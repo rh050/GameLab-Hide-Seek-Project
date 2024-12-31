@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HeatmapManager : MonoBehaviour
 {
-
     public static HeatmapManager Instance;
 
     private Dictionary<Vector2, int> heatmapData = new Dictionary<Vector2, int>();
@@ -19,6 +18,9 @@ public class HeatmapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // רישום ל-Mediator
+        GameMediator.Instance.RegisterHeatmapManager(this);
     }
 
     public void RegisterMovement(Vector2 position)
@@ -46,5 +48,3 @@ public class HeatmapManager : MonoBehaviour
         return hottestZone;
     }
 }
-
-

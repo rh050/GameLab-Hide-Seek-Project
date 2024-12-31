@@ -6,6 +6,8 @@ TagManager:
   tags:
   - HidingSpot
   - Hider
+  - Seeker
+  - MainMenu
   layers:
   - Default
   - TransparentFX
