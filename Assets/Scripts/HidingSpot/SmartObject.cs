@@ -22,24 +22,22 @@ public class SmartObject : MonoBehaviour
 
         if (isTrap)
         {
-            Debug.Log("Trap activated!");
             //PLAYER SLOWED DOWN
-            PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null)
-            {
-                playerController.ModifySpeed(-3f, effectDuration);
-            }
+            
+            Debug.Log("Trap activated!");
+            player.GetComponent<PlayerController>().ModifySpeed(-2f, effectDuration);
+            StartCoroutine(ResetTrap());
+            
         }
 
         if (isMovable)
         {
             Debug.Log("Object is moving!");
-            
-
             StartCoroutine(MoveObject());
+            StartCoroutine(ResetTrap());
         }
+        isActive = false; 
 
-        isActive = true; //loop or once
     }
 
     private IEnumerator MoveObject()
@@ -51,5 +49,11 @@ public class SmartObject : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+    }
+    
+    private IEnumerator ResetTrap()
+    {
+        yield return new WaitForSeconds(effectDuration);
+        isActive = true;
     }
 }

@@ -45,7 +45,7 @@ public class GameMediator : MonoBehaviour
     {
         foreach (SmartObject smartObject in smartObjects)
         {
-            if (Vector3.Distance(player.transform.position, smartObject.transform.position) < 1.5f) // רדיוס הפעלה
+            if (Vector3.Distance(player.transform.position, smartObject.transform.position) < 1.5f)
             {
                 smartObject.Activate(player);
             }
@@ -91,7 +91,7 @@ public class GameMediator : MonoBehaviour
         {
             return availableSpots[Random.Range(0, availableSpots.Count)];
         }
-        return null; // אין מקומות פנויים
+        return null; 
     }
 
     public void NotifyHiderFound(Hider hider)
@@ -111,7 +111,6 @@ public class GameMediator : MonoBehaviour
         Debug.Log("A hiding spot collapsed!");
     }
 
-    // אינטראקציה עם Heatmap
     public void RegisterMovement(Vector2 position)
     {
         if (heatmapManager != null)
