@@ -12,7 +12,12 @@ public class GameMediator : MonoBehaviour
     private SeekerAI seeker;
     private GameHUDController hud;
     private HeatmapManager heatmapManager;
+    private EnergyManager energyManager;
     private List<SmartObject> smartObjects = new List<SmartObject>();
+    
+    private int seekerPoints = 0;
+    private int hidersPoints = 0;
+
 
     void Awake()
     {
@@ -97,6 +102,7 @@ public class GameMediator : MonoBehaviour
     public void NotifyHiderFound(Hider hider)
     {
         hiders.Remove(hider);
+        AddSeekerPoints(10); 
         UpdateHidersCount();
 
         if (hiders.Count == 0)
@@ -138,6 +144,43 @@ public class GameMediator : MonoBehaviour
         if (hud != null)
         {
             hud.UpdateHidersLeft(hiders.Count);
+        }
+    }
+    public void AddSeekerPoints(int points)
+    {
+        seekerPoints += points;
+        UpdateHUDPoints();
+    }
+
+    public void AddHiderPoints(int points)
+    {
+        hidersPoints += points;
+        UpdateHUDPoints();
+    }
+
+    private void UpdateHUDPoints()
+    {
+        if (hud != null)
+        {
+            hud.UpdatePoints(seekerPoints, hidersPoints);
+        }
+    }
+    public void AwardSurvivingHiders()
+    {
+        foreach (var hider in hiders)
+        {
+            AddHiderPoints(5); // נקודות למתחבאים
+        }
+    }
+    public void UpdateEnergyHUD(float currentEnergy, float maxEnergy)
+    {
+        if (hud != null) // Ensure the `hud` instance is assigned
+        {
+            hud.UpdateEnergyHUD(currentEnergy, maxEnergy);
+        }
+        else
+        {
+            Debug.LogWarning("HUD is not assigned to GameMediator!");
         }
     }
 }
