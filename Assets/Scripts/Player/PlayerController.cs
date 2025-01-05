@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
             movement.Normalize();
             //Mediator smart objects
             GameMediator.Instance.ActivateSmartObjects(gameObject);
+            GameMediator.Instance.RegisterMovement(transform.position);
+            
+
     }
     
 

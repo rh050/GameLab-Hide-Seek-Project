@@ -17,6 +17,10 @@ public class GameMediator : MonoBehaviour
     
     private int seekerPoints = 0;
     private int hidersPoints = 0;
+    public int SeekerUpgardeStart = 90;
+    public bool upgradeSpeed = false;
+    public bool upgradeXray = false;
+    private bool playonce = false;
 
 
     void Awake()
@@ -36,16 +40,51 @@ public class GameMediator : MonoBehaviour
         if (GameTime > 0)
         {
             GameTime -= Time.deltaTime;
+            
+                if (GameTime <= SeekerUpgardeStart && GameTime > 0 && seekerPoints < 20 && !playonce)
+                {
+                    if (upgradeSpeed)
+                    {
+                        ActivateSeekerUpgrade("speed");
+                    }
+                    if (upgradeXray)
+                    {
+                        ActivateSeekerUpgrade("xray");
+                    }
+                    playonce = true;
+                }
+                
 
-            if (GameTime <= 0)
-            {
-                EndGame("Time's Up! Hiders Win!");//need to change to ui
-            }
+                if (GameTime <= 0)
+                {
+                    AwardSurvivingHiders();
+                    EndGame("Time's Up! Hiders Win!");
+                }
+            
+            
         }
     }
     
-    
+    //Seeker Upgrades
+    public void ActivateSeekerUpgrade(string upgrade)
+    {
+        if (seeker != null)
+        {
+            Debug.Log("Seeker Upgrade Activated: " + upgrade);
+            if (upgrade == "speed")
+            {
+                seeker.GetComponent<PlayerController>().ModifySpeed(2f, 5f); 
+            }
+            else if (upgrade == "xray")
+            {
+                seeker.ActivateXRayVision(5f); 
+            }
+        }
+    }
 
+
+
+    //Smart Objects
     public void ActivateSmartObjects(GameObject player)
     {
         foreach (SmartObject smartObject in smartObjects)
@@ -61,11 +100,9 @@ public class GameMediator : MonoBehaviour
         smartObjects.Add(smartObject);
     }
     
-    public void EndGame(string result)
-    {
-        Debug.Log(result);
-        SceneManager.LoadScene(0);
-    }
+    
+    
+    //Hiding Spots
     public void RegisterHidingSpot(HidingSpot spot)
     {
         hidingSpots.Add(spot);
@@ -82,13 +119,11 @@ public class GameMediator : MonoBehaviour
     {
         seeker = seekerAI;
     }
-
-    public void RegisterHeatmapManager(HeatmapManager heatmap)
+    public void NotifyHidingSpotCollapsed(HidingSpot spot)
     {
-        heatmapManager = heatmap;
+        hidingSpots.Remove(spot);
+        Debug.Log("A hiding spot collapsed!");
     }
-
-
     public HidingSpot GetRandomAvailableSpot()
     {
         List<HidingSpot> availableSpots = hidingSpots.FindAll(spot => !spot.IsOccupied);
@@ -98,31 +133,17 @@ public class GameMediator : MonoBehaviour
         }
         return null; 
     }
-
-    public void NotifyHiderFound(Hider hider)
+    
+    //Heatmap
+    public void RegisterHeatmapManager(HeatmapManager heatmap)
     {
-        hiders.Remove(hider);
-        AddSeekerPoints(10); 
-        UpdateHidersCount();
-
-        if (hiders.Count == 0)
-        {
-            EndGame("All Hiders Found! Seeker Wins!");
-        }
+        heatmapManager = heatmap;
     }
-
-    public void NotifyHidingSpotCollapsed(HidingSpot spot)
-    {
-        hidingSpots.Remove(spot);
-        Debug.Log("A hiding spot collapsed!");
-    }
-
+   
     public void RegisterMovement(Vector2 position)
     {
-        if (heatmapManager != null)
-        {
-            heatmapManager.RegisterMovement(position);
-        }
+        heatmapManager.RegisterMovement(position);
+        
     }
 
     public Vector2 GetHottestZone()
@@ -133,7 +154,20 @@ public class GameMediator : MonoBehaviour
         }
         return Vector2.zero;
     }
+    public void DisplayHeatmap()
+    {
+        if (heatmapManager != null)
+        {
+            heatmapManager.DisplayHeatmap();
+        }
+    }
+    public List<Hider> GetAllHiders()
+    {
+        return hiders; 
+    }
+
     
+    //Hud functions
     public void RegisterHUD(GameHUDController hudController)
     {
         hud = hudController;
@@ -144,6 +178,27 @@ public class GameMediator : MonoBehaviour
         if (hud != null)
         {
             hud.UpdateHidersLeft(hiders.Count);
+        }
+    }
+    private void UpdateHUDPoints()
+    {
+        if (hud != null)
+        {
+            hud.UpdatePoints(seekerPoints, hidersPoints);
+        }
+    }
+    
+    //Ranking
+    
+    public void NotifyHiderFound(Hider hider)
+    {
+        hiders.Remove(hider);
+        AddSeekerPoints(10); 
+        UpdateHidersCount();
+
+        if (hiders.Count == 0)
+        {
+            EndGame("All Hiders Found! Seeker Wins!");
         }
     }
     public void AddSeekerPoints(int points)
@@ -157,24 +212,19 @@ public class GameMediator : MonoBehaviour
         hidersPoints += points;
         UpdateHUDPoints();
     }
-
-    private void UpdateHUDPoints()
-    {
-        if (hud != null)
-        {
-            hud.UpdatePoints(seekerPoints, hidersPoints);
-        }
-    }
+    
     public void AwardSurvivingHiders()
     {
         foreach (var hider in hiders)
         {
-            AddHiderPoints(5); // נקודות למתחבאים
+            AddHiderPoints(5); 
         }
     }
+    
+    //Energy Manager
     public void UpdateEnergyHUD(float currentEnergy, float maxEnergy)
     {
-        if (hud != null) // Ensure the `hud` instance is assigned
+        if (hud != null) 
         {
             hud.UpdateEnergyHUD(currentEnergy, maxEnergy);
         }
@@ -182,5 +232,15 @@ public class GameMediator : MonoBehaviour
         {
             Debug.LogWarning("HUD is not assigned to GameMediator!");
         }
+    }
+    
+    //End Game
+    private void EndGame(string result)
+    {
+        AwardSurvivingHiders();
+
+        Debug.Log(result);
+
+        SceneManager.LoadScene(0);
     }
 }
