@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
@@ -64,23 +64,34 @@ public class GameMediator : MonoBehaviour
             
         }
     }
-    
+
     //Seeker Upgrades
     public void ActivateSeekerUpgrade(string upgrade)
     {
-        if (seeker != null)
+        if (seeker == null)
         {
-            Debug.Log("Seeker Upgrade Activated: " + upgrade);
-            if (upgrade == "speed")
-            {
-                seeker.GetComponent<PlayerController>().ModifySpeed(2f, 5f); 
-            }
-            else if (upgrade == "xray")
-            {
-                seeker.ActivateXRayVision(5f); 
-            }
+            Debug.LogWarning("Seeker is not registered!");
+            return;
+        }
+
+        PlayerAbilities abilities = seeker.GetComponent<PlayerAbilities>();
+        if (abilities == null)
+        {
+            Debug.LogWarning($"PlayerAbilities not found on {seeker.name}");
+            return;
+        }
+
+        if (upgrade == "speed")
+        {
+            abilities.BoostSpeed(2f, 5f); // הגברת מהירות
+        }
+        else if (upgrade == "xray")
+        {
+            abilities.ActivateXRayVision(5f); // הפעלת רנטגן למשך 5 שניות
         }
     }
+
+
 
 
 
@@ -233,7 +244,32 @@ public class GameMediator : MonoBehaviour
             Debug.LogWarning("HUD is not assigned to GameMediator!");
         }
     }
-    
+
+
+    public float invisibilityDuration = 5f;
+    public float speedBoostDuration = 5f;
+
+    public void ActivateHiderUpgrade(Hider hider, string upgrade)
+    {
+        PlayerAbilities abilities = hider.GetComponent<PlayerAbilities>();
+        if (abilities == null)
+        {
+            Debug.LogWarning($"PlayerAbilities not found on {hider.name}");
+            return;
+        }
+
+        if (upgrade == "invisibility")
+        {
+            abilities.TurnInvisible(invisibilityDuration);
+        }
+        else if (upgrade == "speed")
+        {
+            abilities.BoostSpeed(2f, speedBoostDuration);
+        }
+    }
+
+
+
     //End Game
     private void EndGame(string result)
     {
@@ -243,4 +279,6 @@ public class GameMediator : MonoBehaviour
 
         SceneManager.LoadScene(0);
     }
+
+
 }

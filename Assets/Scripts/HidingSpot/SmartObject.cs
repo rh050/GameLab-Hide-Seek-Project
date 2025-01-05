@@ -1,33 +1,35 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class SmartObject : MonoBehaviour
 {
-    public bool isTrap; 
-    public bool isMovable; 
-    public Vector3 moveDirection; 
-    public float effectDuration = 5f; 
+    public bool isTrap;
+    public bool isMovable;
+    public Vector3 moveDirection;
+    public float effectDuration = 5f;
     private bool isActive = true;
 
     void Start()
     {
-        //Mediator
-        GameMediator.Instance.RegisterSmartObject(this);
-        
+        GameMediator.Instance?.RegisterSmartObject(this); // רישום האובייקט
     }
 
     public void Activate(GameObject player)
     {
         if (!isActive) return;
 
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogWarning("Player does not have PlayerController!");
+            return;
+        }
+
         if (isTrap)
         {
-            //PLAYER SLOWED DOWN
-            
             Debug.Log("Trap activated!");
-            player.GetComponent<PlayerController>().ModifySpeed(-2f, effectDuration);
+            playerController.ModifySpeedTemporary(0.5f, effectDuration); // האטת מהירות ל-50%
             StartCoroutine(ResetTrap());
-            
         }
 
         if (isMovable)
@@ -36,24 +38,32 @@ public class SmartObject : MonoBehaviour
             StartCoroutine(MoveObject());
             StartCoroutine(ResetTrap());
         }
-        isActive = false; 
 
+        isActive = false;
     }
 
     private IEnumerator MoveObject()
     {
+        if (moveDirection == Vector3.zero)
+        {
+            Debug.LogWarning($"{gameObject.name}: moveDirection is zero, object won't move!");
+            yield break;
+        }
+
         float elapsedTime = 0f;
         while (elapsedTime < effectDuration)
         {
-            transform.position += moveDirection * Time.deltaTime;
+            transform.position += moveDirection * Time.deltaTime; // תנועה בכיוון מוגדר
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        Debug.Log($"{gameObject.name} finished moving.");
     }
-    
+
+
     private IEnumerator ResetTrap()
     {
         yield return new WaitForSeconds(effectDuration);
-        isActive = true;
+        isActive = true; // הפיכת האובייקט לפעיל מחדש
     }
 }
