@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SeekerAI : MonoBehaviour
@@ -28,6 +29,36 @@ public class SeekerAI : MonoBehaviour
         }
     }
 
+
+    public void ActivateXRayVision(float duration)
+    {
+        StartCoroutine(EnableXRay(duration));
+    }
+
+    private IEnumerator EnableXRay(float duration)
+    {
+        foreach (Hider hider in GameMediator.Instance.GetAllHiders())
+        {
+            SpriteRenderer sr = hider.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.color = Color.red; 
+            }
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        foreach (Hider hider in GameMediator.Instance.GetAllHiders())
+        {
+            SpriteRenderer sr = hider.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.color = Color.white; 
+            }
+        }
+    }
+    
+    //state machine
     void SearchForHiders()
     {
         HidingSpot predictedSpot = GameMediator.Instance.GetRandomAvailableSpot();
@@ -47,6 +78,7 @@ public class SeekerAI : MonoBehaviour
 
     void AdaptSearchPattern()
     {
+        GameMediator.Instance.DisplayHeatmap();
         Vector2 hottestZone = HeatmapManager.Instance.GetHottestZone();
         transform.position = Vector2.MoveTowards(transform.position, hottestZone, Time.deltaTime * 2);
     }

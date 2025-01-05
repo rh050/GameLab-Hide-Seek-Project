@@ -34,7 +34,7 @@ public class GameHUDController : MonoBehaviour
     {
         if (energySlider != null)
         {
-            energySlider.value = currentEnergy / maxEnergy; // Update slider's value
+            energySlider.value = currentEnergy / maxEnergy; 
         }
         else
         {
