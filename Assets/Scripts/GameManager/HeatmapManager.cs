@@ -25,11 +25,11 @@ public class HeatmapManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             HeatmapManager.Instance.DebugMaxHeat();
         }
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             HeatmapManager.Instance.DisplayHeatmap();
         }

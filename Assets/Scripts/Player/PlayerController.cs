@@ -3,50 +3,58 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    private Vector3 movement;
-    private Rigidbody2D rb;
-    private PlayerAbilities abilities;
+    public float moveSpeed = 5f; 
+    private Vector3 movement; 
+    private Rigidbody2D rb; 
+    private float originalSpeed; 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        abilities = GetComponent<PlayerAbilities>(); // חיבור לסקריפט הכוחות
+        originalSpeed = moveSpeed; 
     }
 
     void Update()
     {
-        // ניהול תנועה
+    
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
+        GameMediator.Instance.RegisterMovement(transform.position);
+        GameMediator.Instance.ActivateSmartObjects(gameObject);
+        
 
-        // הפעלת יכולות לפי לחיצה על מקשים
-        if (Input.GetKeyDown(KeyCode.E)) // התחבאות
+        //ask luna game mediator to activate the hider upgrade or directly activate the seeker upgrade with PowerManager
+        if (Input.GetKeyDown(KeyCode.H)) 
         {
-            HidePlayer();
+            GameMediator.Instance.ActivateHiderUpgrade(this, "invisibility"); 
         }
 
-        if (Input.GetKeyDown(KeyCode.N)) // מצב לילה
+        if (Input.GetKeyDown(KeyCode.J)) 
         {
-            ToggleNightMode();
+            GameMediator.Instance.ActivateHiderUpgrade(this, "speed"); 
         }
 
-        if (Input.GetKeyDown(KeyCode.H)) // שקיפות
+        if (Input.GetKeyDown(KeyCode.K)) 
         {
-            abilities.TurnInvisible(5f);
+            GameMediator.Instance.ActivateSeekerUpgrade("xray");
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.J)) // מהירות
-        {
-            abilities.BoostSpeed(2f, 5f);
-        }
+    void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + (Vector2)movement * moveSpeed * Time.fixedDeltaTime); 
+    }
 
-        if (Input.GetKeyDown(KeyCode.K)) // רנטגן
-        {
-            abilities.ActivateXRayVision(5f);
-        }
+  
+    public void ModifySpeed(float multiplier)
+    {
+        moveSpeed *= multiplier; 
+    }
 
+    public void ResetSpeed()
+    {
+        moveSpeed = originalSpeed; 
     }
 
     public void ModifySpeedTemporary(float multiplier, float duration)
@@ -56,39 +64,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator TemporarySpeedChange(float multiplier, float duration)
     {
-        moveSpeed *= multiplier; // שינוי המהירות
-        yield return new WaitForSeconds(duration); // המתנה למשך הזמן
-        moveSpeed /= multiplier; // חזרה למהירות המקורית
-    }
-
-
-    void FixedUpdate()
-    {
-        rb.MovePosition(rb.position + (Vector2)movement * moveSpeed * Time.fixedDeltaTime);
-    }
-
-    // התחבאות
-    private void HidePlayer()
-    {
-        Debug.Log("Player is hiding!"); // ניתן לשלב כאן לוגיקה נוספת להתחבאות
-    }
-
-    // מעבר למצב לילה
-    private void ToggleNightMode()
-    {
-        Debug.Log("Night mode toggled!");
-        // לדוגמה, ניתן לשנות תאורה, רקעים או אפקטים
-        RenderSettings.ambientLight = RenderSettings.ambientLight == Color.black ? Color.white : Color.black;
-    }
-
-    // שינוי מהירות זמני (נשלט ע"י abilities)
-    public void ModifySpeed(float multiplier)
-    {
-        moveSpeed *= multiplier;
-    }
-
-    public void ResetSpeed(float originalSpeed)
-    {
-        moveSpeed = originalSpeed;
+        ModifySpeed(multiplier); 
+        yield return new WaitForSeconds(duration);
+        ResetSpeed(); 
     }
 }

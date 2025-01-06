@@ -11,8 +11,9 @@ public class SmartObject : MonoBehaviour
 
     void Start()
     {
-        GameMediator.Instance?.RegisterSmartObject(this); // רישום האובייקט
+        GameMediator.Instance.RegisterSmartObject(this); 
     }
+    
 
     public void Activate(GameObject player)
     {
@@ -53,11 +54,10 @@ public class SmartObject : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < effectDuration)
         {
-            transform.position += moveDirection * Time.deltaTime; // תנועה בכיוון מוגדר
+            transform.position += moveDirection * Time.deltaTime; 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        Debug.Log($"{gameObject.name} finished moving.");
     }
 
 

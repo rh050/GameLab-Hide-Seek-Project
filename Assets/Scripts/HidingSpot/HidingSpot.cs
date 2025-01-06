@@ -5,7 +5,7 @@ public class HidingSpot : MonoBehaviour
 {
     public bool IsOccupied { get; private set; } = false;
     private Coroutine collapseCoroutine;
-    private GameObject hiddenPlayer; // שמירת השחקן המוסתר
+    private GameObject hiddenPlayer; 
 
     void Start()
     {
@@ -17,27 +17,29 @@ public class HidingSpot : MonoBehaviour
         if (!IsOccupied)
         {
             IsOccupied = true;
-            hiddenPlayer = player; // שמירת השחקן
+            hiddenPlayer = player; 
             player.GetComponent<PlayerController>().enabled = false;
             player.GetComponent<SpriteRenderer>().enabled = false;
             Debug.Log("Player is hiding!");
 
-            // הפעלת מנגנון הקריסה לאחר 10 שניות
             collapseCoroutine = StartCoroutine(CollapseAfterDelay(10f));
+        }
+        else
+        {
+            Debug.Log("Hiding spot is already occupied!");
         }
     }
 
     public void LeaveSpot(GameObject player)
     {
-        if (IsOccupied)
+        if (IsOccupied && hiddenPlayer == player)
         {
             IsOccupied = false;
-            hiddenPlayer = null; // ניקוי השחקן
+            hiddenPlayer = null; 
             player.GetComponent<PlayerController>().enabled = true;
             player.GetComponent<SpriteRenderer>().enabled = true;
             Debug.Log("Player left the hiding spot!");
 
-            // ביטול מנגנון הקריסה אם השחקן עזב
             if (collapseCoroutine != null)
             {
                 StopCoroutine(collapseCoroutine);
@@ -49,8 +51,7 @@ public class HidingSpot : MonoBehaviour
     {
         if (IsOccupied && hiddenPlayer != null)
         {
-            // שחרור השחקן אם המקום קורס
-            LeaveSpot(hiddenPlayer);
+            LeaveSpot(hiddenPlayer); 
         }
 
         IsOccupied = false;
@@ -62,6 +63,6 @@ public class HidingSpot : MonoBehaviour
     private IEnumerator CollapseAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        BreakSpot();
+        BreakSpot(); 
     }
 }

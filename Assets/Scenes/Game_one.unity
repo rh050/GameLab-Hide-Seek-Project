@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 116006003}
   - component: {fileID: 116006002}
   - component: {fileID: 116006005}
+  - component: {fileID: 116006006}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -154,8 +155,7 @@ Transform:
   m_LocalPosition: {x: -7.9232273, y: 0.51832825, z: -0.003909839}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1798896492}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &116006002
@@ -215,6 +215,18 @@ MonoBehaviour:
   currentEnergy: 10
   energyRegenRate: 1
   energyText: {fileID: 0}
+--- !u!114 &116006006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116005999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a5ce7debb6bb64cb6880280a21679a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &116453539
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,11 +649,11 @@ Transform:
   m_GameObject: {fileID: 291502808}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.9986095, y: -1.4543748, z: -3.0225248}
+  m_LocalPosition: {x: 1.3899999, y: 0.71000004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1625503572}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &451024805
 GameObject:
@@ -4300,11 +4312,11 @@ Transform:
   m_GameObject: {fileID: 1134454615}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5386095, y: 2.0456252, z: -3.0225248}
+  m_LocalPosition: {x: -4.07, y: 4.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1625503572}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1134454620
 MonoBehaviour:
@@ -20637,8 +20649,6 @@ Transform:
   - {fileID: 886454276}
   - {fileID: 1320672419}
   - {fileID: 1058463000}
-  - {fileID: 1134454619}
-  - {fileID: 291502812}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1795787238
@@ -20723,50 +20733,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!1 &1798896491
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1798896492}
-  - component: {fileID: 1798896493}
-  m_Layer: 0
-  m_Name: HeatmapManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1798896492
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798896491}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 116006001}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1798896493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798896491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81ea16318f81d841b7774b15df4c8d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1900037528
 GameObject:
   m_ObjectHideFlags: 0
@@ -21107,6 +21073,10 @@ PrefabInstance:
       propertyPath: energyManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2158788814048239669, guid: db56a852fbd014c9c8131ebc6fc0bb80, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5192169623339595099, guid: db56a852fbd014c9c8131ebc6fc0bb80, type: 3}
       propertyPath: m_Name
       value: PortalManager
@@ -21168,6 +21138,8 @@ SceneRoots:
   - {fileID: 477524057}
   - {fileID: 578540433}
   - {fileID: 1625503572}
+  - {fileID: 1134454619}
+  - {fileID: 291502812}
   - {fileID: 737236383}
   - {fileID: 794361984}
   - {fileID: 2459812833862629005}

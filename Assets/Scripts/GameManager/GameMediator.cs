@@ -65,24 +65,6 @@ public class GameMediator : MonoBehaviour
         }
     }
     
-    //Seeker Upgrades
-    public void ActivateSeekerUpgrade(string upgrade)
-    {
-        if (seeker != null)
-        {
-            Debug.Log("Seeker Upgrade Activated: " + upgrade);
-            if (upgrade == "speed")
-            {
-                seeker.GetComponent<PlayerController>().ModifySpeed(2f, 5f); 
-            }
-            else if (upgrade == "xray")
-            {
-                seeker.ActivateXRayVision(5f); 
-            }
-        }
-    }
-
-
 
     //Smart Objects
     public void ActivateSmartObjects(GameObject player)
@@ -233,29 +215,28 @@ public class GameMediator : MonoBehaviour
             Debug.LogWarning("HUD is not assigned to GameMediator!");
         }
     }
-
-
-    public float invisibilityDuration = 5f;
-    public float speedBoostDuration = 5f;
-
-    public void ActivateHiderUpgrade(Hider hider, string upgrade)
+    
+    //Abilities
+    public void ActivateHiderUpgrade(PlayerController player, string upgrade)
     {
-        PlayerAbilities abilities = hider.GetComponent<PlayerAbilities>();
-        if (abilities == null)
-        {
-            Debug.LogWarning($"PlayerAbilities not found on {hider.name}");
-            return;
-        }
-
         if (upgrade == "invisibility")
         {
-            abilities.TurnInvisible(invisibilityDuration);
+            PowerManager.Instance.ActivateInvisibility(player.gameObject, 5f);
         }
         else if (upgrade == "speed")
         {
-            abilities.BoostSpeed(2f, speedBoostDuration);
+            PowerManager.Instance.ActivateSpeedBoost(player.gameObject, 2f, 5f);
         }
     }
+
+    public void ActivateSeekerUpgrade(string upgrade)
+    {
+        if (upgrade == "xray")
+        {
+            PowerManager.Instance.ActivateXRayVision(5f);
+        }
+    }
+    
 
 
 
