@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
@@ -233,7 +233,32 @@ public class GameMediator : MonoBehaviour
             Debug.LogWarning("HUD is not assigned to GameMediator!");
         }
     }
-    
+
+
+    public float invisibilityDuration = 5f;
+    public float speedBoostDuration = 5f;
+
+    public void ActivateHiderUpgrade(Hider hider, string upgrade)
+    {
+        PlayerAbilities abilities = hider.GetComponent<PlayerAbilities>();
+        if (abilities == null)
+        {
+            Debug.LogWarning($"PlayerAbilities not found on {hider.name}");
+            return;
+        }
+
+        if (upgrade == "invisibility")
+        {
+            abilities.TurnInvisible(invisibilityDuration);
+        }
+        else if (upgrade == "speed")
+        {
+            abilities.BoostSpeed(2f, speedBoostDuration);
+        }
+    }
+
+
+
     //End Game
     private void EndGame(string result)
     {
@@ -243,4 +268,6 @@ public class GameMediator : MonoBehaviour
 
         SceneManager.LoadScene(0);
     }
+
+
 }
