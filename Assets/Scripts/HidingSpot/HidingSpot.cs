@@ -6,15 +6,18 @@ public class HidingSpot : MonoBehaviour
     public bool IsOccupied { get; private set; } = false;
     private Coroutine collapseCoroutine;
     private GameObject hiddenPlayer; 
+    public float energyCost = 5f;
+    private EnergyManager energyManager;
 
     void Start()
     {
         GameMediator.Instance.RegisterHidingSpot(this);
+        energyManager = EnergyManager.Instance;
     }
 
     public void HidePlayer(GameObject player)
     {
-        if (!IsOccupied)
+        if (!IsOccupied && energyManager != null && energyManager.UseEnergy(energyCost))
         {
             IsOccupied = true;
             hiddenPlayer = player; 
@@ -26,7 +29,7 @@ public class HidingSpot : MonoBehaviour
         }
         else
         {
-            Debug.Log("Hiding spot is already occupied!");
+            Debug.Log("Not enough energy to hide!");
         }
     }
 

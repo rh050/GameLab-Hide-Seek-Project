@@ -21,6 +21,7 @@ public class GameMediator : MonoBehaviour
     public bool upgradeSpeed = false;
     public bool upgradeXray = false;
     private bool playonce = false;
+ 	private bool gameStarted = false;
 
 
     void Awake()
@@ -32,39 +33,47 @@ public class GameMediator : MonoBehaviour
         else
         {
             Destroy(gameObject);
+ 			DontDestroyOnLoad(gameObject);
         }
+    }
+
+	private void Start()
+   	{
+        hud.PrepareForGame(); 
     }
     
     private void Update()
     {
-        if (GameTime > 0)
+        if (!gameStarted && !hud.IsCountingDown) 
+        {
+            StartGame();
+        }
+
+        if (gameStarted && GameTime > 0) 
         {
             GameTime -= Time.deltaTime;
-            
-                if (GameTime <= SeekerUpgardeStart && GameTime > 0 && seekerPoints < 20 && !playonce)
-                {
-                    if (upgradeSpeed)
-                    {
-                        ActivateSeekerUpgrade("speed");
-                    }
-                    if (upgradeXray)
-                    {
-                        ActivateSeekerUpgrade("xray");
-                    }
-                    playonce = true;
-                }
-                
 
-                if (GameTime <= 0)
+            if (GameTime <= SeekerUpgardeStart && GameTime > 0 && seekerPoints < 20 && !playonce)
+            {
+                if (upgradeSpeed)
                 {
-                    AwardSurvivingHiders();
-                    EndGame("Time's Up! Hiders Win!");
+                    ActivateSeekerUpgrade("speed");
                 }
-            
-            
+                if (upgradeXray)
+                {
+                    ActivateSeekerUpgrade("xray");
+                }
+                playonce = true;
+            }
+
+
+            if (GameTime <= 0)
+            {
+                AwardSurvivingHiders();
+                EndGame("Time's Up! Hiders Win!");
+            }
         }
-    }
-    
+    }	
 
     //Smart Objects
     public void ActivateSmartObjects(GameObject player)
@@ -104,7 +113,7 @@ public class GameMediator : MonoBehaviour
     public void NotifyHidingSpotCollapsed(HidingSpot spot)
     {
         hidingSpots.Remove(spot);
-        Debug.Log("A hiding spot collapsed!");
+		hud.DisplayMessage("A hiding spot collapsed!",2f);
     }
     public HidingSpot GetRandomAvailableSpot()
     {
@@ -174,6 +183,7 @@ public class GameMediator : MonoBehaviour
     
     public void NotifyHiderFound(Hider hider)
     {
+		hud.DisplayMessage("A hider has been found!",2f);
         hiders.Remove(hider);
         AddSeekerPoints(10); 
         UpdateHidersCount();
@@ -222,10 +232,12 @@ public class GameMediator : MonoBehaviour
         if (upgrade == "invisibility")
         {
             PowerManager.Instance.ActivateInvisibility(player.gameObject, 5f);
+			hud.DisplayMessage("Hider is Invisible!",2f);
         }
         else if (upgrade == "speed")
         {
             PowerManager.Instance.ActivateSpeedBoost(player.gameObject, 2f, 5f);
+			hud.DisplayMessage("Hider has gained Speed Boost!",2f);
         }
     }
 
@@ -233,12 +245,47 @@ public class GameMediator : MonoBehaviour
     {
         if (upgrade == "xray")
         {
+			
             PowerManager.Instance.ActivateXRayVision(5f);
+			hud.DisplayMessage("You activated X-Ray Vision!",2f);
         }
     }
     
+	//Start game
+	 public void StartGame()
+    {
+		gameStarted = true;
+		hud.DisplayMessage("Start!",2f);
+		foreach (Hider hider in hiders)
+		{
+			PlayerController playerController = hider.gameObject.GetComponent<PlayerController>();
+    		if (playerController != null)
+    		{
+       			 playerController.enabled = true;
+    		}
+		}
+    }
+	//Disable NPC's movement while in countdown.
+	public void SetNPCMovement(bool enabled)
+	{
+		foreach (Hider hider in hiders)
+		{
+       		PlayerController playerController = hider.gameObject.GetComponent<PlayerController>();
+        	if (playerController != null)
+        	{
+            	playerController.enabled = enabled;
+        	}
+    	}
 
-
+    	if (seeker != null)
+    	{
+        	SeekerAI seekerAI = seeker.GetComponent<SeekerAI>();
+        	if (seekerAI != null)
+        	{
+            	seekerAI.enabled = enabled;
+        	}
+    	}
+	}
 
     //End Game
     private void EndGame(string result)

@@ -7,11 +7,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement; 
     private Rigidbody2D rb; 
     private float originalSpeed; 
+    private EnergyManager energyManager;
+    public float energyCost = 2f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         originalSpeed = moveSpeed; 
+        energyManager = EnergyManager.Instance;
     }
 
     void Update()
@@ -25,17 +28,17 @@ public class PlayerController : MonoBehaviour
         
 
         //ask luna game mediator to activate the hider upgrade or directly activate the seeker upgrade with PowerManager
-        if (Input.GetKeyDown(KeyCode.H)) 
+        if (Input.GetKeyDown(KeyCode.H) && energyManager != null && energyManager.UseEnergy(energyCost) ) 
         {
             GameMediator.Instance.ActivateHiderUpgrade(this, "invisibility"); 
         }
 
-        if (Input.GetKeyDown(KeyCode.J)) 
+        if (Input.GetKeyDown(KeyCode.J) && energyManager != null && energyManager.UseEnergy(energyCost)) 
         {
             GameMediator.Instance.ActivateHiderUpgrade(this, "speed"); 
         }
 
-        if (Input.GetKeyDown(KeyCode.K)) 
+        if (Input.GetKeyDown(KeyCode.K) && energyManager != null && energyManager.UseEnergy(energyCost)) 
         {
             GameMediator.Instance.ActivateSeekerUpgrade("xray");
         }
