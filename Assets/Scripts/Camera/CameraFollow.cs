@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!target)
+        if (!target&& GameObject.FindGameObjectWithTag("Hider"))
         {
             target = GameObject.FindGameObjectWithTag("Hider").transform;
         }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HidingSpot : MonoBehaviour
 {
-    public bool IsOccupied { get; private set; } = false;
+    public bool IsOccupied { get; set; } = false;
     private Coroutine collapseCoroutine;
     private GameObject hiddenPlayer; 
     public float energyCost = 5f;
@@ -14,6 +14,7 @@ public class HidingSpot : MonoBehaviour
         GameMediator.Instance.RegisterHidingSpot(this);
         energyManager = EnergyManager.Instance;
     }
+    
 
     public void HidePlayer(GameObject player)
     {
@@ -62,10 +63,21 @@ public class HidingSpot : MonoBehaviour
         gameObject.SetActive(false);
         Debug.Log("Hiding spot has collapsed!");
     }
+    
 
     private IEnumerator CollapseAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         BreakSpot(); 
+    }
+
+    public Hider GetHidingPlayer()
+    {
+        if (IsOccupied)
+        {
+            return hiddenPlayer.GetComponent<Hider>();
+        }
+
+        return null;
     }
 }

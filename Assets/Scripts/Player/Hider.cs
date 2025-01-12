@@ -45,8 +45,13 @@ public class Hider : MonoBehaviour
 
         if (other.CompareTag("Seeker"))
         {
-            GameMediator.Instance.NotifyHiderFound(this);
-            Destroy(gameObject); 
+            GameMediator.Instance.NotifyHiderSpotted(this);
+            //destroy the hider just if its very close to the seeker
+            if (Vector3.Distance(transform.position, other.transform.position) < 1f)
+            {
+                GameMediator.Instance.NotifyHiderFound(this);
+                Destroy(gameObject);
+            }
         }
     }
 

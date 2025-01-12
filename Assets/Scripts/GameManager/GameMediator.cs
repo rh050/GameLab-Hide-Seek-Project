@@ -193,6 +193,17 @@ public class GameMediator : MonoBehaviour
             EndGame("All Hiders Found! Seeker Wins!");
         }
     }
+    public void NotifyHiderSpotted(Hider hider)
+    {
+        SeekerAI seeker = this.seeker.GetComponent<SeekerAI>();
+        if (seeker != null)
+        {
+            seeker.SetChaseTarget(hider.transform);
+            hud.DisplayMessage("Seeker is chasing a hider!", 2f);
+        }
+    }
+
+
     public void AddSeekerPoints(int points)
     {
         seekerPoints += points;

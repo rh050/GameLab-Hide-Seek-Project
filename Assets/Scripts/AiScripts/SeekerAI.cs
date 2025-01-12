@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class SeekerAI : MonoBehaviour
 {
-    private enum State { Searching, Chasing, Adaptive }
-    private State currentState = State.Searching;
-
+    private enum State { Observing, Exploring, Chasing }
+    private State currentState = State.Observing;
     private Transform target;
+    private Vector2 searchArea;
+    private bool isSearchingSpot = false;
+    private bool isChasing = false;
 
     void Start()
     {
@@ -17,69 +19,102 @@ public class SeekerAI : MonoBehaviour
     {
         switch (currentState)
         {
-            case State.Searching:
-                SearchForHiders();
+            case State.Observing:
+                ObserveAndListen();
+                break;
+            case State.Exploring:
+                ExploreHidingSpots();
                 break;
             case State.Chasing:
                 ChaseTarget();
                 break;
-            case State.Adaptive:
-                AdaptSearchPattern();
-                break;
         }
     }
 
-
-    public void ActivateXRayVision(float duration)
+    void ObserveAndListen()
     {
-        StartCoroutine(EnableXRay(duration));
+        searchArea = GameMediator.Instance.GetHottestZone();
+        Debug.Log("state is observing");
+
+        if (searchArea != Vector2.zero)
+        {
+            currentState = State.Exploring; 
+        }
     }
 
-    private IEnumerator EnableXRay(float duration)
+    void ExploreHidingSpots()
     {
-        foreach (Hider hider in GameMediator.Instance.GetAllHiders())
+        Debug.Log("state is ExploreHidingSpots");
+
+        if (!isSearchingSpot)
         {
-            SpriteRenderer sr = hider.GetComponent<SpriteRenderer>();
-            if (sr != null)
+            StartCoroutine(MoveToArea(searchArea));
+        }
+        else
+        {
+            CheckNearbyHidingSpots();
+        }
+    }
+
+    private IEnumerator MoveToArea(Vector2 area)
+    {
+        isSearchingSpot = true;
+        Vector3 targetPosition = new Vector3(area.x, area.y, transform.position.z);
+
+        while (Vector3.Distance(transform.position, targetPosition) > 0.5f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * 3f);
+            yield return null;
+        }
+
+        isSearchingSpot = false;
+    }
+
+    private void CheckNearbyHidingSpots()
+    {
+        Debug.Log("state is CheckNearbyHidingSpots");
+
+        HidingSpot[] spots = FindObjectsOfType<HidingSpot>();
+        foreach (HidingSpot spot in spots)
+        {
+            if (Vector3.Distance(transform.position, spot.transform.position) < 2f)
             {
-                sr.color = Color.red; 
+                if (spot.IsOccupied)
+                {
+                    Debug.Log("Found a hider in the HidingSpot!");
+                    GameMediator.Instance.NotifyHiderFound(spot.GetHidingPlayer());
+                    return;
+                }
             }
         }
 
-        yield return new WaitForSeconds(duration);
-
-        foreach (Hider hider in GameMediator.Instance.GetAllHiders())
-        {
-            SpriteRenderer sr = hider.GetComponent<SpriteRenderer>();
-            if (sr != null)
-            {
-                sr.color = Color.white; 
-            }
-        }
-    }
-    
-    //state machine
-    void SearchForHiders()
-    {
-        HidingSpot predictedSpot = GameMediator.Instance.GetRandomAvailableSpot();
-        if (predictedSpot != null)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, predictedSpot.transform.position, Time.deltaTime * 2);
-        }
+        currentState = State.Observing;
     }
 
     void ChaseTarget()
     {
         if (target != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, Time.deltaTime * 3);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 4f);
+
+            if (Vector3.Distance(transform.position, target.position) < 0.5f)
+            {
+                Debug.Log("Caught the hider!");
+                GameMediator.Instance.NotifyHiderFound(target.gameObject.GetComponent<Hider>());
+                target = null;
+                currentState = State.Observing; 
+            }
+        }
+        else
+        {
+            Debug.Log("Lost the hider...");
+            currentState = State.Observing;
         }
     }
 
-    void AdaptSearchPattern()
+    public void SetChaseTarget(Transform newTarget)
     {
-        GameMediator.Instance.DisplayHeatmap();
-        Vector2 hottestZone = HeatmapManager.Instance.GetHottestZone();
-        transform.position = Vector2.MoveTowards(transform.position, hottestZone, Time.deltaTime * 2);
+        target = newTarget;
+        currentState = State.Chasing;
     }
 }
