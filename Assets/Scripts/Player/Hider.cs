@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Hider : MonoBehaviour
 {
     private HidingSpot currentSpot;
     public Light playerLight;
+    private bool isInHiddingsotArea = false;
+
 
     void Start()
     {
@@ -19,7 +22,11 @@ public class Hider : MonoBehaviour
 
     void Update()
     {
-
+        if (!isInHiddingsotArea)
+        {
+            GameMediator.Instance.RegisterMovement(transform.position);
+        }
+        
         if (Input.GetKeyDown(KeyCode.E) && currentSpot != null)
         {
             if (!currentSpot.IsOccupied)
@@ -39,28 +46,30 @@ public class Hider : MonoBehaviour
     {
         if (other.CompareTag("HidingSpot"))
         {
+            isInHiddingsotArea = true;
             currentSpot = other.GetComponent<HidingSpot>();
             Debug.Log("You are near a hiding spot!");
         }
+       
 
-        if (other.CompareTag("Seeker"))
-        {
-            GameMediator.Instance.NotifyHiderSpotted(this);
-            //destroy the hider just if its very close to the seeker
-            if (Vector3.Distance(transform.position, other.transform.position) < 1f)
-            {
-                GameMediator.Instance.NotifyHiderFound(this);
-                Destroy(gameObject);
-            }
-        }
+        // if (other.CompareTag("Seeker")&& !currentSpot.IsOccupied)
+        // {
+        //     GameMediator.Instance.NotifyHiderSpotted(this);
+        //     //destroy the hider just if its very close to the seeker
+        //     if (Vector3.Distance(transform.position, other.transform.position) < 1f)
+        //     {
+        //         GameMediator.Instance.NotifyHiderFound(this);
+        //         Destroy(gameObject);
+        //     }
+        // }
     }
+    
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("HidingSpot"))
         {
-            currentSpot = null;
-            Debug.Log("You left the hiding spot!");
+            isInHiddingsotArea = false;
         }
     }
 

@@ -39,6 +39,7 @@ public class HeatmapManager : MonoBehaviour
 
     }
 
+    //register player movement but in hidding spot area not register
     public void RegisterMovement(Vector2 position)
     {
         if (heatmapData.ContainsKey(position))
@@ -47,7 +48,7 @@ public class HeatmapManager : MonoBehaviour
         }
         else
         {
-            heatmapData[position] = 1;
+            heatmapData.Add(position, 1);
         }
     }
 
@@ -68,6 +69,10 @@ public class HeatmapManager : MonoBehaviour
         }
 
         return hottestZone;
+    }
+    public void DeleteHottestZone(Vector2 position)
+    {
+        heatmapData.Remove(position);
     }
     public int GetMaxHeat()
     {

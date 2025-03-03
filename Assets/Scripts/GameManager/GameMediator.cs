@@ -39,15 +39,15 @@ public class GameMediator : MonoBehaviour
 
 	private void Start()
    	{
-        hud.PrepareForGame(); 
+        //hud.PrepareForGame(); 
     }
     
     private void Update()
     {
-        if (!gameStarted && !hud.IsCountingDown) 
-        {
-            StartGame();
-        }
+        // if (!gameStarted && !hud.IsCountingDown) 
+        // {
+        //     StartGame();
+        // }
 
         if (gameStarted && GameTime > 0) 
         {
@@ -144,6 +144,11 @@ public class GameMediator : MonoBehaviour
             return heatmapManager.GetHottestZone();
         }
         return Vector2.zero;
+    }
+    
+    public void DeleteHottestZone(Vector2 position)
+    {
+        heatmapManager.DeleteHottestZone(position);
     }
     public void DisplayHeatmap()
     {
@@ -308,5 +313,5 @@ public class GameMediator : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-
+    
 }
