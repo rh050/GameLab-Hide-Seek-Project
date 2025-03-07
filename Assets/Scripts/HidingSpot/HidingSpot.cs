@@ -11,22 +11,19 @@ public class HidingSpot : MonoBehaviour
 
     void Start()
     {
-        GameMediator.Instance.RegisterHidingSpot(this);
+        HidingSpotManager.Instance.RegisterHidingSpot(this);
         energyManager = EnergyManager.Instance;
     }
-    
 
     public void HidePlayer(GameObject player)
     {
-        if (!IsOccupied && energyManager != null && energyManager.UseEnergy(energyCost))
+        if (!IsOccupied && EnergyManager.Instance.UseEnergy(energyCost))
         {
             IsOccupied = true;
             hiddenPlayer = player; 
             player.GetComponent<PlayerController>().enabled = false;
             player.GetComponent<SpriteRenderer>().enabled = false;
             Debug.Log("Player is hiding!");
-
-            collapseCoroutine = StartCoroutine(CollapseAfterDelay(10f));
         }
         else
         {
@@ -59,17 +56,10 @@ public class HidingSpot : MonoBehaviour
         }
 
         IsOccupied = false;
-        GameMediator.Instance.NotifyHidingSpotCollapsed(this);
+        HidingSpotManager.Instance.NotifyHidingSpotCollapsed(this);
         gameObject.SetActive(false);
-        Debug.Log("Hiding spot has collapsed!");
     }
     
-
-    private IEnumerator CollapseAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        BreakSpot(); 
-    }
 
     public Hider GetHidingPlayer()
     {

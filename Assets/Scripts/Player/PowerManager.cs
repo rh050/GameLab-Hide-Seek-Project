@@ -40,8 +40,15 @@ public class PowerManager : MonoBehaviour
    
     public void ActivateSpeedBoost(GameObject player, float multiplier, float duration)
     {
-        StartCoroutine(BoostSpeed(player, multiplier, duration));
+        if (EnergyManager.Instance.UseEnergy(5f))
+        {
+            StartCoroutine(BoostSpeed(player, multiplier, duration));
+        }
     }
+    
+
+    
+
 
     private IEnumerator BoostSpeed(GameObject player, float multiplier, float duration)
     {

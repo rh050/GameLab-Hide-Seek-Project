@@ -1,11 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HeatmapManager : MonoBehaviour
 {
-    public static HeatmapManager  Instance ;
+
+    public static HeatmapManager Instance;
 
     private Dictionary<Vector2, int> heatmapData = new Dictionary<Vector2, int>();
 
@@ -19,27 +18,20 @@ public class HeatmapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        GameMediator.Instance.RegisterHeatmapManager(this);
-
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            HeatmapManager.Instance.DebugMaxHeat();
+            DebugMaxHeat();
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
-            HeatmapManager.Instance.DisplayHeatmap();
+            DisplayHeatmap();
         }
-        //need to check if it's ok with luna
-        GameMediator.Instance.RegisterHeatmapManager(this);
-
-
     }
 
-    //register player movement but in hidding spot area not register
     public void RegisterMovement(Vector2 position)
     {
         if (heatmapData.ContainsKey(position))
@@ -51,8 +43,6 @@ public class HeatmapManager : MonoBehaviour
             heatmapData.Add(position, 1);
         }
     }
-
-
 
     public Vector2 GetHottestZone()
     {
@@ -70,10 +60,12 @@ public class HeatmapManager : MonoBehaviour
 
         return hottestZone;
     }
+
     public void DeleteHottestZone(Vector2 position)
     {
         heatmapData.Remove(position);
     }
+
     public int GetMaxHeat()
     {
         int maxHeat = 0;
@@ -86,6 +78,7 @@ public class HeatmapManager : MonoBehaviour
         }
         return maxHeat;
     }
+
 
     public void DisplayHeatmap()
     {
@@ -101,11 +94,12 @@ public class HeatmapManager : MonoBehaviour
             Debug.DrawLine(new Vector3(zone.Key.x, zone.Key.y, 0), new Vector3(zone.Key.x, zone.Key.y + 0.5f, 0), heatColor, 0.5f);
         }
     }
+
+
     public void DebugMaxHeat()
     {
         int maxHeat = GetMaxHeat();
         Debug.Log($"Max Heat: {maxHeat}");
     }
-
-
 }
+

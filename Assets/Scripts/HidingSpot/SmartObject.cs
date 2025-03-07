@@ -11,10 +11,9 @@ public class SmartObject : MonoBehaviour
 
     void Start()
     {
-        GameMediator.Instance.RegisterSmartObject(this); 
+        SmartObjectManager.Instance.RegisterSmartObject(this); 
     }
     
-
     public void Activate(GameObject player)
     {
         if (!isActive) return;
@@ -59,7 +58,6 @@ public class SmartObject : MonoBehaviour
             yield return null;
         }
     }
-
 
     private IEnumerator ResetTrap()
     {

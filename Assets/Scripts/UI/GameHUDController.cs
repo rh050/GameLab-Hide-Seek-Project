@@ -22,6 +22,13 @@ public class GameHUDController : MonoBehaviour
         GameMediator.Instance.RegisterHUD(this);
         StartCoroutine(StartCountdown()); // הפעלת הספירה לאחור
     }
+    
+    private void Update()
+    {
+        float gameTime = GameManager.Instance.GetGameTime();
+        timerText.text = "Time Left: " + Mathf.CeilToInt(gameTime).ToString() + "s";
+    }
+
 
     public bool IsCountingDown
     {
@@ -29,24 +36,24 @@ public class GameHUDController : MonoBehaviour
     }
 
     private IEnumerator StartCountdown()
-{
-    countdownText.gameObject.SetActive(true);
-    GameMediator.Instance.SetNPCMovement(false); // Disable NPC movement
-
-    while (countdownTime > 0)
     {
-        countdownText.text = Mathf.CeilToInt(countdownTime).ToString();
-        yield return new WaitForSeconds(1f);
-        countdownTime--;
+        countdownText.gameObject.SetActive(true);
+        GameManager.Instance.SetNPCMovement(false); 
+
+        while (countdownTime > 0)
+        {
+            countdownText.text = Mathf.CeilToInt(countdownTime).ToString();
+            yield return new WaitForSeconds(1f);
+            countdownTime--;
+        }
+
+        countdownText.gameObject.SetActive(false);
+        isCountingDown = false;
+        GameManager.Instance.SetNPCMovement(true); 
+        GameManager.Instance.StartGame();
     }
 
-    countdownText.gameObject.SetActive(false);
-    isCountingDown = false;
-    GameMediator.Instance.SetNPCMovement(true); // Enable NPC movement
-    GameMediator.Instance.StartGame();
-}
-
-    public void DisplayMessage(string message, float duration) // פונקציה להצגת הודעות
+    public void DisplayMessage(string message, float duration) 
     {
         StartCoroutine(ShowMessageCoroutine(message, duration));
     }
@@ -73,11 +80,7 @@ public class GameHUDController : MonoBehaviour
         StartCoroutine(StartCountdown());
     }
 
-    private void Update()
-    {
-        float gameTime = GameMediator.Instance.GameTime;
-        timerText.text = "Time Left: " + Mathf.CeilToInt(gameTime).ToString() + "s";
-    }
+   
 
     public void UpdateHidersLeft(int count)
     {
@@ -86,20 +89,14 @@ public class GameHUDController : MonoBehaviour
 
     public void UpdatePoints(int seekerPoints, int hidersPoints)
     {
-        seekerPointsText.text = "Seeker Points: " + seekerPoints;
-        hidersPointsText.text = "Hider Points: " + hidersPoints;
+        seekerPointsText.text = $"Seeker: {seekerPoints}";
+        hidersPointsText.text = $"Hiders: {hidersPoints}";
     }
+
 
     public void UpdateEnergyHUD(float currentEnergy, float maxEnergy)
     {
-        if (energySlider != null)
-        {
-            energySlider.value = currentEnergy / maxEnergy;
-            energyValueText.text = $"{Mathf.RoundToInt(currentEnergy)} / {Mathf.RoundToInt(maxEnergy)}";
-        }
-        else
-        {
-            Debug.LogWarning("Energy Slider is not assigned in GameHUDController!");
-        }
+        energyValueText.text = $"Energy: {currentEnergy}/{maxEnergy}";
+
     }
 }

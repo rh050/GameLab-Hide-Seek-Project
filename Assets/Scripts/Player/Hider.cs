@@ -24,7 +24,7 @@ public class Hider : MonoBehaviour
     {
         if (!isInHiddingsotArea)
         {
-            GameMediator.Instance.RegisterMovement(transform.position);
+            HeatmapManager.Instance.RegisterMovement(transform.position);
         }
         
         if (Input.GetKeyDown(KeyCode.E) && currentSpot != null)

@@ -1,124 +1,91 @@
-using System.Collections;
 using UnityEngine;
 
 public class SeekerAI : MonoBehaviour
 {
-    private enum State { Observing, Exploring, Chasing }
-    private State currentState = State.Observing;
-    private Transform target;
-    private Vector2 searchArea;
-    private bool isSearchingSpot = false;
-    private bool isChasing = false;
-    public double DistanceHidingSpotCheck =0.5f;
-    public float SeekerSpeed = 4f;
-
+    private SeekerState currentState;
+    private Transform currentTarget;
+    private Collider2D[] visionColliders;
 
     void Start()
     {
-        GameMediator.Instance.RegisterSeeker(this);
+        SwitchState(new ObservingState());
     }
 
     void Update()
     {
-        switch (currentState)
-        {
-            case State.Observing:
-                ObserveAndListen();
-                break;
-            case State.Exploring:
-                ExploreHidingSpots();
-                break;
-            case State.Chasing:
-                ChaseTarget();
-                break;
-        }
+        currentState.UpdateState(this);
     }
 
-    void ObserveAndListen()
+    public void SwitchState(SeekerState newState)
     {
-        searchArea = GameMediator.Instance.GetHottestZone();
-        Debug.Log("state is observing");
-
-        if (searchArea != Vector2.zero)
+        if (currentState != null)
         {
-            currentState = State.Exploring; 
+            currentState.ExitState(this);
         }
+        currentState = newState;
+        currentState.EnterState(this);
     }
 
-    void ExploreHidingSpots()
+    public void MoveToLocation(Vector2 location)
     {
-        Debug.Log("state is ExploreHidingSpots");
-
-        if (!isSearchingSpot)
-        {
-            StartCoroutine(MoveToArea(searchArea));
-        }
-        else
-        {
-            CheckNearbyHidingSpots();
-        }
+        transform.position = Vector2.MoveTowards(transform.position, location, Time.deltaTime * 2);
     }
 
-    private IEnumerator MoveToArea(Vector2 area)
+    public bool CanSeeHidingSpot()
     {
-        isSearchingSpot = true;
-        Vector3 targetPosition = new Vector3(area.x, area.y, transform.position.z);
-
-        while (Vector3.Distance(transform.position, targetPosition) > 0.5f)
+        visionColliders = Physics2D.OverlapCircleAll(transform.position, 5f);
+        foreach (Collider2D col in visionColliders)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * 3f);
-            yield return null;
-            //delete the hottest zone
-            GameMediator.Instance.DeleteHottestZone(area);
-        }
-
-        isSearchingSpot = false;
-    }
-
-    private void CheckNearbyHidingSpots()
-    {
-        HidingSpot[] spots = FindObjectsOfType<HidingSpot>();
-        foreach (HidingSpot spot in spots)
-        {
-            if (Vector3.Distance(transform.position, spot.transform.position) < DistanceHidingSpotCheck)
+            if (col.CompareTag("HidingSpot"))
             {
-                if (spot.IsOccupied)
-                {//need to change 
-                    Debug.Log("Found a hider in the HidingSpot!");
-                    GameMediator.Instance.NotifyHiderFound(spot.GetHidingPlayer());
-                    return;
-                }
+                return true;
             }
         }
-
-        currentState = State.Observing;
+        return false;
     }
 
-
-    void ChaseTarget()
+    public HidingSpot GetClosestHidingSpot()
     {
-        if (target != null)
+        visionColliders = Physics2D.OverlapCircleAll(transform.position, 5f);
+        foreach (Collider2D col in visionColliders)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * SeekerSpeed);
-
-            if (Vector3.Distance(transform.position, target.position) < 0.5f)
+            if (col.CompareTag("HidingSpot"))
             {
-                Debug.Log("Caught the hider!");
-                GameMediator.Instance.NotifyHiderFound(target.gameObject.GetComponent<Hider>());
-                target = null;
-                currentState = State.Observing; 
+                return col.GetComponent<HidingSpot>();
             }
         }
-        else
-        {
-            Debug.Log("Lost the hider...");
-            currentState = State.Observing;
-        }
+        return null;
     }
 
-    public void SetChaseTarget(Transform newTarget)
+    public bool CanSeeHider()
     {
-        target = newTarget;
-        currentState = State.Chasing;
+        visionColliders = Physics2D.OverlapCircleAll(transform.position, 5f);
+        foreach (Collider2D col in visionColliders)
+        {
+            if (col.CompareTag("Hider"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void SetChaseTarget(Transform target)
+    {
+        SwitchState(new ChasingState(target));
+    }
+
+
+    public Transform GetHiderTarget()
+    {
+        visionColliders = Physics2D.OverlapCircleAll(transform.position, 5f);
+        foreach (Collider2D col in visionColliders)
+        {
+            if (col.CompareTag("Hider"))
+            {
+                return col.transform;
+            }
+        }
+        return null;
     }
 }
