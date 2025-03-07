@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
 
         SmartObjectManager.Instance.ActivateSmartObjects(gameObject);
+        
         if (!IsInsideHidingSpot())
         {
             HeatmapManager.Instance.RegisterMovement(transform.position);
