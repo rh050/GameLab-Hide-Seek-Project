@@ -7,27 +7,29 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-      //  if (SceneManager.GetActiveScene().name != "MainMenu")
-      //  {
-      //      Destroy(gameObject);
-       // }
-        characterSelectionPanel.SetActive(false); // Hide panel initially
+
     }
 
     public void ShowCharacterSelection()
     {
-        characterSelectionPanel.SetActive(true); // Show selection panel
+        if (characterSelectionPanel == null)
+        {
+            Debug.LogError("characterSelectionPanel is missing! Cannot show selection panel.");
+            return;
+        }
+
+        characterSelectionPanel.SetActive(true);
     }
 
     public void StartGame()
     {
-        if (characterSelectionPanel.activeSelf) // Prevent game from starting if the panel is open
+        if (characterSelectionPanel != null && characterSelectionPanel.activeSelf)
         {
             Debug.Log("Please select a character before starting the game.");
             return;
         }
 
-        SceneManager.LoadScene("Game_one"); // Load the game only after confirming character selection
+        SceneManager.LoadScene("Game_one");
     }
 
     public void QuitGame()

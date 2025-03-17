@@ -7,7 +7,7 @@ public class CharacterSelection : MonoBehaviour
     public CharactersSO[] availableCharacters; // Assign 3 character SOs in Inspector
     public Button[] characterButtons; // Assign 3 buttons in Inspector
     public GameObject characterSelectionPanel;
-    private CharactersSO selectedCharacter;
+    private static CharactersSO selectedCharacter; // Store the character across scenes
 
     void Start()
     {
@@ -32,19 +32,18 @@ public class CharacterSelection : MonoBehaviour
             return;
         }
 
-        // Instantiate the selected character's prefab
-        GameObject player = Instantiate(selectedCharacter.characterPrefab, Vector3.zero, Quaternion.identity);
-        Hider hiderComponent = player.GetComponent<Hider>();
-
-        if (hiderComponent != null)
-        {
-            hiderComponent.AssignCharacter(selectedCharacter);
-        }
+        // Store character choice for next scene
+        PlayerPrefs.SetString("SelectedCharacter", selectedCharacter.characterName);
 
         Debug.Log("Game Started with " + selectedCharacter.characterName);
         characterSelectionPanel.SetActive(false); // Hide selection UI
 
-        // Load the game after confirming character selection
+        // Load the game scene
         SceneManager.LoadScene("Game_one");
+    }
+
+    public static CharactersSO GetSelectedCharacter()
+    {
+        return selectedCharacter;
     }
 }

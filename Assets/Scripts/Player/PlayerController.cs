@@ -4,59 +4,97 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement Settings")]
     public float moveSpeed = 5f;
-    private Vector3 movement;
+    private Vector2 movement;
     private Rigidbody2D rb;
-    private float originalSpeed;
-    private EnergyManager energyManager;
+
+    [Header("Energy Settings")]
     public float energyCost = 2f;
-    private Animator animator;
+    private EnergyManager energyManager;
+
+    [Header("Animation (Future)")]
+    private SpriteRenderer spriteRenderer;
+    private bool isMoving = false;
 
     void Start()
     {
+        // Get Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();
-        originalSpeed = moveSpeed;
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D is missing on " + gameObject.name);
+        }
+
+        // Get EnergyManager (Singleton)
         energyManager = EnergyManager.Instance;
-        animator = GetComponent<Animator>();
-        
+        if (energyManager == null)
+        {
+            Debug.LogError("EnergyManager instance not found!");
+        }
+
+        // Get Sprite Renderer for animation in the future
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-
         SmartObjectManager.Instance.ActivateSmartObjects(gameObject);
-        
+
         if (!IsInsideHidingSpot())
         {
             HeatmapManager.Instance.RegisterMovement(transform.position);
         }
 
-        //ask luna game mediator to activate the hider upgrade or directly activate the seeker upgrade with PowerManager
+        // Ability activation (future-proofed)
         if (Input.GetKeyDown(KeyCode.H) && energyManager != null && energyManager.UseEnergy(energyCost))
         {
             PowerManager.Instance.ActivateInvisibility(gameObject, 5f);
         }
-
-
         if (Input.GetKeyDown(KeyCode.J) && energyManager != null && energyManager.UseEnergy(energyCost))
         {
             PowerManager.Instance.ActivateSpeedBoost(gameObject, 2f, 5f);
         }
-        
         if (Input.GetKeyDown(KeyCode.K) && energyManager != null && energyManager.UseEnergy(energyCost))
         {
             PowerManager.Instance.ActivateXRayVision(5f);
         }
-
-
-        
     }
 
     void FixedUpdate()
     {
-        if (movement.magnitude > 0)
+        if (rb != null)
         {
-            rb.MovePosition(rb.position + (Vector2)movement * moveSpeed * Time.fixedDeltaTime);
+            rb.velocity = movement * moveSpeed;
+        }
+
+        // Future animation support
+        if (spriteRenderer != null)
+        {
+            if (movement.x != 0)
+            {
+                spriteRenderer.flipX = movement.x < 0;
+            }
+        }
+    }
+
+    // Handles movement input (New Input System)
+    public void Move(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            movement = context.ReadValue<Vector2>();
+            movement.Normalize();
+            isMoving = true;
+
+            Debug.Log("Movement Detected: " + movement); // ✅ Prints input values
+        }
+        else if (context.canceled)
+        {
+            movement = Vector2.zero;
+            isMoving = false;
+
+            Debug.Log("Movement Stopped!"); // ✅ Prints when movement stops
         }
     }
 
@@ -68,53 +106,18 @@ public class PlayerController : MonoBehaviour
         {
             if (collider.CompareTag("HidingSpot"))
             {
-                return true; 
+                return true;
             }
         }
         return false;
     }
 
-    public void ModifySpeed(float multiplier)
-    {
-        moveSpeed *= multiplier;
-    }
-
-    public void ResetSpeed()
-    {
-        moveSpeed = originalSpeed;
-    }
-
+    // Speed Modifiers
+    public void ModifySpeed(float multiplier) => moveSpeed *= multiplier;
+    public void ResetSpeed() => moveSpeed = 5f; // Reset to default
     public void ModifySpeedTemporary(float multiplier, float duration)
     {
         StartCoroutine(TemporarySpeedChange(multiplier, duration));
-    }
-
-    public void Move(InputAction.CallbackContext context)
-    {
-        if (context.started || context.performed)
-        {
-            movement = context.ReadValue<Vector2>();
-            movement.Normalize();
-            if (movement.x == 1)
-            {
-                GetComponent<SpriteRenderer>().flipX = false;
-            }
-            else if (movement.x == -1)
-            {
-                GetComponent<SpriteRenderer>().flipX = true;
-            }
-
-            animator.SetFloat("InputX", movement.x);
-            animator.SetFloat("InputY", movement.y);
-            animator.SetBool("isWalking", movement.magnitude > 0);
-        }
-        else if (context.canceled)
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputX", movement.x);
-            animator.SetFloat("LastInputY", movement.y);
-            movement = Vector3.zero;
-        }
     }
 
     private IEnumerator TemporarySpeedChange(float multiplier, float duration)
