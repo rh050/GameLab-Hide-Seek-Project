@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PowerManager : MonoBehaviour
 {
-    public static PowerManager Instance { get; private set; } 
+    public static PowerManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -17,7 +17,6 @@ public class PowerManager : MonoBehaviour
         }
     }
 
-
     public void ActivateInvisibility(GameObject player, float duration)
     {
         StartCoroutine(TurnInvisible(player, duration));
@@ -26,29 +25,19 @@ public class PowerManager : MonoBehaviour
     private IEnumerator TurnInvisible(GameObject player, float duration)
     {
         SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
-        Color originalColor = sr.color;
         if (sr != null)
         {
-            
+            Color originalColor = sr.color;
             sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0.3f);
             yield return new WaitForSeconds(duration);
-            sr.color = originalColor; 
+            sr.color = originalColor;
         }
-        sr.color = originalColor; 
     }
 
-   
     public void ActivateSpeedBoost(GameObject player, float multiplier, float duration)
     {
-        if (EnergyManager.Instance.UseEnergy(5f))
-        {
-            StartCoroutine(BoostSpeed(player, multiplier, duration));
-        }
+        StartCoroutine(BoostSpeed(player, multiplier, duration));
     }
-    
-
-    
-
 
     private IEnumerator BoostSpeed(GameObject player, float multiplier, float duration)
     {
@@ -60,7 +49,7 @@ public class PowerManager : MonoBehaviour
             pc.ResetSpeed();
         }
     }
-    
+
     public void ActivateXRayVision(float duration)
     {
         StartCoroutine(XRayVision(duration));
@@ -76,13 +65,7 @@ public class PowerManager : MonoBehaviour
             {
                 sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.3f);
             }
-            HidingSpot hs = spot.GetComponent<HidingSpot>();
-            if (hs != null && hs.IsOccupied)
-            {
-                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
-            }
         }
-
         Debug.Log("X-Ray Vision activated!");
         yield return new WaitForSeconds(duration);
 
@@ -91,11 +74,9 @@ public class PowerManager : MonoBehaviour
             SpriteRenderer sr = spot.GetComponent<SpriteRenderer>();
             if (sr != null)
             {
-                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f); 
+                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
             }
         }
-
         Debug.Log("X-Ray Vision ended!");
     }
-    
 }

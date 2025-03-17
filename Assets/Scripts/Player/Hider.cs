@@ -1,12 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Hider : MonoBehaviour
 {
-    private HidingSpot currentSpot;
+    private CharactersSO characterData;
     public Light playerLight;
-    private bool isInHiddingsotArea = false;
-
+    private bool isInHidingSpotArea = false;
 
     void Start()
     {
@@ -15,30 +13,37 @@ public class Hider : MonoBehaviour
         if (playerLight != null)
         {
             playerLight.intensity = 1.0f;
-            playerLight.range = 5.0f; 
-            playerLight.color = Color.white; 
+            playerLight.range = 5.0f;
+            playerLight.color = Color.white;
+        }
+    }
+
+    public void AssignCharacter(CharactersSO selectedCharacter)
+    {
+        characterData = selectedCharacter;
+        GetComponent<SpriteRenderer>().sprite = characterData.characterSprite;
+        Debug.Log("Hider assigned: " + characterData.characterName);
+    }
+
+    public void ActivateAbility()
+    {
+        if (characterData != null && characterData.ability != null)
+        {
+            Debug.Log(characterData.characterName + " used ability: " + characterData.ability.abilityName);
+            characterData.ActivateAbility(gameObject);
         }
     }
 
     void Update()
     {
-        if (!isInHiddingsotArea)
+        if (!isInHidingSpotArea)
         {
             HeatmapManager.Instance.RegisterMovement(transform.position);
         }
-        
-        if (Input.GetKeyDown(KeyCode.E) && currentSpot != null)
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!currentSpot.IsOccupied)
-            {
-                currentSpot.HidePlayer(gameObject);
-                UpdateLight(false); 
-            }
-            else
-            {
-                currentSpot.LeaveSpot(gameObject);
-                UpdateLight(true); 
-            }
+            ActivateAbility();
         }
     }
 
@@ -46,38 +51,16 @@ public class Hider : MonoBehaviour
     {
         if (other.CompareTag("HidingSpot"))
         {
-            isInHiddingsotArea = true;
-            currentSpot = other.GetComponent<HidingSpot>();
+            isInHidingSpotArea = true;
             Debug.Log("You are near a hiding spot!");
         }
-       
-
-        // if (other.CompareTag("Seeker")&& !currentSpot.IsOccupied)
-        // {
-        //     GameMediator.Instance.NotifyHiderSpotted(this);
-        //     //destroy the hider just if its very close to the seeker
-        //     if (Vector3.Distance(transform.position, other.transform.position) < 1f)
-        //     {
-        //         GameMediator.Instance.NotifyHiderFound(this);
-        //         Destroy(gameObject);
-        //     }
-        // }
     }
-    
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("HidingSpot"))
         {
-            isInHiddingsotArea = false;
-        }
-    }
-
-    private void UpdateLight(bool state)
-    {
-        if (playerLight != null)
-        {
-            playerLight.enabled = state;
+            isInHidingSpotArea = false;
         }
     }
 }
