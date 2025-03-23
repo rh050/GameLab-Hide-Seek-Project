@@ -84,7 +84,7 @@ public class GameHUDController : MonoBehaviour
         hidersLeftText.text = "Hiders Left: " + count.ToString();
     }
 
-    public void UpdatePoints(int seekerPoints, int hidersPoints)
+    public void UpdatePoints(int seekerPoints, int hidersPoints)                
     {
         seekerPointsText.text = "Seeker Points: " + seekerPoints;
         hidersPointsText.text = "Hider Points: " + hidersPoints;
