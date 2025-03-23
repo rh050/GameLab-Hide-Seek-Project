@@ -15,5 +15,5 @@ MonoBehaviour:
   characterName: Sozzy
   characterSprite: {fileID: 0}
   speed: 2
-  characterPrefab: {fileID: 3474370703813971275, guid: 3e1b827a57860bf4381651863422961b, type: 3}
+  characterPrefab: {fileID: 7858592109270468648, guid: e627b230d65deda41b439be509e0dd05, type: 3}
   ability: {fileID: 11400000, guid: adbf14bce48fa2a43bd1e358f4f19201, type: 2}

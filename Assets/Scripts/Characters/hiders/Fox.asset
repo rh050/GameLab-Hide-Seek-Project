@@ -15,5 +15,5 @@ MonoBehaviour:
   characterName: Proxy
   characterSprite: {fileID: 0}
   speed: 0
-  characterPrefab: {fileID: 3064229545271129420, guid: a9b68237b6e08a040977c3d5e879bd3d, type: 3}
+  characterPrefab: {fileID: 7858592109270468648, guid: 6165fc9bf05acf2469b81b03e5e25dcc, type: 3}
   ability: {fileID: 11400000, guid: 1e78fee11d585d140a720c8a10db9b8a, type: 2}

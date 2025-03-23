@@ -15,5 +15,5 @@ MonoBehaviour:
   characterName: BOB
   characterSprite: {fileID: 0}
   speed: 0
-  characterPrefab: {fileID: 3602497718866565896, guid: 67882a4b714f55f4c80c6a35a2ee5c04, type: 3}
+  characterPrefab: {fileID: 7858592109270468648, guid: 9738888a019c7ba4eb393c679b796385, type: 3}
   ability: {fileID: 11400000, guid: 704d2be5598ebe043bde72ddc5d44660, type: 2}

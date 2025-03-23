@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
     {
         if (characterSelectionPanel == null)
         {
-            Debug.LogError("characterSelectionPanel is missing! Cannot show selection panel.");
+            Debug.LogError("characterSelectionPanel is missing! Cannot show selection panel.    ");
             return;
         }
 

@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
     public void EndGame(string result)
     {
         ScoreManager.Instance.AwardSurvivingHiders();
+        GameData.GameResult = result;
         Debug.Log(result);
         SceneManager.LoadScene("GameOverScene");
     }
