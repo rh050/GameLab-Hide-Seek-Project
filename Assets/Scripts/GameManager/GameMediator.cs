@@ -43,11 +43,11 @@ public class GameMediator : MonoBehaviour
     }
     
     private void Update()
-    {
-        // if (!gameStarted && !hud.IsCountingDown) 
-        // {
-        //     StartGame();
-        // }
+    { 
+        if (!gameStarted && !hud.IsCountingDown) 
+        {
+            StartGame();
+        }
 
         if (gameStarted && GameTime > 0) 
         {
@@ -105,6 +105,16 @@ public class GameMediator : MonoBehaviour
         UpdateHidersCount();
         
     }
+
+	public int GetSeekerScore()
+	{
+   		 return seekerPoints;
+	}
+
+	public int GetHiderScore()
+	{
+ 		 return hidersPoints;
+	}
 
     public void RegisterSeeker(SeekerAI seekerAI)
     {
@@ -198,6 +208,7 @@ public class GameMediator : MonoBehaviour
             EndGame("All Hiders Found! Seeker Wins!");
         }
     }
+    
     public void NotifyHiderSpotted(Hider hider)
     {
         SeekerAI seeker = this.seeker.GetComponent<SeekerAI>();
@@ -309,9 +320,12 @@ public class GameMediator : MonoBehaviour
         AwardSurvivingHiders();
 
         Debug.Log(result);
-
-        SceneManager.LoadScene(0);
+        
+        SceneManager.LoadScene("EndingScreen");
+        
+       
     }
+    
 
     
 }
