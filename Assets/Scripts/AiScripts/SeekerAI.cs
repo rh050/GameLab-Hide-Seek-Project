@@ -9,6 +9,9 @@ public class SeekerAI : MonoBehaviour
     private Vector2 searchArea;
     private bool isSearchingSpot = false;
     private bool isChasing = false;
+    public double DistanceHidingSpotCheck =0.5f;
+    public float SeekerSpeed = 4f;
+
 
     void Start()
     {
@@ -65,6 +68,8 @@ public class SeekerAI : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * 3f);
             yield return null;
+            //delete the hottest zone
+            GameMediator.Instance.DeleteHottestZone(area);
         }
 
         isSearchingSpot = false;
@@ -72,15 +77,13 @@ public class SeekerAI : MonoBehaviour
 
     private void CheckNearbyHidingSpots()
     {
-        Debug.Log("state is CheckNearbyHidingSpots");
-
         HidingSpot[] spots = FindObjectsOfType<HidingSpot>();
         foreach (HidingSpot spot in spots)
         {
-            if (Vector3.Distance(transform.position, spot.transform.position) < 2f)
+            if (Vector3.Distance(transform.position, spot.transform.position) < DistanceHidingSpotCheck)
             {
                 if (spot.IsOccupied)
-                {
+                {//need to change 
                     Debug.Log("Found a hider in the HidingSpot!");
                     GameMediator.Instance.NotifyHiderFound(spot.GetHidingPlayer());
                     return;
@@ -91,11 +94,12 @@ public class SeekerAI : MonoBehaviour
         currentState = State.Observing;
     }
 
+
     void ChaseTarget()
     {
         if (target != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 4f);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * SeekerSpeed);
 
             if (Vector3.Distance(transform.position, target.position) < 0.5f)
             {
