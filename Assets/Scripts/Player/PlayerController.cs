@@ -87,14 +87,14 @@ public class PlayerController : MonoBehaviour
             movement.Normalize();
             isMoving = true;
 
-            Debug.Log("Movement Detected: " + movement); // ✅ Prints input values
+            Debug.Log("Movement Detected: " + movement);
         }
         else if (context.canceled)
         {
             movement = Vector2.zero;
             isMoving = false;
 
-            Debug.Log("Movement Stopped!"); // ✅ Prints when movement stops
+            Debug.Log("Movement Stopped!"); 
         }
     }
 
