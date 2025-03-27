@@ -3,6 +3,8 @@ using UnityEngine;
 public class ChasingState : SeekerState
 {
     private Transform targetHider;
+    private float lostSightTimer = 0f; 
+    private float maxLostSightDuration = 3f;
 
     public ChasingState(Transform target)
     {
@@ -12,22 +14,38 @@ public class ChasingState : SeekerState
     public void EnterState(SeekerAI seeker)
     {
         Debug.Log("Seeker is now Chasing.");
+        lostSightTimer = 0f;
     }
 
     public void UpdateState(SeekerAI seeker)
     {
-        if (targetHider != null)
+        if (targetHider == null)
         {
-            seeker.MoveToLocation(targetHider.position);
+            seeker.SwitchState(new ExploringState());
+            return;
+        }
 
-            if (Vector3.Distance(seeker.transform.position, targetHider.position) < 1f)
+        if (!seeker.CanSeeTarget(targetHider))
+        {
+            lostSightTimer += Time.deltaTime;
+
+            if (lostSightTimer >= maxLostSightDuration)
             {
-                GameMediator.Instance.NotifyHiderFound(targetHider.GetComponent<Hider>());
-                seeker.SwitchState(new ObservingState());
+                Debug.Log("Seeker lost the target.");
+                seeker.SwitchState(new ExploringState());
+                return;
             }
         }
         else
         {
+            lostSightTimer = 0f;
+        }
+
+        seeker.MoveToLocation(targetHider.position);
+
+        if (Vector3.Distance(seeker.transform.position, targetHider.position) < 1f)
+        {
+            GameMediator.Instance.NotifyHiderFound(targetHider.GetComponent<Hider>());
             seeker.SwitchState(new ObservingState());
         }
     }

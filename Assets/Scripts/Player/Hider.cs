@@ -36,6 +36,7 @@ public class Hider : MonoBehaviour
 
     void Update()
     {
+        
         if (!isInHidingSpotArea)
         {
             HeatmapManager.Instance.RegisterMovement(transform.position);

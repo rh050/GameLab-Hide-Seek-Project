@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Handles movement input (New Input System)
     public void Move(InputAction.CallbackContext context)
     {
         if (context.performed)

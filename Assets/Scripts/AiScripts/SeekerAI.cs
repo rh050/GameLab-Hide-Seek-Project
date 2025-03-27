@@ -5,9 +5,11 @@ public class SeekerAI : MonoBehaviour
     private SeekerState currentState;
     private Transform currentTarget;
     private Collider2D[] visionColliders;
+    
 
     void Start()
     {
+        GameMediator.Instance.RegisterSeeker(this);
         SwitchState(new ObservingState());
     }
 
@@ -88,4 +90,26 @@ public class SeekerAI : MonoBehaviour
         }
         return null;
     }
+    public bool CanSeeTarget(Transform target) { 
+        //achikam need to implement this
+        /*
+        if (target == null) return false;
+        // If target has invisibility enabled, we can’t see them
+        InvisibilityController invis = target.GetComponent<InvisibilityController>();
+        if (invis != null && invis.IsInvisible)
+            return false;
+
+        Vector2 direction = target.position - transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, 5f);
+
+        if (hit.collider != null && hit.collider.transform == target)
+            return true;
+            */
+
+        return false;
+        
+    }
+
+    
+
 }

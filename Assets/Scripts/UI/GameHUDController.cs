@@ -11,11 +11,14 @@ public class GameHUDController : MonoBehaviour
     public TextMeshProUGUI hidersPointsText;
     public Slider energySlider;
     public TextMeshProUGUI energyValueText;
-    public TextMeshProUGUI countdownText; // טקסט חדש לספירה לאחור
-    private float countdownTime = 10f; // זמן ספירה לאחור
+    public TextMeshProUGUI countdownText;
+    private float countdownTime = 10f;
     private bool isCountingDown = true;
+    public TextMeshProUGUI messageText;
+    public Material dangerEffectMaterial;
+    public float maxDistance = 6f;
+
     
-    public TextMeshProUGUI messageText; // Add this field for the message text
 
     private void Start()
     {
@@ -27,13 +30,20 @@ public class GameHUDController : MonoBehaviour
     {
         float gameTime = GameManager.Instance.GetGameTime();
         timerText.text = "Time Left: " + Mathf.CeilToInt(gameTime).ToString() + "s";
+        
+        float distance = GameMediator.Instance.GetSeekerToPlayerDistance();
+        // Example: Stronger effect when Seeker is close
+        float intensity = Mathf.Clamp01(1f - (distance / maxDistance));
+
+        // Update shader properties
+        dangerEffectMaterial.SetFloat("_FullScreenInten", intensity * 0.6f);
+        dangerEffectMaterial.SetFloat("_VoroniSpeed", intensity * 1.5f);
+
+        
     }
 
-
-    public bool IsCountingDown
-    {
-        get { return isCountingDown; }
-    }
+    
+    public bool IsCountingDown => isCountingDown;
 
     private IEnumerator StartCountdown()
     {
@@ -79,8 +89,7 @@ public class GameHUDController : MonoBehaviour
         messageText.gameObject.SetActive(false);
         StartCoroutine(StartCountdown());
     }
-
-   
+    
 
     public void UpdateHidersLeft(int count)
     {
