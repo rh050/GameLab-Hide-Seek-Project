@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Fox Ability", menuName = "Ability/Fox")]
@@ -11,6 +10,17 @@ public class FoxAbility : Ability
     public override void UseAbility(GameObject player)
     {
         Debug.Log(abilityName + " activated: Speed boost!");
-        PowerManager.Instance.ActivateSpeedBoost(player, speedBoost, duration);
+        player.GetComponent<MonoBehaviour>().StartCoroutine(BoostSpeed(player));
+    }
+
+    private IEnumerator BoostSpeed(GameObject player)
+    {
+        PlayerController pc = player.GetComponent<PlayerController>();
+        if (pc != null)
+        {
+            pc.ModifySpeed(speedBoost);
+            yield return new WaitForSeconds(duration);
+            pc.ResetSpeed();
+        }
     }
 }

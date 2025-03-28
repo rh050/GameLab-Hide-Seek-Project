@@ -62,7 +62,7 @@ Material:
     - _VignetteIntens: 1
     - _VignetteRediusPower: 10
     - _VoroniScale: 10
-    - _VoroniSpeed: 0.3121956
+    - _VoroniSpeed: 0
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0

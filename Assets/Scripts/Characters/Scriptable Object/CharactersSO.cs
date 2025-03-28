@@ -3,18 +3,23 @@
 [CreateAssetMenu(fileName = "New Character", menuName = "Character/Create New Character")]
 public class CharactersSO : ScriptableObject
 {
-    [SerializeField] public string characterName;
-    [SerializeField] public Sprite characterSprite;
-    [SerializeField] public int speed;
-    [SerializeField] public GameObject characterPrefab;
+    [Header("Character Info")]
+    public string characterName;
+    public Sprite characterSprite;
+    public int speed;
+    public GameObject characterPrefab;
 
-    [SerializeField] public Ability ability; 
+    [Header("Ability Settings")]
+    public Ability ability;
 
     public void ActivateAbility(GameObject player)
     {
-        if (ability != null)
+        if (ability == null)
         {
-            ability.UseAbility(player);
+            Debug.LogWarning("No ability assigned to " + characterName);
+            return;
         }
+
+        ability.UseAbility(player);
     }
 }

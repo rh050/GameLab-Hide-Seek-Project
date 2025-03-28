@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d012ee564c2000d439294940f19bd24a, type: 3}
   m_Name: Ninja
   m_EditorClassIdentifier: 
-  characterName: BOB
+  characterName: BOB from Japan
   characterSprite: {fileID: 0}
   speed: 0
   characterPrefab: {fileID: 7858592109270468648, guid: 9738888a019c7ba4eb393c679b796385, type: 3}

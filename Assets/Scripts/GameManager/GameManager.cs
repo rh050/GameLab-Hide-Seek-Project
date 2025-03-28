@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -31,6 +31,37 @@ public class GameManager : MonoBehaviour
         SpawnSelectedCharacter();
     }
 
+    //private void SpawnSelectedCharacter()
+    //{
+    //    string selectedCharacterName = PlayerPrefs.GetString("SelectedCharacter", "");
+    //    if (string.IsNullOrEmpty(selectedCharacterName))
+    //    {
+    //        Debug.LogError("No character selected! Returning to Main Menu...");
+    //        SceneManager.LoadScene("MainMenu");
+    //        return;
+    //    }
+
+    //    CharactersSO selectedCharacter = null;
+    //    foreach (var character in characterList)
+    //    {
+    //        if (character.characterName == selectedCharacterName)
+    //        {
+    //            selectedCharacter = character;
+    //            break;
+    //        }
+    //    }
+
+    //    if (selectedCharacter == null)
+    //    {
+    //        Debug.LogError("Character not found in list!");
+    //        return;
+    //    }
+
+    //    GameObject player = Instantiate(selectedCharacter.characterPrefab, spawnPoint.position, Quaternion.identity);
+    //    Debug.Log("Spawned " + selectedCharacter.characterName + " at " + spawnPoint.position);
+    //}
+
+
     private void SpawnSelectedCharacter()
     {
         string selectedCharacterName = PlayerPrefs.GetString("SelectedCharacter", "");
@@ -57,9 +88,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        
         GameObject player = Instantiate(selectedCharacter.characterPrefab, spawnPoint.position, Quaternion.identity);
+
+        Hider hider = player.GetComponent<Hider>();
+        if (hider != null)
+        {
+            hider.AssignCharacter(selectedCharacter);
+            Debug.Log("Assigned Character to Hider: " + selectedCharacter.characterName);
+        }
+        else
+        {
+            Debug.LogError("Hider component missing on player prefab!");
+        }
+
         Debug.Log("Spawned " + selectedCharacter.characterName + " at " + spawnPoint.position);
     }
+
+
 
     public void StartGame()
     {

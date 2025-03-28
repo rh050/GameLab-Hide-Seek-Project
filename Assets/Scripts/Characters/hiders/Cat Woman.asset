@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d012ee564c2000d439294940f19bd24a, type: 3}
   m_Name: Cat Woman
   m_EditorClassIdentifier: 
-  characterName: Sozzy
+  characterName: Sozzy the Cats
   characterSprite: {fileID: 0}
   speed: 2
   characterPrefab: {fileID: 7858592109270468648, guid: e627b230d65deda41b439be509e0dd05, type: 3}

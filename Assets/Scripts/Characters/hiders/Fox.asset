@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d012ee564c2000d439294940f19bd24a, type: 3}
   m_Name: Fox
   m_EditorClassIdentifier: 
-  characterName: Proxy
+  characterName: Proxy the Foxy
   characterSprite: {fileID: 0}
   speed: 0
   characterPrefab: {fileID: 7858592109270468648, guid: 6165fc9bf05acf2469b81b03e5e25dcc, type: 3}

@@ -5,10 +5,23 @@ public class Hider : MonoBehaviour
     private CharactersSO characterData;
     public Light playerLight;
     private bool isInHidingSpotArea = false;
+    private EnergyManager energyManager;
+
+    [Header("Ability Settings")]
+    public float abilityEnergyCost = 5f;
 
     void Start()
     {
-        GameMediator.Instance.RegisterHider(this);
+
+
+        if (characterData == null)
+            Debug.LogWarning("CharacterData is NULL at Start!");
+        if (characterData.ability == null)
+            Debug.LogWarning("CharacterData.ability is NULL at Start!");
+        
+
+            GameMediator.Instance.RegisterHider(this);
+        energyManager = EnergyManager.Instance;
 
         if (playerLight != null)
         {
@@ -27,16 +40,25 @@ public class Hider : MonoBehaviour
 
     public void ActivateAbility()
     {
-        if (characterData != null && characterData.ability != null)
+        if (characterData == null || characterData.ability == null)
         {
-            Debug.Log(characterData.characterName + " used ability: " + characterData.ability.abilityName);
+            Debug.LogWarning("Ability not assigned!");
+            return;
+        }
+
+        if (energyManager != null && energyManager.UseEnergy(abilityEnergyCost))
+        {
             characterData.ActivateAbility(gameObject);
+            Debug.Log(characterData.characterName + " used ability: " + characterData.ability.abilityName);
+        }
+        else
+        {
+            Debug.Log("Not enough energy to use ability!");
         }
     }
 
     void Update()
     {
-        
         if (!isInHidingSpotArea)
         {
             HeatmapManager.Instance.RegisterMovement(transform.position);
@@ -44,6 +66,7 @@ public class Hider : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("E Key Pressed");
             ActivateAbility();
         }
     }
