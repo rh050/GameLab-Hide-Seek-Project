@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public bool isClone = false;
+
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     private Vector2 movement;
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isMoving = false;
 
+    private PlayerCloneManager cloneManager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,18 +32,26 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("EnergyManager instance not found!");
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Get clone manager if exists
+        cloneManager = GetComponent<PlayerCloneManager>();
     }
 
     void Update()
     {
+        // ✨ Prevent movement if CatWoman has active clone and is not a clone herself
+        if (!isClone && cloneManager != null && cloneManager.IsCloneActive())
+        {
+            movement = Vector2.zero;
+            return; // Block CatWoman from moving while clone is active
+        }
+
         SmartObjectManager.Instance.ActivateSmartObjects(gameObject);
 
         if (!IsInsideHidingSpot())
         {
             HeatmapManager.Instance.RegisterMovement(transform.position);
         }
-
-        // שימו לב - אין כאן יותר הפעלת יכולת
     }
 
     void FixedUpdate()

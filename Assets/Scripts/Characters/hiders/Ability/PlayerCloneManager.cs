@@ -17,12 +17,20 @@ public class PlayerCloneManager : MonoBehaviour
         // Disable real player control
         realPlayer.GetComponent<PlayerController>().enabled = false;
 
+        // ✅ Freeze Rigidbody of CatWoman to prevent push
+        Rigidbody2D rb = realPlayer.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll; // full freeze while clone is active
+        }
+
         // Enable clone control
         PlayerController cloneController = clone.GetComponent<PlayerController>();
         if (cloneController != null)
         {
             cloneController.enabled = true;
-            cloneController.isClone = true; // optional if you want to mark clones
+            cloneController.isClone = true; // optional
         }
 
         // Get camera follow script
@@ -51,6 +59,13 @@ public class PlayerCloneManager : MonoBehaviour
 
         if (realPlayer != null)
         {
+            // ✅ Unfreeze Rigidbody
+            Rigidbody2D rb = realPlayer.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.constraints = RigidbodyConstraints2D.None; // allow movement again
+            }
+
             realPlayer.GetComponent<PlayerController>().enabled = true;
 
             // Return camera to follow the real player
@@ -59,5 +74,17 @@ public class PlayerCloneManager : MonoBehaviour
                 cameraFollow.target = realPlayer.transform;
             }
         }
+    }
+
+    public bool IsCloneActive()
+    {
+        return clone != null;
+    }
+
+    public Vector3 GetClonePosition()
+    {
+        if (clone != null)
+            return clone.transform.position;
+        return realPlayer.transform.position; // fallback
     }
 }

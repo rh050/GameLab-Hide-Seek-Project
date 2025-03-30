@@ -8,19 +8,18 @@ public class Hider : MonoBehaviour
     private EnergyManager energyManager;
 
     [Header("Ability Settings")]
-    public float abilityEnergyCost = 5f;
+    [SerializeField] private float abilityEnergyCost = 5f;
+    [SerializeField] private float abilityCooldownDuration = 10f; 
+    private float abilityCooldownTimer = 0f;   
 
     void Start()
     {
-
-
         if (characterData == null)
             Debug.LogWarning("CharacterData is NULL at Start!");
         if (characterData.ability == null)
             Debug.LogWarning("CharacterData.ability is NULL at Start!");
-        
 
-            GameMediator.Instance.RegisterHider(this);
+        GameMediator.Instance.RegisterHider(this);
         energyManager = EnergyManager.Instance;
 
         if (playerLight != null)
@@ -46,10 +45,19 @@ public class Hider : MonoBehaviour
             return;
         }
 
+        if (abilityCooldownTimer > 0)
+        {
+            Debug.Log("Ability is on cooldown! Time left: " + abilityCooldownTimer.ToString("F1") + "s");
+            return;
+        }
+
         if (energyManager != null && energyManager.UseEnergy(abilityEnergyCost))
         {
             characterData.ActivateAbility(gameObject);
             Debug.Log(characterData.characterName + " used ability: " + characterData.ability.abilityName);
+
+            // Start cooldown
+            abilityCooldownTimer = abilityCooldownDuration;
         }
         else
         {
@@ -62,6 +70,12 @@ public class Hider : MonoBehaviour
         if (!isInHidingSpotArea)
         {
             HeatmapManager.Instance.RegisterMovement(transform.position);
+        }
+
+        // עדכון טיימר קירור
+        if (abilityCooldownTimer > 0)
+        {
+            abilityCooldownTimer -= Time.deltaTime;
         }
 
         if (Input.GetKeyDown(KeyCode.E))
