@@ -8,6 +8,7 @@ public class GameMediator : MonoBehaviour
     private List<Hider> hiders = new List<Hider>();
     private SeekerAI seeker;
     private GameHUDController hud;
+    private HidingSpotManager hidingSpotManager;
 
     void Awake()
     {
@@ -83,14 +84,18 @@ public class GameMediator : MonoBehaviour
         }
     }
 
-    public void NotifyHiderSpotted(Hider hider)
+
+    public static void HidespotDestroyed(HidingSpot hidingSpot)
     {
-        SeekerAI seeker = GameManager.Instance.GetSeeker();
-        if (seeker != null)
+        if (hidingSpot != null)
         {
-            seeker.SetChaseTarget(hider.transform);
-            hud.DisplayMessage("Seeker is chasing a hider!", 2f);
+            hidingSpot.BreakSpot();
         }
+    }
+    public static void SpawnHidingSpots()
+    {
+        HidingSpotManager hidingSpotManager = FindObjectOfType<HidingSpotManager>();
+        hidingSpotManager.SpawnHidingSpots();
     }
 
     public GameHUDController GetHUD() => hud;

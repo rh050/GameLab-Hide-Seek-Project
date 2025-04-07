@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SeekerAI : MonoBehaviour
@@ -5,6 +7,9 @@ public class SeekerAI : MonoBehaviour
     private SeekerState currentState;
     private Transform currentTarget;
     private Collider2D[] visionColliders;
+    public float teleportInterval = 20f;
+    private float teleportTimer = 0f;
+
     
 
     void Start()
@@ -15,8 +20,18 @@ public class SeekerAI : MonoBehaviour
 
     void Update()
     {
+        teleportTimer += Time.deltaTime;
+        if (teleportTimer >= teleportInterval)
+        {
+            Vector2 teleportPosition = HeatmapManager.Instance.GetHottestZone();
+            transform.position = teleportPosition;
+            teleportTimer = 0f;
+            Debug.Log("Seeker teleported to a hot zone.");
+        }
+    
         currentState.UpdateState(this);
     }
+
 
     public void SwitchState(SeekerState newState)
     {
@@ -46,17 +61,24 @@ public class SeekerAI : MonoBehaviour
         return false;
     }
 
-    public HidingSpot GetClosestHidingSpot()
+    public HidingSpot[] GetClosestHidingSpot()
     {
-        visionColliders = Physics2D.OverlapCircleAll(transform.position, 5f);
-        foreach (Collider2D col in visionColliders)
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5f);
+        List<HidingSpot> hidingSpots = new List<HidingSpot>();
+
+        foreach (Collider2D col in colliders)
         {
             if (col.CompareTag("HidingSpot"))
             {
-                return col.GetComponent<HidingSpot>();
+                HidingSpot hidingSpot = col.GetComponent<HidingSpot>();
+                if (hidingSpot != null)
+                {
+                    hidingSpots.Add(hidingSpot);
+                }
             }
         }
-        return null;
+
+        return hidingSpots.ToArray();
     }
 
     public bool CanSeeHider()

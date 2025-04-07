@@ -56,8 +56,8 @@ public class HidingSpot : MonoBehaviour
         }
 
         IsOccupied = false;
-        HidingSpotManager.Instance.NotifyHidingSpotCollapsed(this);
-        gameObject.SetActive(false);
+        HidingSpotManager.Instance.UnregisterHidingSpot(this);
+        Destroy(gameObject);
     }
     
 

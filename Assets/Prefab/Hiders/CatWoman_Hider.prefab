@@ -164,8 +164,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 29298855, guid: a48c483932e208d46b474e3f98b5036c, type: 3}
-  m_Color: {r: 0.8962264, g: 0.28324133, b: 0.28324133, a: 1}
+  m_Sprite: {fileID: 741960138, guid: bbad23a42a0f3ac4fb0e9ef7a167d16b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -296,6 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f363a7f51150afa4c9fd0fa8d550f64c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isClone: 0
   moveSpeed: 3
   energyCost: 2
 --- !u!114 &4437299447619482615
@@ -312,6 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLight: {fileID: 0}
   abilityEnergyCost: 5
+  abilityCooldownDuration: 10
 --- !u!95 &7887227726442769375
 Animator:
   serializedVersion: 5
@@ -322,7 +324,7 @@ Animator:
   m_GameObject: {fileID: 7858592109270468648}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 973dd8966b1d5fa41918827fb6f28ffe, type: 2}
+  m_Controller: {fileID: 9100000, guid: 76d962bab2e079844aef4331cb291c33, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

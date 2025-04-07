@@ -18,6 +18,11 @@ public class PlayerController : MonoBehaviour
     [Header("Animation (Future)")]
     private SpriteRenderer spriteRenderer;
     private bool isMoving = false;
+    private Vector2 LastInputX;
+    private Vector2 LastInputY;
+    private Vector2 InputX;
+    private Vector2 InputY;
+    Animator animator ;
 
     private PlayerCloneManager cloneManager;
 
@@ -35,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
         // Get clone manager if exists
         cloneManager = GetComponent<PlayerCloneManager>();
+        animator = GetComponent<Animator>();
+        
     }
 
     void Update()
@@ -61,28 +68,56 @@ public class PlayerController : MonoBehaviour
             rb.velocity = movement * moveSpeed;
         }
 
-        if (spriteRenderer != null && movement.x != 0)
+       /* if (spriteRenderer != null && movement.x != 0)
         {
             spriteRenderer.flipX = movement.x < 0;
-        }
+        }*/
     }
 
     public void Move(InputAction.CallbackContext context)
+{
+    Vector2 input = context.ReadValue<Vector2>().normalized;
+
+    if (context.performed)
     {
-        if (context.performed)
+        movement = input;
+        animator.SetBool("isMoving", true);
+
+        UpdateAnimatorFloat("InputX", input.x);
+        UpdateAnimatorFloat("InputY", input.y);
+
+        if (input != Vector2.zero)
         {
-            movement = context.ReadValue<Vector2>();
-            movement.Normalize();
-            isMoving = true;
-            Debug.Log("Movement Detected: " + movement);
+            LastInputX = new Vector2(input.x, 0);
+            LastInputY = new Vector2(0, input.y);
+
+            UpdateAnimatorFloat("LastInputX", input.x);
+            UpdateAnimatorFloat("LastInputY", input.y);
         }
-        else if (context.canceled)
-        {
-            movement = Vector2.zero;
-            isMoving = false;
-            Debug.Log("Movement Stopped!");
-        }
+
+        Debug.Log("Movement Detected: " + movement);
     }
+    else if (context.canceled)
+    {
+        movement = Vector2.zero;
+        animator.SetBool("isMoving", false);
+
+        UpdateAnimatorFloat("InputX", 0);
+        UpdateAnimatorFloat("InputY", 0);
+
+        Debug.Log("Movement Stopped!");
+    }
+}
+
+private void UpdateAnimatorFloat(string parameter, float value)
+{
+    // Only update if value actually changed to reduce overhead
+    if (!Mathf.Approximately(animator.GetFloat(parameter), value))
+    {
+        animator.SetFloat(parameter, value);
+    }
+}
+
 
     private bool IsInsideHidingSpot()
     {

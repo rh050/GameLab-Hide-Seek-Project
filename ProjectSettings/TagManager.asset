@@ -8,6 +8,7 @@ TagManager:
   - Hider
   - Seeker
   - MainMenu
+  - Objects
   layers:
   - Default
   - TransparentFX
