@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bdc9e94ae4f96f49b826905192bef70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHidingSpots: 40
+  totalHidingSpots: 15
   respawnCooldown: 10
   levelTilemap: {fileID: 1598929342}
   hidingSpotPrefabs:
@@ -1270,7 +1270,7 @@ GameObject:
   - component: {fileID: 364330176}
   m_Layer: 0
   m_Name: Gress
-  m_TagString: HidingSpot
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8302,6 +8302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b1b8f81a0bd694c8430a6e1411fbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teleportInterval: 20
 --- !u!61 &578540438
 BoxCollider2D:
   m_ObjectHideFlags: 0
