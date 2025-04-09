@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SeekerAI : MonoBehaviour
@@ -10,12 +9,21 @@ public class SeekerAI : MonoBehaviour
     public float teleportInterval = 20f;
     private float teleportTimer = 0f;
 
-    
+    // Animation-related
+    private Animator animator;
+    private Vector2 lastInputX;
+    private Vector2 lastInputY;
+    private Vector2 inputX;
+    private Vector2 inputY;
+    private Vector2 lastPosition;
 
     void Start()
     {
         GameMediator.Instance.RegisterSeeker(this);
         SwitchState(new ObservingState());
+
+        animator = GetComponent<Animator>();
+        lastPosition = transform.position;
     }
 
     void Update()
@@ -28,10 +36,37 @@ public class SeekerAI : MonoBehaviour
             teleportTimer = 0f;
             Debug.Log("Seeker teleported to a hot zone.");
         }
-    
+
         currentState.UpdateState(this);
+
+        UpdateAnimation();
     }
 
+    private void UpdateAnimation()
+    {
+        Vector2 movement = (Vector2)transform.position - lastPosition;
+        movement = movement.normalized;
+
+        inputX = new Vector2(movement.x, 0);
+        inputY = new Vector2(0, movement.y);
+
+        bool isMoving = movement.magnitude > 0.01f;
+        animator.SetBool("isMoving", isMoving);
+
+        animator.SetFloat("InputX", movement.x);
+        animator.SetFloat("InputY", movement.y);
+
+        if (isMoving)
+        {
+            lastInputX = new Vector2(movement.x, 0);
+            lastInputY = new Vector2(0, movement.y);
+
+            animator.SetFloat("LastInputX", movement.x);
+            animator.SetFloat("LastInputY", movement.y);
+        }
+
+        lastPosition = transform.position;
+    }
 
     public void SwitchState(SeekerState newState)
     {
@@ -93,12 +128,11 @@ public class SeekerAI : MonoBehaviour
         }
         return false;
     }
-    
+
     public void SetChaseTarget(Transform target)
     {
         SwitchState(new ChasingState(target));
     }
-
 
     public Transform GetHiderTarget()
     {
@@ -112,26 +146,10 @@ public class SeekerAI : MonoBehaviour
         }
         return null;
     }
-    public bool CanSeeTarget(Transform target) { 
-        //achikam need to implement this
-        /*
-        if (target == null) return false;
-        // If target has invisibility enabled, we can’t see them
-        InvisibilityController invis = target.GetComponent<InvisibilityController>();
-        if (invis != null && invis.IsInvisible)
-            return false;
 
-        Vector2 direction = target.position - transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, 5f);
-
-        if (hit.collider != null && hit.collider.transform == target)
-            return true;
-            */
-
+    public bool CanSeeTarget(Transform target)
+    {
+        // Implement your line-of-sight logic if needed
         return false;
-        
     }
-
-    
-
 }
