@@ -152,4 +152,17 @@ public class SeekerAI : MonoBehaviour
         // Implement your line-of-sight logic if needed
         return false;
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Hider") || other.CompareTag("Clone"))
+        {
+            Hider hider = other.GetComponent<Hider>();
+            if (hider != null)
+            {
+                GameMediator.Instance.NotifyHiderFound(hider);
+            }
+        }
+    }
+
+
 }

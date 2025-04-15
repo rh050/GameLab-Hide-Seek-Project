@@ -62,7 +62,7 @@ public class GameMediator : MonoBehaviour
     public float GetSeekerToPlayerDistance()
     {
         // need to build script of user information to make it unique nad replace it with this line
-        PlayerController player = FindObjectOfType<PlayerController>(); 
+        PlayerController player = FindObjectOfType<PlayerController>();
         if (player != null && seeker != null)
         {
             return Vector3.Distance(seeker.transform.position, player.transform.position);
@@ -99,5 +99,5 @@ public class GameMediator : MonoBehaviour
     }
 
     public GameHUDController GetHUD() => hud;
-    
+
 }

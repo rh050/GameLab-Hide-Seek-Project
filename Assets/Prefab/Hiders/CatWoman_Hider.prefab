@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6998888493395029339}
   - component: {fileID: 5837161887531375524}
-  m_Layer: 1
+  m_Layer: 7
   m_Name: PlayerLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 4437299447619482615}
   - component: {fileID: 7887227726442769375}
   - component: {fileID: 3392159855320722356}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CatWoman_Hider
   m_TagString: Hider
   m_Icon: {fileID: 0}
@@ -314,6 +314,9 @@ MonoBehaviour:
   playerLight: {fileID: 0}
   abilityEnergyCost: 5
   abilityCooldownDuration: 10
+  hidingCooldownDuration: 5
+  minHideTime: 3
+  maxHideTime: 10
 --- !u!95 &7887227726442769375
 Animator:
   serializedVersion: 5

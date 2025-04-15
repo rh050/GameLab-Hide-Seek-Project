@@ -9,6 +9,7 @@ TagManager:
   - Seeker
   - MainMenu
   - Objects
+  - Clone
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - HidingSpotLayer
   - Water
   - UI
-  - 
-  - 
+  - 'Clone '
+  - 'Player '
   - 
   - 
   - 

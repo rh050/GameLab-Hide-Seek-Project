@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6998888493395029339}
   - component: {fileID: 5837161887531375524}
-  m_Layer: 1
+  m_Layer: 6
   m_Name: PlayerLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,9 +99,9 @@ GameObject:
   - component: {fileID: 4437299447619482615}
   - component: {fileID: 7887227726442769375}
   - component: {fileID: 3392159855320722356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CatCat
-  m_TagString: Hider
+  m_TagString: Clone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f363a7f51150afa4c9fd0fa8d550f64c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isClone: 0
   moveSpeed: 3
   energyCost: 2
 --- !u!114 &4437299447619482615
@@ -299,6 +300,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLight: {fileID: 0}
   abilityEnergyCost: 5
+  abilityCooldownDuration: 10
+  hidingCooldownDuration: 5
+  minHideTime: 3
+  maxHideTime: 10
 --- !u!95 &7887227726442769375
 Animator:
   serializedVersion: 5

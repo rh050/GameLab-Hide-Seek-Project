@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public CharactersSO[] characterList; // Assign all characters in Inspector
-    public Transform spawnPoint; // Assign a spawn point in the game scene
+    public Transform[] spawnPoints; // Assign multiple spawn points in Inspector
 
     private bool gameStarted = false;
     private GameHUDController hud;
@@ -30,37 +30,6 @@ public class GameManager : MonoBehaviour
         seeker = FindObjectOfType<SeekerAI>();
         SpawnSelectedCharacter();
     }
-
-    //private void SpawnSelectedCharacter()
-    //{
-    //    string selectedCharacterName = PlayerPrefs.GetString("SelectedCharacter", "");
-    //    if (string.IsNullOrEmpty(selectedCharacterName))
-    //    {
-    //        Debug.LogError("No character selected! Returning to Main Menu...");
-    //        SceneManager.LoadScene("MainMenu");
-    //        return;
-    //    }
-
-    //    CharactersSO selectedCharacter = null;
-    //    foreach (var character in characterList)
-    //    {
-    //        if (character.characterName == selectedCharacterName)
-    //        {
-    //            selectedCharacter = character;
-    //            break;
-    //        }
-    //    }
-
-    //    if (selectedCharacter == null)
-    //    {
-    //        Debug.LogError("Character not found in list!");
-    //        return;
-    //    }
-
-    //    GameObject player = Instantiate(selectedCharacter.characterPrefab, spawnPoint.position, Quaternion.identity);
-    //    Debug.Log("Spawned " + selectedCharacter.characterName + " at " + spawnPoint.position);
-    //}
-
 
     private void SpawnSelectedCharacter()
     {
@@ -88,7 +57,10 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        
+        // Random spawn point selection
+        int index = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = spawnPoints[index];
+
         GameObject player = Instantiate(selectedCharacter.characterPrefab, spawnPoint.position, Quaternion.identity);
 
         Hider hider = player.GetComponent<Hider>();
@@ -104,8 +76,6 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Spawned " + selectedCharacter.characterName + " at " + spawnPoint.position);
     }
-
-
 
     public void StartGame()
     {

@@ -19,3 +19,4 @@ public class CatWomanAbility : Ability
         manager.ActivateClone(player, clonePrefab, controlDuration);
     }
 }
+    
