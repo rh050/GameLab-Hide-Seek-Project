@@ -42,6 +42,15 @@ public class GameHUDController : MonoBehaviour
         
     }
 
+    private void OnDestroy()
+    {
+        if (dangerEffectMaterial != null)
+        {
+            dangerEffectMaterial.SetFloat("_FullScreenInten", 0f);
+            dangerEffectMaterial.SetFloat("_VoroniSpeed", 0f);
+        }
+    }
+
     
     public bool IsCountingDown => isCountingDown;
 
