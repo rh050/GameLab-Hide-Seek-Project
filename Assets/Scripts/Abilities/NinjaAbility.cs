@@ -14,13 +14,18 @@ public class NinjaAbility : Ability
 
     private IEnumerator TurnInvisible(GameObject player)
     {
+        Hider hider = player.GetComponent<Hider>();
+        if (hider == null) yield break;
+
         SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
         if (sr != null)
         {
-            Color originalColor = sr.color;
-            sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0.3f);
+            GameMediator.Instance.SetHiderInvisible(hider, true); 
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.3f);
             yield return new WaitForSeconds(invisibilityDuration);
-            sr.color = originalColor;
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
+            GameMediator.Instance.SetHiderInvisible(hider, false); 
         }
     }
+
 }

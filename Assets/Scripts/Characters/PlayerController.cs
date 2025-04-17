@@ -67,7 +67,10 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = movement * moveSpeed;
         }
-        
+        //freeze Z 
+        Vector3 fixedPos = transform.position;
+        fixedPos.z = 0f;
+        transform.position = fixedPos;
     }
 
     public void Move(InputAction.CallbackContext context)

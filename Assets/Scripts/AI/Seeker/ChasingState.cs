@@ -38,6 +38,7 @@ public class ChasingState : SeekerState
         {
             lostSightTimer = 0f;
         }
+        
 
         seeker.MoveToLocation(targetHider.position);
 
@@ -47,6 +48,12 @@ public class ChasingState : SeekerState
             if (hider == null) return;
 
             var cloneManager = hider.GetComponent<PlayerCloneManager>();
+           
+            if (GameMediator.Instance.IsHiderInvisible(hider))
+            {
+                Debug.Log("Hider is invisible – cannot be caught.");
+                return;
+            }
 
             if (hider.CompareTag("Clone"))
             {

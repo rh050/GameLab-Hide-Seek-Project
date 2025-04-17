@@ -163,12 +163,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -500599886, guid: e2e8c2225dcb32e4da08744745a9e5a2, type: 3}
+  m_Sprite: {fileID: 1321654719, guid: 511a37ac81969e94a8cc598f03a86132, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -301,6 +301,9 @@ MonoBehaviour:
   playerLight: {fileID: 0}
   abilityEnergyCost: 5
   abilityCooldownDuration: 10
+  hidingCooldownDuration: 5
+  minHideTime: 3
+  maxHideTime: 10
 --- !u!95 &7887227726442769375
 Animator:
   serializedVersion: 5

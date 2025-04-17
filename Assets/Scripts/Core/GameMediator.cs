@@ -6,6 +6,7 @@ public class GameMediator : MonoBehaviour
     public static GameMediator Instance;
 
     private List<Hider> hiders = new List<Hider>();
+    private HashSet<Hider> invisibleHiders = new HashSet<Hider>();
     private SeekerAI seeker;
     private GameHUDController hud;
     private HidingSpotManager hidingSpotManager;
@@ -112,6 +113,18 @@ public class GameMediator : MonoBehaviour
         }
     }
 
+    public void SetHiderInvisible(Hider hider, bool state)
+    {
+        if (state)
+            invisibleHiders.Add(hider);
+        else
+            invisibleHiders.Remove(hider);
+    }
+
+    public bool IsHiderInvisible(Hider hider)
+    {
+        return invisibleHiders.Contains(hider);
+    }
 
     public static void SpawnHidingSpots()
     {
