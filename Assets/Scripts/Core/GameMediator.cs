@@ -60,6 +60,10 @@ public class GameMediator : MonoBehaviour
             hud.UpdateHidersLeft(hiders.Count);
         }
     }
+    public SeekerAI GetSeeker()
+    {
+        return seeker;
+    }
     public float GetSeekerToPlayerDistance()
     {
         // need to build script of user information to make it unique nad replace it with this line
