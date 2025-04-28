@@ -114,6 +114,7 @@ public class GameHUDController : MonoBehaviour
 
     public void UpdateEnergyHUD(float currentEnergy, float maxEnergy)
     {
+        energySlider.value = currentEnergy / maxEnergy; 
         energyValueText.text = $"{currentEnergy}/{maxEnergy}";
 
     }
