@@ -15,12 +15,5 @@ public class VictoryPoint : MonoBehaviour
             GameManager.Instance.EndGame(GameData.GameResult);
             gameEnded = true;
         }
-        else if (other.CompareTag("Seeker"))
-        {
-            GameMediator.Instance.GetHUD().DisplayMessage("Seeker blocked the goal!", 2f);
-            GameData.GameResult = "Seeker Wins!";
-            GameManager.Instance.EndGame(GameData.GameResult);
-            gameEnded = true;
-        }
     }
 }

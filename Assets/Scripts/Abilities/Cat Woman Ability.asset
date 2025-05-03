@@ -15,4 +15,4 @@ MonoBehaviour:
   abilityName: 
   description: 
   clonePrefab: {fileID: 7858592109270468648, guid: cf596fdfd5ab60643a5ff0fe4a6c984b, type: 3}
-  controlDuration: 10
+  controlDuration: 30

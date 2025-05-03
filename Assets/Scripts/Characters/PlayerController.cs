@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     public bool isClone = false;
 
     [Header("Movement Settings")]
-    public float moveSpeed = 5f;
+    public float moveSpeed = 2f;
+    private float speedRegular;
     private Vector2 movement;
     private Rigidbody2D rb;
 
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        speedRegular = moveSpeed;
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
             Debug.LogError("Rigidbody2D is missing on " + gameObject.name);
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
         // Get clone manager if exists
         cloneManager = GetComponent<PlayerCloneManager>();
         animator = GetComponent<Animator>();
+
         
     }
 
@@ -132,7 +135,7 @@ private void UpdateAnimatorFloat(string parameter, float value)
 
     // Speed Modifiers
     public void ModifySpeed(float multiplier) => moveSpeed *= multiplier;
-    public void ResetSpeed() => moveSpeed = 5f;
+    public void ResetSpeed() => moveSpeed = speedRegular;
     public void ModifySpeedTemporary(float multiplier, float duration)
     {
         StartCoroutine(TemporarySpeedChange(multiplier, duration));
@@ -140,8 +143,8 @@ private void UpdateAnimatorFloat(string parameter, float value)
 
     private IEnumerator TemporarySpeedChange(float multiplier, float duration)
     {
+        
         ModifySpeed(multiplier);
         yield return new WaitForSeconds(duration);
-        ResetSpeed();
     }
 }
