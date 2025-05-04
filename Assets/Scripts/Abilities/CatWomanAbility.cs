@@ -4,7 +4,23 @@ using UnityEngine;
 public class CatWomanAbility : Ability
 {
     public GameObject clonePrefab;
-    public float controlDuration = 10f;
+    public float controlDuration;
+    
+    void OnEnable()
+    {
+        switch (DifficultyManager.Instance.GetDifficulty())
+        {
+            case Difficulty.Easy:
+                controlDuration = 15f;
+                break;
+            case Difficulty.Medium:
+                controlDuration = 10f;
+                break;
+            case Difficulty.Hard:
+                controlDuration = 6f;
+                break;
+        }
+    }
 
     public override void UseAbility(GameObject player)
     {

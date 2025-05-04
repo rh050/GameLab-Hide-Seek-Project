@@ -5,17 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="821974f4-3ddd-4e20-bbd3-633a543fa851" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/Characters/Cat_animation/Walk_right.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animation/Characters/Cat_animation/Walk_right.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/Characters/Magician_animation/Idle_up.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animation/Characters/Magician_animation/Idle_up.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/VictoryPoint/VictoryPoint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/VictoryPoint/VictoryPoint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameLab-Hide-Seek-Projects/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameLab-Hide-Seek-Projects/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/CatCat.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/CatCat.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/CatWoman_Hider.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/CatWoman_Hider.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Fox_Hider.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Fox_Hider.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Magician_Seeker.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Magician_Seeker.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Ninja_Hider.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Ninja_Hider.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game_one.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game_one.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/Cat Woman Ability.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/Cat Woman Ability.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/Fox Ability.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/Fox Ability.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/Ninja Ability.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/Ninja Ability.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/GameHUDController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/GameHUDController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/VictoryPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/VictoryPoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/WarningEffect/WarningMateriall.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/WarningEffect/WarningMateriall.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/SeekerAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/SeekerAI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/CatWomanAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/CatWomanAbility.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/FoxAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/FoxAbility.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/NinjaAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/NinjaAbility.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CharacterSelection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CharacterSelection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +28,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/DifficultyManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6ff3bcb667574bf9a8630184172fcfbf176600/e0/d3a868b6/Color.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -36,7 +44,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Alpha&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;beta&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -94,7 +102,8 @@
       <updated>1745179979969</updated>
       <workItem from="1745179981706" duration="1963000" />
       <workItem from="1745779720328" duration="111000" />
-      <workItem from="1746024758480" duration="3673000" />
+      <workItem from="1746024758480" duration="5207000" />
+      <workItem from="1746388187203" duration="5283000" />
     </task>
     <servers />
   </component>

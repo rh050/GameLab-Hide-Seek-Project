@@ -23,13 +23,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        if (characterSelectionPanel != null && characterSelectionPanel.activeSelf)
-        {
-            Debug.Log("Please select a character before starting the game.");
-            return;
-        }
-
-        SceneManager.LoadScene("Game_one");
+        characterSelectionPanel.SetActive(true);
     }
 
     public void QuitGame()

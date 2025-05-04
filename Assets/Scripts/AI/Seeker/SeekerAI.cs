@@ -3,163 +3,157 @@ using UnityEngine;
 
 public class SeekerAI : MonoBehaviour
 {
+    [Header("AI Parameters (set by Difficulty)")]
+    public float moveSpeed;
+    public float teleportInterval;
+    public float visionRadius;
+    public float lostSightDuration;
+
     private SeekerState currentState;
-    private Transform currentTarget;
     private Collider2D[] visionColliders;
-    public float teleportInterval = 20f;
-    private float teleportTimer = 0f;
-    public float moveSpeed = 3.5f;
+    private float teleportTimer;
 
     // Animation-related
     private Animator animator;
-    private Vector2 lastInputX;
-    private Vector2 lastInputY;
-    private Vector2 inputX;
-    private Vector2 inputY;
     private Vector2 lastPosition;
-    
+
     void Start()
     {
+        // Configure parameters based on chosen difficulty
+        switch (DifficultyManager.Instance.GetDifficulty())
+        {
+            case Difficulty.Easy:
+                moveSpeed        = 2.0f;
+                teleportInterval = 30.0f;
+                visionRadius     = 6.0f;
+                lostSightDuration= 5.0f;
+                break;
+            case Difficulty.Medium:
+                moveSpeed        = 3.5f;
+                teleportInterval = 20.0f;
+                visionRadius     = 5.0f;
+                lostSightDuration= 3.0f;
+                break;
+            case Difficulty.Hard:
+                moveSpeed        = 5.0f;
+                teleportInterval = 10.0f;
+                visionRadius     = 4.0f;
+                lostSightDuration= 1.5f;
+                break;
+        }
+
         GameMediator.Instance.RegisterSeeker(this);
         SwitchState(new ObservingState());
-        animator = GetComponent<Animator>();
-        lastPosition = transform.position;
+        animator    = GetComponent<Animator>();
+        lastPosition= transform.position;
     }
 
     void Update()
     {
+        // Teleport logic when not chasing
         teleportTimer += Time.deltaTime;
         if (!(currentState is ChasingState) && teleportTimer >= teleportInterval)
         {
-            Vector2 teleportPosition = HeatmapManager.Instance.GetHottestZone();
-            transform.position = teleportPosition;
+            Vector2 tp = HeatmapManager.Instance.GetHottestZone();
+            transform.position = tp;
             teleportTimer = 0f;
         }
 
+        // Update state behavior
         currentState.UpdateState(this);
 
+        // Update animations
         UpdateAnimation();
     }
 
     private void UpdateAnimation()
     {
-        Vector2 movement = (Vector2)transform.position - lastPosition;
-        movement = movement.normalized;
-
-        inputX = new Vector2(movement.x, 0);
-        inputY = new Vector2(0, movement.y);
-
+        Vector2 movement = ((Vector2)transform.position - lastPosition).normalized;
         bool isMoving = movement.magnitude > 0.01f;
-        animator.SetBool("isMoving", isMoving);
 
+        animator.SetBool("isMoving", isMoving);
         animator.SetFloat("InputX", movement.x);
         animator.SetFloat("InputY", movement.y);
-
-        if (isMoving)
-        {
-            lastInputX = new Vector2(movement.x, 0);
-            lastInputY = new Vector2(0, movement.y);
-
-            animator.SetFloat("LastInputX", movement.x);
-            animator.SetFloat("LastInputY", movement.y);
-        }
 
         lastPosition = transform.position;
     }
 
     public void SwitchState(SeekerState newState)
     {
-        if (currentState != null)
-        {
-            currentState.ExitState(this);
-        }
+        currentState?.ExitState(this);
         currentState = newState;
         currentState.EnterState(this);
     }
 
     public void MoveToLocation(Vector2 location)
     {
-        transform.position = Vector2.MoveTowards(transform.position, location, Time.deltaTime * moveSpeed);
-
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            location,
+            moveSpeed * Time.deltaTime
+        );
     }
-    
 
     public HidingSpot[] FindHidingSpotsNearbyOrGlobal()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5f);
-        List<HidingSpot> nearbySpots = new List<HidingSpot>();
+        var nearby = new List<HidingSpot>();
+        visionColliders = Physics2D.OverlapCircleAll(transform.position, visionRadius);
 
-        foreach (Collider2D col in colliders)
+        foreach (var col in visionColliders)
         {
             if (col.CompareTag("HidingSpot"))
             {
-                HidingSpot spot = col.GetComponent<HidingSpot>();
-                if (spot != null)
-                {
-                    nearbySpots.Add(spot);
-                }
+                var spot = col.GetComponent<HidingSpot>();
+                if (spot != null) nearby.Add(spot);
             }
         }
 
-        if (nearbySpots.Count > 0)
-        {
-            return nearbySpots.ToArray(); 
-        }
+        if (nearby.Count > 0)
+            return nearby.ToArray();
 
-        Debug.Log("No nearby hiding spots. Searching globally...");
-        List<HidingSpot> allSpots = HidingSpotManager.Instance.GetAllActiveSpots();
-        return allSpots.ToArray();
+        // Fallback to global search
+        return HidingSpotManager.Instance.GetAllActiveSpots().ToArray();
     }
-
 
     public bool CanSeeHider()
     {
-        visionColliders = Physics2D.OverlapCircleAll(transform.position, 5f);
-        foreach (Collider2D col in visionColliders)
+        visionColliders = Physics2D.OverlapCircleAll(transform.position, visionRadius);
+
+        foreach (var col in visionColliders)
         {
-            if ((col.CompareTag("Hider") || col.CompareTag("Clone")))
+            if (col.CompareTag("Hider") || col.CompareTag("Clone"))
             {
-                Hider hider = col.GetComponent<Hider>();
+                var hider = col.GetComponent<Hider>();
                 if (hider == null) continue;
-
-                if (GameMediator.Instance.IsHiderInvisible(hider))
-                    continue; // ⬅️ מתעלם ממנו
-
+                if (GameMediator.Instance.IsHiderInvisible(hider)) continue;
                 return true;
             }
         }
+
         return false;
     }
-
-
-
 
     public Transform GetHiderTarget()
     {
-        visionColliders = Physics2D.OverlapCircleAll(transform.position, 5f);
-        foreach (Collider2D col in visionColliders)
+        visionColliders = Physics2D.OverlapCircleAll(transform.position, visionRadius);
+
+        foreach (var col in visionColliders)
         {
-            if ((col.CompareTag("Hider") || col.CompareTag("Clone")))
+            if (col.CompareTag("Hider") || col.CompareTag("Clone"))
             {
-                Hider hider = col.GetComponent<Hider>();
+                var hider = col.GetComponent<Hider>();
                 if (hider == null) continue;
-
-                if (GameMediator.Instance.IsHiderInvisible(hider))
-                    continue;
-
+                if (GameMediator.Instance.IsHiderInvisible(hider)) continue;
                 return col.transform;
             }
         }
+
         return null;
     }
 
-
     public bool CanSeeTarget(Transform target)
     {
-        // Implement your line-of-sight logic if needed
-        return false;
+        // Optional: implement line-of-sight checks here
+        return Vector2.Distance(transform.position, target.position) <= visionRadius;
     }
-
-
-
 }

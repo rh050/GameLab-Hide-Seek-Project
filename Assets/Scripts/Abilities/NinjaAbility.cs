@@ -4,7 +4,23 @@ using System.Collections;
 [CreateAssetMenu(fileName = "Ninja Ability", menuName = "Ability/Ninja")]
 public class NinjaAbility : Ability
 {
-    public float invisibilityDuration = 5f;
+    public float invisibilityDuration ;
+    
+    void OnEnable()
+    {
+        switch (DifficultyManager.Instance.GetDifficulty())
+        {
+            case Difficulty.Easy:
+                invisibilityDuration = 7.0f;
+                break;
+            case Difficulty.Medium:
+                invisibilityDuration = 5.0f;
+                break;
+            case Difficulty.Hard:
+                invisibilityDuration = 3.0f;
+                break;
+        }
+    }
 
     public override void UseAbility(GameObject player)
     {
