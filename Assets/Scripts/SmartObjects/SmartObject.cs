@@ -28,7 +28,7 @@ public class SmartObject : MonoBehaviour
         if (isTrap)
         {
             Debug.Log("Trap activated!");
-            playerController.ModifySpeedTemporary(0.5f, effectDuration); // האטת מהירות ל-50%
+            playerController.ModifySpeedTemporary(0.5f, effectDuration); 
             StartCoroutine(ResetTrap());
         }
 

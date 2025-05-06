@@ -20,22 +20,25 @@ public class SeekerAI : MonoBehaviour
     void Start()
     {
         // Configure parameters based on chosen difficulty
-        switch (DifficultyManager.Instance.GetDifficulty())
+        Difficulty diff = DifficultyManager.Instance != null
+            ? DifficultyManager.Instance.GetDifficulty()
+            : Difficulty.Medium;
+        switch (diff)
         {
             case Difficulty.Easy:
-                moveSpeed        = 2.0f;
+                moveSpeed         = 2.0f;
                 teleportInterval = 30.0f;
                 visionRadius     = 6.0f;
                 lostSightDuration= 5.0f;
                 break;
             case Difficulty.Medium:
-                moveSpeed        = 3.5f;
+                moveSpeed         = 2.5f;
                 teleportInterval = 20.0f;
                 visionRadius     = 5.0f;
                 lostSightDuration= 3.0f;
                 break;
             case Difficulty.Hard:
-                moveSpeed        = 5.0f;
+                moveSpeed         = 3f;
                 teleportInterval = 10.0f;
                 visionRadius     = 4.0f;
                 lostSightDuration= 1.5f;
@@ -50,7 +53,7 @@ public class SeekerAI : MonoBehaviour
 
     void Update()
     {
-        // Teleport logic when not chasing
+        /* Teleport logic when not chasing
         teleportTimer += Time.deltaTime;
         if (!(currentState is ChasingState) && teleportTimer >= teleportInterval)
         {
@@ -58,6 +61,7 @@ public class SeekerAI : MonoBehaviour
             transform.position = tp;
             teleportTimer = 0f;
         }
+        */
 
         // Update state behavior
         currentState.UpdateState(this);

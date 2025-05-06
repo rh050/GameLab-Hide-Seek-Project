@@ -108,9 +108,8 @@ public class Hider : MonoBehaviour
             hidingCooldownTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-         
             Debug.Log("E Key Pressed");
             ActivateAbility();
         }

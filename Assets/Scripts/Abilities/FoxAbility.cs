@@ -9,6 +9,8 @@ public class FoxAbility : Ability
 
     void OnEnable()
     { 
+        if (!Application.isPlaying || DifficultyManager.Instance == null)
+            return;
         switch (DifficultyManager.Instance.GetDifficulty())
         {
             case Difficulty.Easy:
@@ -36,7 +38,7 @@ public class FoxAbility : Ability
         PlayerController pc = player.GetComponent<PlayerController>();
         if (pc != null)
         {
-            pc.ModifySpeed(speedBoost);
+            pc.ModifySpeedTemporary(speedBoost,duration);
             yield return new WaitForSeconds(duration);
             pc.ResetSpeed();
         }

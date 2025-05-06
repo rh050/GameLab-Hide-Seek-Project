@@ -491,10 +491,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slides:
-  - {fileID: 21300000, guid: a99784a106b5c3d41ab880618d1413a4, type: 3}
-  - {fileID: 21300000, guid: 7271bfda01573f24e9ee016021d64733, type: 3}
-  - {fileID: 21300000, guid: 517340ad07422b84abb70696121197c8, type: 3}
-  - {fileID: 21300000, guid: 3591ddb1a274b2b46a61bcfaf64bf26e, type: 3}
+  - {fileID: 21300000, guid: a8833c45f13773e4ebc4cf8b19820481, type: 3}
+  - {fileID: 21300000, guid: 71a52ce3949c5124b8ae47f9b416e4f5, type: 3}
+  - {fileID: 21300000, guid: 8d8975f9bca3ffd498949ed499f40814, type: 3}
+  - {fileID: 21300000, guid: 5062e258f7f33234284c7cd66218fa05, type: 3}
   displayDuration: 2.5
 --- !u!114 &2028484617
 MonoBehaviour:

@@ -139,6 +139,7 @@ private void UpdateAnimatorFloat(string parameter, float value)
     public void ModifySpeedTemporary(float multiplier, float duration)
     {
         StartCoroutine(TemporarySpeedChange(multiplier, duration));
+        //reset speed after duration
     }
 
     private IEnumerator TemporarySpeedChange(float multiplier, float duration)
@@ -146,5 +147,8 @@ private void UpdateAnimatorFloat(string parameter, float value)
         
         ModifySpeed(multiplier);
         yield return new WaitForSeconds(duration);
+        ResetSpeed();
+
+        
     }
 }

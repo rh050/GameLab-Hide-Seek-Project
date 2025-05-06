@@ -5,16 +5,37 @@ public class ChasingState : SeekerState
     private Transform targetHider;
     private float lostSightTimer = 0f;
     private float maxLostSightDuration = 3f;
+    private float originalSpeed;
+
 
     public ChasingState(Transform target)
     {
         targetHider = target;
     }
 
+
     public void EnterState(SeekerAI seeker)
     {
-        Debug.Log("Seeker is now Chasing.");
+        originalSpeed = seeker.moveSpeed;
+        Difficulty diff = DifficultyManager.Instance != null
+            ? DifficultyManager.Instance.GetDifficulty()
+            : Difficulty.Medium;
+        switch (diff)
+        {
+            case Difficulty.Easy:
+                seeker.moveSpeed = originalSpeed * 1.2f; 
+                break;
+
+            case Difficulty.Medium:
+                seeker.moveSpeed = originalSpeed * 2f; 
+                break;
+
+            case Difficulty.Hard:
+                seeker.moveSpeed = originalSpeed * 2.5f; 
+                break;
+        }
         lostSightTimer = 0f;
+
     }
 
     public void UpdateState(SeekerAI seeker)
@@ -75,6 +96,7 @@ public class ChasingState : SeekerState
 
     public void ExitState(SeekerAI seeker)
     {
+        seeker.moveSpeed = originalSpeed;
         Debug.Log("Seeker is leaving Chasing state.");
     }
 }

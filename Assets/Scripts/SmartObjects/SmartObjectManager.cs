@@ -27,7 +27,7 @@ public class SmartObjectManager : MonoBehaviour
     {
         foreach (SmartObject smartObject in smartObjects)
         {
-            if (Vector3.Distance(player.transform.position, smartObject.transform.position) < 1.5f)
+            if (Vector3.Distance(player.transform.position, smartObject.transform.position) < 0.5f)
             {
                 smartObject.Activate(player);
             }

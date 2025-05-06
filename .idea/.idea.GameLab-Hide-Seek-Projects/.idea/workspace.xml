@@ -6,20 +6,30 @@
   <component name="ChangeListManager">
     <list default="true" id="821974f4-3ddd-4e20-bbd3-633a543fa851" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameLab-Hide-Seek-Projects/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameLab-Hide-Seek-Projects/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/CatCat.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/CatCat.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/CatWoman_Hider.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/CatWoman_Hider.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Fox_Hider.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Fox_Hider.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Magician_Seeker.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Magician_Seeker.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Ninja_Hider.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Ninja_Hider.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/Scenes/StoryIntro/ChatGPT Image May 4, 2025, 10_28_07 PM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/Scenes/StoryIntro/ChatGPT Image May 4, 2025, 10_28_07 PM.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/Scenes/StoryIntro/ChatGPT Image May 4, 2025, 10_31_23 PM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/Scenes/StoryIntro/ChatGPT Image May 4, 2025, 10_31_23 PM.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/Scenes/StoryIntro/ChatGPT Image May 4, 2025, 10_34_53 PM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/Scenes/StoryIntro/ChatGPT Image May 4, 2025, 10_34_53 PM.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/Scenes/StoryIntro/May 4, 2025, 10_25_41 PM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/Scenes/StoryIntro/May 4, 2025, 10_25_41 PM.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/UI/IMG_0119 (1).JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/UI/IMG_0119 (1).JPG.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game_one.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game_one.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/StoryIntro.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/StoryIntro.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/ChasingState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/ChasingState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/SeekerAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/SeekerAI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/CatWomanAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/CatWomanAbility.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/FoxAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/FoxAbility.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/NinjaAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/NinjaAbility.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CharacterSelection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CharacterSelection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/Hider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/Hider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HidingSpots/HidingSpot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HidingSpots/HidingSpot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SmartObjects/SmartObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SmartObjects/SmartObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SmartObjects/SmartObjectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SmartObjects/SmartObjectManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/WarningEffect/WarningMateriall.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/WarningEffect/WarningMateriall.mat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +40,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/DifficultyManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Traps/TrapEffect.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6ff3bcb667574bf9a8630184172fcfbf176600/e0/d3a868b6/Color.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -43,6 +53,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;beta&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
@@ -81,10 +92,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="35216">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="35216" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -122,19 +133,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/main" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>

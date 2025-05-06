@@ -19,10 +19,16 @@ public class HidingSpot : MonoBehaviour
     {
         if (!IsOccupied && EnergyManager.Instance.UseEnergy(energyCost))
         {
-            IsOccupied = true;
-            hiddenPlayer = player; 
-            player.GetComponent<PlayerController>().enabled = false;
-            player.GetComponent<SpriteRenderer>().enabled = false;
+            IsOccupied    = true;
+            hiddenPlayer  = player;
+            var rb = player.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.velocity    = Vector2.zero;
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            player.GetComponent<PlayerController>().enabled    = false;
+            player.GetComponent<SpriteRenderer>().enabled      = false;
             Debug.Log("Player is hiding!");
         }
         else
@@ -37,6 +43,15 @@ public class HidingSpot : MonoBehaviour
         {
             IsOccupied = false;
             hiddenPlayer = null; 
+            var rb = player.GetComponent<Rigidbody2D>();
+            if (rb != null)
+                rb.constraints = RigidbodyConstraints2D.None;
+            
+            // Z fix
+            Vector3 p = player.transform.position;
+            p.z = 0f;
+            player.transform.position = p;
+            
             player.GetComponent<PlayerController>().enabled = true;
             player.GetComponent<SpriteRenderer>().enabled = true;
             Debug.Log("Player left the hiding spot!");

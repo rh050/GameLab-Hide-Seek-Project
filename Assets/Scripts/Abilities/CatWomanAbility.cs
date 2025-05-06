@@ -8,6 +8,8 @@ public class CatWomanAbility : Ability
     
     void OnEnable()
     {
+        if (!Application.isPlaying || DifficultyManager.Instance == null)
+            return;
         switch (DifficultyManager.Instance.GetDifficulty())
         {
             case Difficulty.Easy:
