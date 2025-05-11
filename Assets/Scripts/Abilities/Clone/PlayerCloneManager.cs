@@ -77,6 +77,8 @@ public class PlayerCloneManager : MonoBehaviour
             if (rb != null)
             {
                 rb.constraints = RigidbodyConstraints2D.None; // allow movement again
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
             }
 
             realPlayer.GetComponent<PlayerController>().enabled = true;
