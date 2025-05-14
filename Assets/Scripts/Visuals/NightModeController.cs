@@ -1,64 +1,64 @@
-// DayNightCycleManager.cs
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(Light2D))]
 public class DayNightCycleManager : MonoBehaviour
 {
-    [Header("Light References")]
-    public Light2D globalLight;
-    public Light2D[] additionalLights;
-
-    [Header("Cycle Settings")]
+    [Header("Global Moonlight")]
+    public Light2D globalLight;          
+    [Tooltip("משך המעבר (בשניות) מ-לילה לצהריים")]
     public float cycleDuration = 100f;
 
-    [Header("Appearance Curves")]
-    public Gradient colorGradient;
-    public AnimationCurve intensityCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+    [Header("Moon → Day Gradient")]
+    [Tooltip("צבע הלילה (moonlight) בצד ה־0, צבע היום בצד ה־1)")]
+    public Gradient colorGradient = new Gradient()
+    {
+        // ברירת מחדל: אדום כהה לילה → לבן יום
+        colorKeys = new GradientColorKey[]
+        {
+            new GradientColorKey(new Color(0.2f,0,0), 0f),   
+            new GradientColorKey(Color.white,      1f)     
+        },
+        alphaKeys = new GradientAlphaKey[]
+        {
+            new GradientAlphaKey(0.3f, 0f),  
+            new GradientAlphaKey(1f,   1f)   
+        }
+    };
+
+    [Header("Intensity Curve")]
+    [Tooltip("Y=עוצמה: 0 = לילה כהה, 1 = אור מלא")]
+    public AnimationCurve intensityCurve = AnimationCurve.EaseInOut(0f, 0.3f, 1f, 1f);
 
     [Header("Performance")]
+    [Tooltip("עדכון כל X שניות (0 = כל פריים)")]
     public float updateInterval = 0.1f;
 
-    private float lastUpdateTime = 0f;
+    float lastUpdate;
 
     void Start()
     {
         if (globalLight == null)
             globalLight = GetComponent<Light2D>();
-
-        UpdateCycle();
+        UpdateCycle(1f - (GameManager.Instance.GetGameTime() / cycleDuration));
     }
 
     void Update()
     {
-        if (updateInterval > 0f && Time.time - lastUpdateTime < updateInterval)
-            return;
+        if (updateInterval > 0f && Time.time - lastUpdate < updateInterval) return;
+        lastUpdate = Time.time;
 
-        lastUpdateTime = Time.time;
-        UpdateCycle();
+        float t = Mathf.Clamp01(1f - (GameManager.Instance.GetGameTime() / cycleDuration));
+        UpdateCycle(t);
     }
 
-    private void UpdateCycle()
+    void UpdateCycle(float t)
     {
-        float timeLeft = GameManager.Instance.GetGameTime();
-        float t = Mathf.Clamp01(1f - (timeLeft / cycleDuration));
+        // חשב צבע ועוצמה
+        Color c = colorGradient.Evaluate(t);
+        float inten = intensityCurve.Evaluate(t);
 
-        float intensity = intensityCurve.Evaluate(t);
-        Color color     = colorGradient.Evaluate(t);
-
-        ApplyTo(globalLight, intensity, color);
-
-        if (additionalLights != null)
-        {
-            foreach (var lt in additionalLights)
-                ApplyTo(lt, intensity, color);
-        }
-    }
-
-    private void ApplyTo(Light2D lt, float intensity, Color color)
-    {
-        if (lt == null) return;
-        lt.intensity = intensity;
-        lt.color     = color;
+        globalLight.color     = c;
+        globalLight.intensity = inten;
     }
 }

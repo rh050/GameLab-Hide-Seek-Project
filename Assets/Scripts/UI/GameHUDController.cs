@@ -12,7 +12,7 @@ public class GameHUDController : MonoBehaviour
     public Slider energySlider;
     public TextMeshProUGUI energyValueText;
     public TextMeshProUGUI countdownText;
-    private float countdownTime = 10f;
+    private float countdownTime = 5f;
     private bool isCountingDown = true;
     public TextMeshProUGUI messageText;
     public Material dangerEffectMaterial;
@@ -31,10 +31,10 @@ public class GameHUDController : MonoBehaviour
         float gameTime = GameManager.Instance.GetGameTime();
         timerText.text = "Time Left: " + Mathf.CeilToInt(gameTime).ToString() + "s";
         
-        // Update shader effect based on distance
+        /* Update shader effect based on distance
         float distance = GameMediator.Instance.GetSeekerToPlayerDistance();
         float intensity = Mathf.Clamp01(1f - (distance / maxDistance));
-        dangerEffectMaterial.SetFloat("_FullScreenInten", intensity * 0.6f);
+        dangerEffectMaterial.SetFloat("_FullScreenInten", intensity * 0.6f);*/
         
     }
 
