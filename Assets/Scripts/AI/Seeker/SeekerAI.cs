@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using System.Linq;
 
 public class SeekerAI : MonoBehaviour
 {
@@ -8,14 +10,24 @@ public class SeekerAI : MonoBehaviour
     public float teleportInterval;
     public float visionRadius;
     public float lostSightDuration;
-
+    [Header("AI Light Growth")]
+    public float seekerMaxRadius = 15f;
+    private float seekerGrowRate  = 0.5f;  
+    private bool HiiderInsideLightRadius = false;
+    private Collider2D[] collidersBuffer = new Collider2D[32];
+    public Light2D seekerLight;
     private SeekerState currentState;
     private Collider2D[] visionColliders;
     private float teleportTimer;
-
+    private System.Type lastStateType = null;
     // Animation-related
     private Animator animator;
     private Vector2 lastPosition;
+    public bool HiderInsideLightRadius { get; }
+    //states
+    public static readonly ObservingState ObservingStateInstance = new ObservingState();
+    public static readonly ExploringState ExploringStateInstance = new ExploringState();
+    
 
     void Start()
     {
@@ -30,45 +42,64 @@ public class SeekerAI : MonoBehaviour
                 teleportInterval = 30.0f;
                 visionRadius     = 6.0f;
                 lostSightDuration= 5.0f;
+                seekerGrowRate = 0.1f;
                 break;
             case Difficulty.Medium:
                 moveSpeed         = 2.5f;
                 teleportInterval = 20.0f;
                 visionRadius     = 5.0f;
                 lostSightDuration= 3.0f;
+                seekerGrowRate = 0.2f;
+
                 break;
             case Difficulty.Hard:
                 moveSpeed         = 3f;
                 teleportInterval = 10.0f;
                 visionRadius     = 4.0f;
                 lostSightDuration= 1.5f;
+                seekerGrowRate = 0.3f;
                 break;
         }
 
         GameMediator.Instance.RegisterSeeker(this);
-        SwitchState(new ObservingState());
+        SwitchState(ExploringStateInstance);
         animator    = GetComponent<Animator>();
         lastPosition= transform.position;
     }
 
     void Update()
     {
-        /* Teleport logic when not chasing
-        teleportTimer += Time.deltaTime;
-        if (!(currentState is ChasingState) && teleportTimer >= teleportInterval)
+        if (seekerLight != null && seekerLight.pointLightOuterRadius < seekerMaxRadius)
         {
-            Vector2 tp = HeatmapManager.Instance.GetHottestZone();
-            transform.position = tp;
-            teleportTimer = 0f;
+            seekerLight.pointLightOuterRadius = Mathf.Min(
+                seekerLight.pointLightOuterRadius + seekerGrowRate * Time.deltaTime,
+                seekerMaxRadius
+            );
         }
-        */
+        
+        foreach (var hider in GameMediator.Instance.GetAllHiders())
+        {
+            if (hider == null) continue;
+            if (GameMediator.Instance.IsHiderInvisible(hider)) continue;
 
-        // Update state behavior
+            var hLight = hider.GetComponent<Light2D>();
+            if (hLight != null && hLight.enabled)
+            {
+                float dist = Vector2.Distance(transform.position, hider.transform.position);
+                float overlap = seekerLight.pointLightOuterRadius + hLight.pointLightOuterRadius;
+                if (dist <= overlap)
+                {
+                    HeatmapManager.Instance.RegisterRedZone(hider);
+                    break;
+                }
+            }
+        }
+
+
         currentState.UpdateState(this);
-
-        // Update animations
         UpdateAnimation();
     }
+    
 
     private void UpdateAnimation()
     {
@@ -83,11 +114,12 @@ public class SeekerAI : MonoBehaviour
     }
 
     public void SwitchState(SeekerState newState)
-    {
+    { 
         currentState?.ExitState(this);
         currentState = newState;
-        currentState.EnterState(this);
+        currentState?.EnterState(this);
     }
+    
 
     public void MoveToLocation(Vector2 location)
     {
@@ -115,29 +147,28 @@ public class SeekerAI : MonoBehaviour
         if (nearby.Count > 0)
             return nearby.ToArray();
 
-        // Fallback to global search
         return HidingSpotManager.Instance.GetAllActiveSpots().ToArray();
     }
 
-    public bool CanSeeHider()
+    public bool CanSeeHider(Hider hider)
     {
-        visionColliders = Physics2D.OverlapCircleAll(transform.position, visionRadius);
+        if (hider == null) return false;
+        
+        // Check if the target  IsHiderInvisible
+        if (GameMediator.Instance.IsHiderInvisible(hider))
+            return false;
 
-        foreach (var col in visionColliders)
+        if (Vector2.Distance(transform.position, hider.transform.position) > visionRadius)
+        {return false;}
+        else
         {
-            if (col.CompareTag("Hider") || col.CompareTag("Clone"))
-            {
-                var hider = col.GetComponent<Hider>();
-                if (hider == null) continue;
-                if (GameMediator.Instance.IsHiderInvisible(hider)) continue;
-                return true;
-            }
+            return true;
         }
-
-        return false;
+        
     }
+    
 
-    public Transform GetHiderTarget()
+    public Hider GetHiderTarget()
     {
         visionColliders = Physics2D.OverlapCircleAll(transform.position, visionRadius);
 
@@ -147,17 +178,12 @@ public class SeekerAI : MonoBehaviour
             {
                 var hider = col.GetComponent<Hider>();
                 if (hider == null) continue;
-                if (GameMediator.Instance.IsHiderInvisible(hider)) continue;
-                return col.transform;
+                return hider;
             }
         }
 
         return null;
     }
+    
 
-    public bool CanSeeTarget(Transform target)
-    {
-        // Optional: implement line-of-sight checks here
-        return Vector2.Distance(transform.position, target.position) <= visionRadius;
-    }
 }

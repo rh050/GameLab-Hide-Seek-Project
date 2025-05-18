@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class ChasingState : SeekerState
 {
-    private Transform targetHider;
+    private Hider targetHider;
     private float lostSightTimer = 0f;
     private float maxLostSightDuration = 3f;
     private float originalSpeed;
 
-
-    public ChasingState(Transform target)
+    public ChasingState(Hider target)
     {
         targetHider = target;
     }
-
 
     public void EnterState(SeekerAI seeker)
     {
@@ -22,77 +20,49 @@ public class ChasingState : SeekerState
             : Difficulty.Medium;
         switch (diff)
         {
-            case Difficulty.Easy:
-                seeker.moveSpeed = originalSpeed * 1.2f; 
-                break;
-
-            case Difficulty.Medium:
-                seeker.moveSpeed = originalSpeed * 2f; 
-                break;
-
-            case Difficulty.Hard:
-                seeker.moveSpeed = originalSpeed * 2.5f; 
-                break;
+            case Difficulty.Easy: seeker.moveSpeed = originalSpeed * 1.2f; break;
+            case Difficulty.Medium: seeker.moveSpeed = originalSpeed * 1.3f; break;
+            case Difficulty.Hard: seeker.moveSpeed = originalSpeed * 1.4f; break;
         }
         lostSightTimer = 0f;
-
     }
 
     public void UpdateState(SeekerAI seeker)
     {
         if (targetHider == null)
         {
-            seeker.SwitchState(new ExploringState());
+            seeker.SwitchState(SeekerAI.ExploringStateInstance);
             return;
         }
 
-        if (!seeker.CanSeeTarget(targetHider))
+        if (!seeker.CanSeeHider(targetHider))
         {
-            lostSightTimer += Time.deltaTime;
-            if (lostSightTimer >= maxLostSightDuration)
-            {
-                seeker.SwitchState(new ExploringState());
-                return;
-            }
+            seeker.SwitchState(SeekerAI.ExploringStateInstance);
         }
-        else
+
+        //need to transfer this to function on gamemediator (use NotifyHiderFound in game mediator)
+        if (targetHider.GetComponent<Collider2D>().bounds.Contains(seeker.transform.position))
         {
-            lostSightTimer = 0f;
-        }
-        
+            var cloneManager = targetHider.GetComponent<PlayerCloneManager>();
 
-        seeker.MoveToLocation(targetHider.position);
-
-        if (Vector3.Distance(seeker.transform.position, targetHider.position) < 1f)
-        {
-            Hider hider = targetHider.GetComponent<Hider>();
-            if (hider == null) return;
-
-            var cloneManager = hider.GetComponent<PlayerCloneManager>();
-           
-            if (GameMediator.Instance.IsHiderInvisible(hider))
-            {
-                Debug.Log("Hider is invisible – cannot be caught.");
-                return;
-            }
-
-            if (hider.CompareTag("Clone"))
+            if (targetHider.CompareTag("Clone"))
             {
                 GameMediator.Instance.DestroyClone();
             }
             else if (cloneManager != null && cloneManager.IsCloneActive())
             {
-                GameMediator.Instance.TeleportCatWomanToClone(hider);
+                GameMediator.Instance.TeleportCatWomanToClone(targetHider);
             }
             else
             {
-                GameMediator.Instance.NotifyHiderFound(hider);
+                GameMediator.Instance.NotifyHiderFound(targetHider);
             }
-
-            seeker.SwitchState(new ObservingState());
+            seeker.SwitchState(SeekerAI.ExploringStateInstance);
         }
-    }
+        
+        seeker.MoveToLocation(targetHider.transform.position);
 
+    }
 
     public void ExitState(SeekerAI seeker)
     {

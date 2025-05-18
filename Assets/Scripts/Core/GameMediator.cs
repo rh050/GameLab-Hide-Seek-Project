@@ -127,15 +127,31 @@ public class GameMediator : MonoBehaviour
 
     public bool IsHiderInvisible(Hider hider)
     {
-        return invisibleHiders.Contains(hider);
-    }
-
-    public static void SpawnHidingSpots()
-    {
-        HidingSpotManager hidingSpotManager = FindObjectOfType<HidingSpotManager>();
-        hidingSpotManager.SpawnHidingSpots();
+        if (hider.getisInHidingSpotArea())
+        {
+            return true;
+        }
+        if (invisibleHiders.Contains(hider))
+        {
+            return true;
+        }
+        return false;
     }
 
     public GameHUDController GetHUD() => hud;
+    
+    
+    public static void TrackRedZone(Hider hider)
+    {
+        if (hider != null)
+        {
+            HeatmapManager.Instance.TrackRedZone(hider);
+        }
+    }
 
+    public Vector2 GetNearestRedZone(Vector2 seekerPos)
+    {
+        Vector2 nearestRedZone= HeatmapManager.Instance.GetNearestRedZone(seekerPos);
+        return nearestRedZone;
+    }
 }

@@ -1,105 +1,88 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HeatmapManager : MonoBehaviour
 {
-
     public static HeatmapManager Instance;
-
-    private Dictionary<Vector2, int> heatmapData = new Dictionary<Vector2, int>();
-
+    public GameObject redZoneMarkerPrefab;
+    private HashSet<Hider> trackingHiders = new HashSet<Hider>();
+    private HashSet<Vector2> redZones = new HashSet<Vector2>();
+    private Dictionary<Vector2, GameObject> redZoneMarkers = new Dictionary<Vector2, GameObject>(); 
+    private bool isInUse = false;
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
-    private void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
-        {
-            DebugMaxHeat();
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            DisplayHeatmap();
-        }
-    }
-
-    public void RegisterMovement(Vector2 position)
-    {
-        if (heatmapData.ContainsKey(position))
-        {
-            heatmapData[position]++;
-        }
-        else
-        {
-            heatmapData.Add(position, 1);
-        }
-    }
-
-    public Vector2 GetHottestZone()
-    {
-        int maxHeat = 0;
-        Vector2 hottestZone = Vector2.zero;
-
-        foreach (var zone in heatmapData)
-        {
-            if (zone.Value > maxHeat)
-            {
-                maxHeat = zone.Value;
-                hottestZone = zone.Key;
-            }
-        }
-
-        return hottestZone;
-    }
-
-    public void DeleteHottestZone(Vector2 position)
-    {
-        heatmapData.Remove(position);
-    }
-
-    public int GetMaxHeat()
-    {
-        int maxHeat = 0;
-        foreach (var zone in heatmapData)
-        {
-            if (zone.Value > maxHeat)
-            {
-                maxHeat = zone.Value;
-            }
-        }
-        return maxHeat;
+            Debug.Log($"[Heatmap] redZones count: {redZones.Count}");
     }
 
 
-    public void DisplayHeatmap()
+    public void RegisterRedZone(Hider hider)
     {
-        if (heatmapData == null || heatmapData.Count == 0)
+        if (trackingHiders.Contains(hider)) 
             return;
 
-        int maxHeat = GetMaxHeat();
-        foreach (var zone in heatmapData)
-        {
-            float heatRatio = (float)zone.Value / maxHeat;
-            Color heatColor = Color.Lerp(Color.blue, Color.red, heatRatio);
+        trackingHiders.Add(hider);
+        TrackRedZone(hider);
+    }
 
-            Debug.DrawLine(new Vector3(zone.Key.x, zone.Key.y, 0), new Vector3(zone.Key.x, zone.Key.y + 0.5f, 0), heatColor, 0.5f);
+    public void TrackRedZone(Hider hider)
+    {
+            Vector2 startPos = hider.transform.position;
+            waitFunction(1.5f);
+            redZones.Add(startPos);
+            if (redZoneMarkerPrefab != null && !redZoneMarkers.ContainsKey(startPos))
+            {
+                GameObject marker = Instantiate(
+                    redZoneMarkerPrefab,
+                    (Vector3)startPos,
+                    Quaternion.identity
+                );
+                redZoneMarkers[startPos] = marker;
+            }
+    }
+    
+    private IEnumerator waitFunction(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        isInUse = false;
+    }
+
+    public bool HasRedZones() => redZones.Count > 0;
+
+
+    public Vector2 GetNearestRedZone(Vector2 seekerPos)
+    {
+        Vector2 best = Vector2.zero;
+        float bestDist = float.MaxValue;
+        foreach (var pos in redZones)
+        {
+            float d = Vector2.Distance(seekerPos, pos);
+            if (d < bestDist)
+            {
+                bestDist = d;
+                best = pos;
+            }
+        }
+        return best;
+    }
+
+
+    public void RemoveRedZone(Vector2 pos)
+    {
+        if (redZones.Remove(pos))
+        {
+            if (redZoneMarkers.TryGetValue(pos, out var marker) && marker != null)
+            {
+                Destroy(marker);
+                redZoneMarkers.Remove(pos);
+            }
         }
     }
-
-
-    public void DebugMaxHeat()
-    {
-        int maxHeat = GetMaxHeat();
-        Debug.Log($"Max Heat: {maxHeat}");
-    }
 }
-

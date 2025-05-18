@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
         if (!IsInsideHidingSpot())
         {
-            HeatmapManager.Instance.RegisterMovement(transform.position);
+           
         }
     }
 

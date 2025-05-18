@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Rendering.Universal;
 
 public class Hider : MonoBehaviour
 {
-    private CharactersSO characterData;
-    public Light playerLight;
-    private bool isInHidingSpotArea = false;
-    private EnergyManager energyManager;
-
+    
     [Header("Ability Settings")]
     [SerializeField] private float abilityEnergyCost = 5f;
     [SerializeField] private float abilityCooldownDuration = 10f;
@@ -17,8 +14,19 @@ public class Hider : MonoBehaviour
     [SerializeField] private float hidingCooldownDuration = 5f;
     [SerializeField] private float minHideTime = 3f;
     [SerializeField] private float maxHideTime = 10f;
-    private float hidingCooldownTimer = 0f;
+    
+    [Header("Light Shrink Settings")]
+    public float maxLightRadius = 5f;
+    public float minLightRadius = 2f;
+    public float shrinkRate = 0.5f;  
+    public float growRate   = 1f;    
 
+    private CharactersSO characterData;
+    private bool isInHidingSpotArea = false;
+    private EnergyManager energyManager;
+    public Light2D selfLight;
+    private PlayerController pc;
+    private float hidingCooldownTimer = 0f;
     private bool isHiding = false;
     private HidingSpot currentHidingSpot;
     private Coroutine hideCoroutine;
@@ -28,21 +36,69 @@ public class Hider : MonoBehaviour
     void Start()
     {
         cloneManager = GetComponent<PlayerCloneManager>();
-        if (characterData == null)
-            Debug.LogWarning("CharacterData is NULL at Start!");
-        if (characterData.ability == null)
-            Debug.LogWarning("CharacterData.ability is NULL at Start!");
+        if (!CompareTag("Clone")) {GameMediator.Instance.RegisterHider(this);}
+        energyManager  = EnergyManager.Instance;
+        pc             = GetComponent<PlayerController>();
+        
+    }
+    
+    void Update()
+    {
 
-        GameMediator.Instance.RegisterHider(this);
-        energyManager = EnergyManager.Instance;
-
-        if (playerLight != null)
+        if (abilityCooldownTimer > 0)
         {
-            playerLight.intensity = 1.0f;
-            playerLight.range = 5.0f;
-            playerLight.color = Color.white;
+            abilityCooldownTimer -= Time.deltaTime;
+        }
+
+        if (hidingCooldownTimer > 0)
+        {
+            hidingCooldownTimer -= Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("E Key Pressed");
+            ActivateAbility();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ToggleHide();
+        }
+        
+        if (selfLight == null) return;
+
+        if (isHiding)
+        {
+            // shrink until min, then disable entirely
+            if (selfLight.pointLightOuterRadius > minLightRadius)
+            {
+                selfLight.pointLightOuterRadius = Mathf.Max(
+                    selfLight.pointLightOuterRadius - shrinkRate * Time.deltaTime,
+                    minLightRadius
+                );
+            }
+            else
+            {
+                selfLight.enabled = false;
+            }
+        }
+        else
+        {
+            if (!selfLight.enabled)
+                selfLight.enabled = true;
+
+            if (selfLight.pointLightOuterRadius < maxLightRadius)
+            {
+                selfLight.pointLightOuterRadius = Mathf.Min(
+                    selfLight.pointLightOuterRadius + growRate * Time.deltaTime,
+                    maxLightRadius
+                );
+            }
         }
     }
+    
+    
 
     public void AssignCharacter(CharactersSO selectedCharacter)
     {
@@ -89,36 +145,7 @@ public class Hider : MonoBehaviour
             Debug.Log("Not enough energy to use ability.");
         }
     }
-
-
-    void Update()
-    {
-        if (!isInHidingSpotArea)
-        {
-            HeatmapManager.Instance.RegisterMovement(transform.position);
-        }
-
-        if (abilityCooldownTimer > 0)
-        {
-            abilityCooldownTimer -= Time.deltaTime;
-        }
-
-        if (hidingCooldownTimer > 0)
-        {
-            hidingCooldownTimer -= Time.deltaTime;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("E Key Pressed");
-            ActivateAbility();
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ToggleHide();
-        }
-    }
+    
 
     void ToggleHide()
     {
@@ -167,6 +194,12 @@ public class Hider : MonoBehaviour
         {
             currentHidingSpot.LeaveSpot(gameObject);
         }
+        
+        if (selfLight != null)
+        {
+            selfLight.enabled = true;
+            selfLight.pointLightOuterRadius = minLightRadius; 
+        }
 
         isHiding = false;
         currentHidingSpot = null;
@@ -210,5 +243,10 @@ public class Hider : MonoBehaviour
         {
             isInHidingSpotArea = false;
         }
+    }
+
+    public bool getisInHidingSpotArea()
+    {
+        return isInHidingSpotArea;
     }
 }

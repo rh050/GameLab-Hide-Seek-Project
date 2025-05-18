@@ -1,60 +1,65 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class ExploringState : SeekerState
 {
-    private int requiredHidingSpots=1;
     private HidingSpot targetHidingSpot;
-    
 
     public void EnterState(SeekerAI seeker)
     {
-        Debug.Log("Seeker is now in ExploringState.");
-
-        HidingSpot[] nearbySpots = seeker.FindHidingSpotsNearbyOrGlobal();
-        
-
-        if (nearbySpots.Length >= requiredHidingSpots)
+        var spots = seeker.FindHidingSpotsNearbyOrGlobal();
+        if (spots.Length > 0)
         {
-            int randomIndex = Random.Range(0, nearbySpots.Length);
-            targetHidingSpot = nearbySpots[randomIndex].GetComponent<HidingSpot>();
+            targetHidingSpot = spots[Random.Range(0, spots.Length)];
         }
         else
         {
-            requiredHidingSpots++;
             targetHidingSpot = null;
         }
     }
 
     public void UpdateState(SeekerAI seeker)
     {
-        if (seeker.CanSeeHider())
+        if (HeatmapManager.Instance.HasRedZones())
+        {
+            seeker.SwitchState(SeekerAI.ObservingStateInstance);
+            return;
+        }
+
+        if (seeker.CanSeeHider(seeker.GetHiderTarget()))
         {
             seeker.SwitchState(new ChasingState(seeker.GetHiderTarget()));
+            return;
+        }
+
+        if (HeatmapManager.Instance.HasRedZones())
+        {  
+            Vector2 nearestRedZone = GameMediator.Instance.GetNearestRedZone(seeker.transform.position);
+            seeker.MoveToLocation(nearestRedZone);
+        }
+        else if (targetHidingSpot == null)
+        {
+            seeker.SwitchState(SeekerAI.ObservingStateInstance);
             return;
         }
 
         if (targetHidingSpot != null)
         {
             seeker.MoveToLocation(targetHidingSpot.transform.position);
-            if (Vector3.Distance(seeker.transform.position, targetHidingSpot.transform.position) < 1f)
+
+            if (Vector2.Distance(seeker.transform.position, targetHidingSpot.transform.position) < 0.5f)
             {
                 GameMediator.HidespotDestroyed(targetHidingSpot);
-                requiredHidingSpots = 2;
-                seeker.SwitchState(new ObservingState());
+                seeker.SwitchState(SeekerAI.ExploringStateInstance);
             }
         }
         else
         {
-            seeker.SwitchState(new ObservingState());
+            // אין לאן ללכת? פשוט תסתובב (אפשר להוסיף התנהגות רנדומלית)
         }
     }
 
     public void ExitState(SeekerAI seeker)
     {
-        Debug.Log("Seeker is leaving DestroyingState.");
+        Debug.Log("Seeker is leaving Exploring state.");
     }
 }
-
-
-
