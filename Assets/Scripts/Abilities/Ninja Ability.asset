@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: 
   description: 
-  invisibilityDuration: 3
+  smokeZonePrefab: {fileID: 1412390446521304658, guid: 476c90c3d3e784145b488a16c3172220, type: 3}
+  smokeDuration: 5

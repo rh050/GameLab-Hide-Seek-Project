@@ -1,46 +1,62 @@
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Fox Ability", menuName = "Ability/Fox")]
 public class FoxAbility : Ability
 {
-    public float speedBoost ;
-    public float duration;
+    [Header("Illusion Settings")]
+    public GameObject illusionPrefab;
+    private float illusionLifetime;
 
-    void OnEnable()
-    { 
-        if (!Application.isPlaying || DifficultyManager.Instance == null)
-            return;
-        switch (DifficultyManager.Instance.GetDifficulty())
-        {
-            case Difficulty.Easy:
-                speedBoost = 2.0f;
-                duration   = 5.0f;
-                break;
-            case Difficulty.Medium:
-                speedBoost = 3.0f;
-                duration   = 4.0f;
-                break;
-            case Difficulty.Hard:
-                speedBoost = 4.0f;
-                duration   = 3.0f;
-                break;
-        }
-    }
+    // מיקומי אשליות בריבוע סביב השחקן
+    private Vector2[] illusionOffsets = new Vector2[]
+    {
+        new Vector2(-1.5f,  1.5f),   // צפון-מערב
+        new Vector2( 1.5f,  1.5f),   // צפון-מזרח
+        new Vector2(-1.5f, -1.5f),   // דרום-מערב
+        new Vector2( 1.5f, -1.5f)    // דרום-מזרח
+    };
+
     public override void UseAbility(GameObject player)
     {
-        Debug.Log(abilityName + " activated: Speed boost!");
-        player.GetComponent<MonoBehaviour>().StartCoroutine(BoostSpeed(player));
+        // בחר משך חיים לפי דרגת קושי
+        switch (DifficultyManager.Instance.GetDifficulty())
+        {
+            case Difficulty.Easy: illusionLifetime = 7f; break;
+            case Difficulty.Medium: illusionLifetime = 5f; break;
+            case Difficulty.Hard: illusionLifetime = 3f; break;
+        }
+
+        // שמירת כיוון התנועה האחרון של השחקן
+        var controller = player.GetComponent<PlayerController>();
+        Vector2 dir = (controller != null && controller.LastMoveDirection != Vector2.zero)
+                       ? controller.LastMoveDirection.normalized
+                       : Vector2.up;
+
+        CreateIllusions(player.transform.position, dir);
+        EventManager.Instance.TriggerIllusionActivated();
     }
 
-    private IEnumerator BoostSpeed(GameObject player)
+    private void CreateIllusions(Vector2 playerPos, Vector2 direction)
     {
-        PlayerController pc = player.GetComponent<PlayerController>();
-        if (pc != null)
+        int idx = 0;
+        for (int i = 0; i < illusionOffsets.Length; i++)
         {
-            pc.ModifySpeedTemporary(speedBoost,duration);
-            yield return new WaitForSeconds(duration);
-            pc.ResetSpeed();
+            // מדלגים על מיקום אחד כדי שלא נשים על השחקן האמיתי
+            if (i == 2) continue;
+
+            Vector2 spawn = playerPos + illusionOffsets[i];
+            var illusion = Instantiate(illusionPrefab, spawn, Quaternion.identity);
+            illusion.tag = "Clone";
+
+            var beh = illusion.GetComponent<IllusionFoxBehavior>();
+            if (beh != null)
+            {
+                beh.lifetime = illusionLifetime;
+                beh.SetDirection(direction);
+            }
+
+            Destroy(illusion, illusionLifetime);
+            idx++;
         }
     }
 }

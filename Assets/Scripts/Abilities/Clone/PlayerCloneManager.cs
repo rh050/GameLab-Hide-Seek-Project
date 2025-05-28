@@ -72,18 +72,16 @@ public class PlayerCloneManager : MonoBehaviour
 
         if (realPlayer != null)
         {
-            // ✅ Unfreeze Rigidbody
             Rigidbody2D rb = realPlayer.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.constraints = RigidbodyConstraints2D.None; // allow movement again
+                rb.constraints = RigidbodyConstraints2D.None; 
                 rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
             }
 
             realPlayer.GetComponent<PlayerController>().enabled = true;
 
-            // Return camera to follow the real player
             if (cameraFollow != null)
             {
                 cameraFollow.target = realPlayer.transform;
@@ -100,6 +98,6 @@ public class PlayerCloneManager : MonoBehaviour
     {
         if (clone != null)
             return clone.transform.position;
-        return realPlayer.transform.position; // fallback
+        return realPlayer.transform.position; 
     }
 }

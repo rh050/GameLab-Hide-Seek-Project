@@ -16,3 +16,6 @@ MonoBehaviour:
   description: 
   speedBoost: 2
   duration: 1
+  illusionPrefab: {fileID: 7858592109270468648, guid: c9073de8fae5c4549bf1afe68a3a72d1, type: 3}
+  illusionDuration: 7
+  illusionSpawnRadius: 2
