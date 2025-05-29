@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7856790502036000003}
   - component: {fileID: 7887227726442769375}
   - component: {fileID: 6976955672574847716}
+  - component: {fileID: 8630412901114065482}
   m_Layer: 0
   m_Name: IllusionFox
   m_TagString: Clone
@@ -215,10 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d114c11d3289d80419acec9280ac7e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  changeDirectionInterval: 1.5
   lifetime: 7
-  movementRange: 2
+  moveSpeed: 2
 --- !u!95 &7887227726442769375
 Animator:
   serializedVersion: 5
@@ -290,3 +289,25 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &8630412901114065482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7858592109270468648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92383508ca524add9f94cbfc37722b84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityEnergyCost: 5
+  abilityCooldownDuration: 10
+  hidingCooldownDuration: 5
+  minHideTime: 3
+  maxHideTime: 10
+  maxLightRadius: 5
+  minLightRadius: 2
+  shrinkRate: 0.5
+  growRate: 1
+  selfLight: {fileID: 0}
