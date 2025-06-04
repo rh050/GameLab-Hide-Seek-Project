@@ -42,14 +42,14 @@ public class SeekerAI : MonoBehaviour
                 teleportInterval = 30.0f;
                 visionRadius     = 6.0f;
                 lostSightDuration= 5.0f;
-                seekerGrowRate = 0.1f;
+                seekerGrowRate = 0.01f;
                 break;
             case Difficulty.Medium:
                 moveSpeed         = 2.5f;
                 teleportInterval = 20.0f;
                 visionRadius     = 5.0f;
                 lostSightDuration= 3.0f;
-                seekerGrowRate = 0.2f;
+                seekerGrowRate = 0.03f;
 
                 break;
             case Difficulty.Hard:
@@ -57,7 +57,7 @@ public class SeekerAI : MonoBehaviour
                 teleportInterval = 10.0f;
                 visionRadius     = 4.0f;
                 lostSightDuration= 1.5f;
-                seekerGrowRate = 0.3f;
+                seekerGrowRate = 0.05f;
                 break;
         }
 

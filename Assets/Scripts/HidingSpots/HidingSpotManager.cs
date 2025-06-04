@@ -8,10 +8,10 @@ public class HidingSpotManager : MonoBehaviour
     public static HidingSpotManager Instance { get; private set; }
     
     [Header("Spawner Settings")]
-    public int totalHidingSpots = 20;         // מספר מקומות המחבוא הכולל במפה
-    public float respawnCooldown = 10f;       // זמן המתנה לפני ספוואן מחדש
-    public Tilemap levelTilemap;              // הפניה ל-Tilemap של האזור
-    public List<GameObject> hidingSpotPrefabs;  // רשימת סוגי מחבוא
+    public int totalHidingSpots = 20;        
+    public float respawnCooldown = 10f;       
+    public Tilemap levelTilemap;              
+    public List<GameObject> hidingSpotPrefabs;  
 
     private List<HidingSpot> activeHidingSpots = new List<HidingSpot>();
     private bool isRespawning = false;
@@ -55,47 +55,36 @@ public class HidingSpotManager : MonoBehaviour
     
 public void SpawnHidingSpots()
 {
-    // הסרת הפניות לאובייקטים שנהרבו, כך הרשימה משקפת את מה שקיים
     activeHidingSpots.RemoveAll(spot => spot == null);
 
-    // חישוב מספר המחבואים החסרים כדי להגיע ל־totalHidingSpots (למשל, 20)
     int missingCount = totalHidingSpots - activeHidingSpots.Count;
     if (missingCount <= 0)
-        return; // אין צורך בספוואן אם כבר קיימים כל המחבואים הרצויים
+        return; 
 
-    // הגדרת הגריד: לדוגמה 3 שורות ו־3 עמודות
     int rows = 3;
     int cols = 3;
 
-    // קבלת גבולות ה-Tilemap במרחב העולם
     Bounds localBounds = levelTilemap.localBounds;
     Vector3 worldMin = levelTilemap.transform.TransformPoint(localBounds.min);
     Vector3 worldMax = levelTilemap.transform.TransformPoint(localBounds.max);
     float tilemapWidth = worldMax.x - worldMin.x;
     float tilemapHeight = worldMax.y - worldMin.y;
 
-    // חישוב גודל כל תא (cell) ברשת
     float sectionWidth = tilemapWidth / cols;
     float sectionHeight = tilemapHeight / rows;
 
-    // עבור כל מחבוא חסר, בוחרים תא רנדומלי וממקמים בו את המחבוא
     for (int i = 0; i < missingCount; i++)
     {
-        // בחירת שורה ועמודה רנדומלית מתוך הרשת
         int randomRow = Random.Range(0, rows);
         int randomCol = Random.Range(0, cols);
 
-        // חישוב נקודת ההתחלה (origin) של התא הנבחר
         Vector2 sectionOrigin = new Vector2(worldMin.x + randomCol * sectionWidth, worldMin.y + randomRow * sectionHeight);
 
-        // יצירת offset אקראי בתוך גבולות התא
         Vector2 randomOffset = new Vector2(Random.Range(0f, sectionWidth), Random.Range(0f, sectionHeight));
         Vector2 spawnPosition = sectionOrigin + randomOffset;
 
-        // בדיקה האם המיקום תקין – למשל, האם יש Tile באותו תא ואינו מתנגש עם אובייקטים אחרים
         if (IsValidPosition(spawnPosition))
         {
-            // בחירת prefab רנדומלי מתוך הרשימה
             GameObject prefab = hidingSpotPrefabs[Random.Range(0, hidingSpotPrefabs.Count)];
             if (prefab != null)
             {
@@ -105,7 +94,7 @@ public void SpawnHidingSpots()
         }
         else
         {
-            // אם המיקום לא תקין, ננסה שוב עבור מחבוא זה
+            // if the position is invalid, decrement i to retry this iteration
             i--;
         }
     }

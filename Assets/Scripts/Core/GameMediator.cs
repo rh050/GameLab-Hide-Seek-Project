@@ -77,6 +77,7 @@ public class GameMediator : MonoBehaviour
 
     public void NotifyHiderFound(Hider hider)
     {
+        AudioManager.Instance.PlayGameOverSFX();
         hud.DisplayMessage("A hider has been found!", 2f);
         hiders.Remove(hider);
         ScoreManager.Instance.AddSeekerPoints(10);

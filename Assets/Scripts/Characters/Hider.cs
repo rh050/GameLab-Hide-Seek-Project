@@ -31,6 +31,8 @@ public class Hider : MonoBehaviour
     private HidingSpot currentHidingSpot;
     private Coroutine hideCoroutine;
     private PlayerCloneManager cloneManager;
+    private Coroutine whisperCoroutine;
+
     
 
     void Start()
@@ -168,6 +170,7 @@ public class Hider : MonoBehaviour
                         spot.HidePlayer(gameObject);
                         isHiding = true;
                         currentHidingSpot = spot;
+                        SoundOnEnterHide();
 
                         float hideDuration = Random.Range(minHideTime, maxHideTime);
                         hideCoroutine = StartCoroutine(EndHideAfterSeconds(hideDuration));
@@ -200,6 +203,7 @@ public class Hider : MonoBehaviour
             selfLight.enabled = true;
             selfLight.pointLightOuterRadius = minLightRadius; 
         }
+        SoundOnExitHide();
 
         isHiding = false;
         currentHidingSpot = null;
@@ -244,9 +248,32 @@ public class Hider : MonoBehaviour
             isInHidingSpotArea = false;
         }
     }
-
-    public bool getisInHidingSpotArea()
+     public bool getisInHidingSpotArea()
+     {
+         return isInHidingSpotArea;
+     }   
+     
+    void SoundOnEnterHide()
     {
-        return isInHidingSpotArea;
+        if (whisperCoroutine != null) StopCoroutine(whisperCoroutine);
+        AudioManager.Instance.PlayCalmAmbience();
+        whisperCoroutine = StartCoroutine(StartWhisperAfterDelay(5f)); 
     }
+
+    IEnumerator StartWhisperAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        AudioManager.Instance.StopSound();
+        AudioManager.Instance.PlayBackgroundAmbience();
+        AudioManager.Instance.PlayWhisperLoop();
+    }
+
+    void SoundOnExitHide()
+    {
+        if (whisperCoroutine != null) StopCoroutine(whisperCoroutine);
+        AudioManager.Instance.StopSound();
+        AudioManager.Instance.PlayCalmAmbience(); 
+    }
+
+
 }

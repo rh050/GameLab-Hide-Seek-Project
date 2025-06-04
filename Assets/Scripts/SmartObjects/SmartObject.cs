@@ -29,6 +29,8 @@ public class SmartObject : MonoBehaviour
         {
             Debug.Log("Trap activated!");
             playerController.ModifySpeedTemporary(0.5f, effectDuration); 
+            HeatmapManager.Instance.RegisterRedZone(playerController.GetComponent<Hider>());
+            AudioManager.Instance.PlayTrapLaugh();
             StartCoroutine(ResetTrap());
         }
 
@@ -36,6 +38,8 @@ public class SmartObject : MonoBehaviour
         {
             Debug.Log("Object is moving!");
             StartCoroutine(MoveObject());
+            HeatmapManager.Instance.RegisterRedZone(playerController.GetComponent<Hider>());
+            AudioManager.Instance.PlayTrapLaugh();
             StartCoroutine(ResetTrap());
         }
 

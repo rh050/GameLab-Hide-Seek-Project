@@ -15,6 +15,7 @@ public class ChasingState : SeekerState
     public void EnterState(SeekerAI seeker)
     {
         originalSpeed = seeker.moveSpeed;
+        AudioManager.Instance.PlayEvilLaugh();
         Difficulty diff = DifficultyManager.Instance != null
             ? DifficultyManager.Instance.GetDifficulty()
             : Difficulty.Medium;
