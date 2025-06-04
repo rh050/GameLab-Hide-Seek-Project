@@ -6,14 +6,23 @@ using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
 {
     public GameObject pausePanel;
+    public GameObject controlsPanel;
 
+
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ShowControlsPanel();
+        }
     }
+
 
     public void TogglePause()
     {
@@ -38,4 +47,16 @@ public class PauseManager : MonoBehaviour
     {
         Application.Quit();
     }
+    public void ShowControlsPanel()
+    {
+        pausePanel.SetActive(false);
+        controlsPanel.SetActive(true);
+    }
+    public void BackToPauseMenu()
+    {
+        controlsPanel.SetActive(false);
+        pausePanel.SetActive(true);
+    }
+
+
 }
