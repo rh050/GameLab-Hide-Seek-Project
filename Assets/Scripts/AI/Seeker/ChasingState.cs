@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using System;
 
 public class ChasingState : SeekerState
 {
@@ -6,6 +7,10 @@ public class ChasingState : SeekerState
     private float lostSightTimer = 0f;
     private float maxLostSightDuration = 3f;
     private float originalSpeed;
+    private SeekerAI mySeeker;
+    private Action illusionEventHandler;
+
+
 
     public ChasingState(Hider target)
     {
@@ -15,6 +20,7 @@ public class ChasingState : SeekerState
     public void EnterState(SeekerAI seeker)
     {
         originalSpeed = seeker.moveSpeed;
+        mySeeker = seeker;
         AudioManager.Instance.PlayEvilLaugh();
         Difficulty diff = DifficultyManager.Instance != null
             ? DifficultyManager.Instance.GetDifficulty()
@@ -26,22 +32,81 @@ public class ChasingState : SeekerState
             case Difficulty.Hard: seeker.moveSpeed = originalSpeed * 1.4f; break;
         }
         lostSightTimer = 0f;
+
+        illusionEventHandler = OnIllusionActivated;
+
+        if (EventManager.Instance != null)
+            EventManager.Instance.OnIllusionActivated += illusionEventHandler;
     }
+
+
+    private void OnIllusionActivated()
+    {
+        Debug.Log("Illusion event received — switching from Chasing to Exploring");
+        if (mySeeker != null)
+            mySeeker.SwitchState(SeekerAI.ExploringStateInstance);
+    }
+
+
+    /*    public void UpdateState(SeekerAI seeker)
+        {
+            if (targetHider == null)
+            {
+                seeker.SwitchState(SeekerAI.ExploringStateInstance);
+                return;
+            }
+
+            if (!seeker.CanSeeHider(targetHider))
+            {
+                //seeker.SwitchState(SeekerAI.ExploringStateInstance);
+                Debug.Log("Seeker lost sight of hider – switching to Exploring");
+                seeker.SwitchState(SeekerAI.ExploringStateInstance);
+                return;
+            }  
+
+            //need to transfer this to function on gamemediator (use NotifyHiderFound in game mediator)
+            if (targetHider.GetComponent<Collider2D>().bounds.Contains(seeker.transform.position))
+            {
+                var cloneManager = targetHider.GetComponent<PlayerCloneManager>();
+
+                if (targetHider.CompareTag("Clone"))
+                {
+                    GameMediator.Instance.DestroyClone();
+                }
+                else if (cloneManager != null && cloneManager.IsCloneActive())
+                {
+                    GameMediator.Instance.TeleportCatWomanToClone(targetHider);
+                }
+                else
+                {
+                    GameMediator.Instance.NotifyHiderFound(targetHider);
+                }
+                seeker.SwitchState(SeekerAI.ExploringStateInstance);
+            }
+
+            seeker.MoveToLocation(targetHider.transform.position);
+
+        }
+    */
 
     public void UpdateState(SeekerAI seeker)
     {
         if (targetHider == null)
         {
+            Debug.Log("Target is null – back to exploring");
             seeker.SwitchState(SeekerAI.ExploringStateInstance);
             return;
         }
 
-        if (!seeker.CanSeeHider(targetHider))
+        // בדיקה מחוזקת אם אפשר לראות
+        if (!seeker.CanSeeHider(targetHider) || targetHider.CompareTag("Invisible"))
         {
+            Debug.Log("Seeker lost sight of hider – switching to Exploring");
             seeker.SwitchState(SeekerAI.ExploringStateInstance);
+            return;
         }
 
-        //need to transfer this to function on gamemediator (use NotifyHiderFound in game mediator)
+        // האם נוגע ב־Hider
         if (targetHider.GetComponent<Collider2D>().bounds.Contains(seeker.transform.position))
         {
             var cloneManager = targetHider.GetComponent<PlayerCloneManager>();
@@ -58,16 +123,19 @@ public class ChasingState : SeekerState
             {
                 GameMediator.Instance.NotifyHiderFound(targetHider);
             }
-            seeker.SwitchState(SeekerAI.ExploringStateInstance);
-        }
-        
-        seeker.MoveToLocation(targetHider.transform.position);
 
+            seeker.SwitchState(SeekerAI.ExploringStateInstance);
+            return;
+        }
+
+        seeker.MoveToLocation(targetHider.transform.position);
     }
 
     public void ExitState(SeekerAI seeker)
     {
         seeker.moveSpeed = originalSpeed;
+        if (EventManager.Instance != null && illusionEventHandler != null)
+            EventManager.Instance.OnIllusionActivated -= illusionEventHandler;
         Debug.Log("Seeker is leaving Chasing state.");
     }
 }

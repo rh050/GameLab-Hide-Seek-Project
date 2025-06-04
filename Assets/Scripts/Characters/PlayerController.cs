@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public bool isClone = false;
+    public Vector2 LastMoveDirection { get; private set; } = Vector2.up;
+
 
     [Header("Movement Settings")]
     public float moveSpeed = 2f;
@@ -24,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 InputX;
     private Vector2 InputY;
     Animator animator ;
+
+    public Vector2 LastDirection { get; private set; }
 
     private PlayerCloneManager cloneManager;
 
@@ -90,6 +94,9 @@ public class PlayerController : MonoBehaviour
 
         if (input != Vector2.zero)
         {
+            LastMoveDirection = input;
+
+
             LastInputX = new Vector2(input.x, 0);
             LastInputY = new Vector2(0, input.y);
 

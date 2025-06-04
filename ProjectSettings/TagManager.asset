@@ -11,6 +11,9 @@ TagManager:
   - Objects
   - Clone
   - VictoryPoint
+  - IllusionFox
+  - SmokeZone
+  - Invisible
   layers:
   - Default
   - TransparentFX
