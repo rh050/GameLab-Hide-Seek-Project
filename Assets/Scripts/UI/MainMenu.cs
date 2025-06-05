@@ -1,10 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject characterSelectionPanel;
 
+    public GameObject mainMenuPanel;
+    public GameObject difficultyPanel;
     void Start()
     {
 
@@ -30,4 +32,17 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+    public void BackFromCharacterToMenu()
+    {
+        characterSelectionPanel.SetActive(false);
+        difficultyPanel.SetActive(false);
+    }
+
+    public void BackFromDifficultyToCharacter()
+    {
+        difficultyPanel.SetActive(false);
+        characterSelectionPanel.SetActive(true);
+        
+    }
+
 }
