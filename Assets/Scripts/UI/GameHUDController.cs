@@ -107,10 +107,11 @@ public class GameHUDController : MonoBehaviour
         hidersPointsText.text = $"Hiders: {hidersPoints}";
     }
 
-
+    
     public void UpdateEnergyHUD(float currentEnergy, float maxEnergy)
     {
-        energyValueText.text = $"{currentEnergy}/{maxEnergy}";
-
+        energySlider.maxValue = maxEnergy;
+        energySlider.value = currentEnergy;
+        energyValueText.text = $"{Mathf.FloorToInt(currentEnergy)}/{Mathf.FloorToInt(maxEnergy)}";
     }
 }

@@ -100,6 +100,24 @@ public class AudioManager : MonoBehaviour
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
         audioSource.Stop();
     }
+    
+    public void MuteAll()
+    {
+        audioSource.mute = true;
+        sfxSource.mute = true;
+    }
+
+    public void UnmuteAll()
+    {
+        audioSource.mute = false;
+        sfxSource.mute = false;
+    }
+
+    public bool IsMuted()
+    {
+        return audioSource.mute && sfxSource.mute;
+    }
+
 
     // --- Core Fade Logic ---
     public void CrossfadeToClip(AudioClip newClip, bool loop)
