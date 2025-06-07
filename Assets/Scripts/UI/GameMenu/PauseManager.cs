@@ -10,16 +10,37 @@ public class PauseManager : MonoBehaviour
 
 
     
+  
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TogglePause();
+            if (controlsPanel.activeSelf)
+            {
+                controlsPanel.SetActive(false);
+                pausePanel.SetActive(false);
+                Time.timeScale = 1;
+            }
+            else
+            {
+                TogglePause();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            ShowControlsPanel();
+            ToggleControlsPanel();
+        }
+    }
+
+    public void ToggleControlsPanel()
+    {
+        bool isActive = controlsPanel.activeSelf;
+        controlsPanel.SetActive(!isActive);
+
+        if (!isActive)
+        {
+            pausePanel.SetActive(false);
         }
     }
 

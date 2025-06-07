@@ -7,6 +7,8 @@ public class MainMenu : MonoBehaviour
 
     public GameObject mainMenuPanel;
     public GameObject difficultyPanel;
+    public GameObject controlsPanel;
+
     void Start()
     {
 
@@ -44,5 +46,12 @@ public class MainMenu : MonoBehaviour
         characterSelectionPanel.SetActive(true);
         
     }
+    public void ToggleControlsPanel()
+    {
+        bool isActive = controlsPanel.activeSelf;
+        controlsPanel.SetActive(!isActive);
+        mainMenuPanel.SetActive(isActive); 
+    }
+
 
 }
