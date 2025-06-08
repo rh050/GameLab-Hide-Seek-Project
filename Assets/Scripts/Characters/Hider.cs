@@ -72,7 +72,6 @@ public class Hider : MonoBehaviour
 
         if (isHiding)
         {
-            // shrink until min, then disable entirely
             if (selfLight.pointLightOuterRadius > minLightRadius)
             {
                 selfLight.pointLightOuterRadius = Mathf.Max(

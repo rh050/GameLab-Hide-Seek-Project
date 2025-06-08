@@ -7,18 +7,16 @@ public class FoxAbility : Ability
     public GameObject illusionPrefab;
     private float illusionLifetime;
 
-    // מיקומי אשליות בריבוע סביב השחקן
     private Vector2[] illusionOffsets = new Vector2[]
     {
-        new Vector2(-1.5f,  1.5f),   // צפון-מערב
-        new Vector2( 1.5f,  1.5f),   // צפון-מזרח
-        new Vector2(-1.5f, -1.5f),   // דרום-מערב
-        new Vector2( 1.5f, -1.5f)    // דרום-מזרח
+        new Vector2(-1.5f,  1.5f),   
+        new Vector2( 1.5f,  1.5f),   
+        new Vector2(-1.5f, -1.5f),   
+        new Vector2( 1.5f, -1.5f)    
     };
 
     public override void UseAbility(GameObject player)
     {
-        // בחר משך חיים לפי דרגת קושי
         switch (DifficultyManager.Instance.GetDifficulty())
         {
             case Difficulty.Easy: illusionLifetime = 7f; break;
@@ -26,7 +24,6 @@ public class FoxAbility : Ability
             case Difficulty.Hard: illusionLifetime = 3f; break;
         }
 
-        // שמירת כיוון התנועה האחרון של השחקן
         var controller = player.GetComponent<PlayerController>();
         Vector2 dir = (controller != null && controller.LastMoveDirection != Vector2.zero)
                        ? controller.LastMoveDirection.normalized
@@ -41,7 +38,6 @@ public class FoxAbility : Ability
         int idx = 0;
         for (int i = 0; i < illusionOffsets.Length; i++)
         {
-            // מדלגים על מיקום אחד כדי שלא נשים על השחקן האמיתי
             if (i == 2) continue;
 
             Vector2 spawn = playerPos + illusionOffsets[i];

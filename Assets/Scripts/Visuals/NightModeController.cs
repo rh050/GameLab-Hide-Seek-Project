@@ -13,7 +13,6 @@ public class DayNightCycleManager : MonoBehaviour
     [Tooltip("צבע הלילה (moonlight) בצד ה־0, צבע היום בצד ה־1)")]
     public Gradient colorGradient = new Gradient()
     {
-        // ברירת מחדל: אדום כהה לילה → לבן יום
         colorKeys = new GradientColorKey[]
         {
             new GradientColorKey(new Color(0.2f,0,0), 0f),   
@@ -54,7 +53,6 @@ public class DayNightCycleManager : MonoBehaviour
 
     void UpdateCycle(float t)
     {
-        // חשב צבע ועוצמה
         Color c = colorGradient.Evaluate(t);
         float inten = intensityCurve.Evaluate(t);
 

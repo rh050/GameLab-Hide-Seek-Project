@@ -46,49 +46,6 @@ public class ChasingState : SeekerState
         if (mySeeker != null)
             mySeeker.SwitchState(SeekerAI.ExploringStateInstance);
     }
-
-
-    /*    public void UpdateState(SeekerAI seeker)
-        {
-            if (targetHider == null)
-            {
-                seeker.SwitchState(SeekerAI.ExploringStateInstance);
-                return;
-            }
-
-            if (!seeker.CanSeeHider(targetHider))
-            {
-                //seeker.SwitchState(SeekerAI.ExploringStateInstance);
-                Debug.Log("Seeker lost sight of hider – switching to Exploring");
-                seeker.SwitchState(SeekerAI.ExploringStateInstance);
-                return;
-            }  
-
-            //need to transfer this to function on gamemediator (use NotifyHiderFound in game mediator)
-            if (targetHider.GetComponent<Collider2D>().bounds.Contains(seeker.transform.position))
-            {
-                var cloneManager = targetHider.GetComponent<PlayerCloneManager>();
-
-                if (targetHider.CompareTag("Clone"))
-                {
-                    GameMediator.Instance.DestroyClone();
-                }
-                else if (cloneManager != null && cloneManager.IsCloneActive())
-                {
-                    GameMediator.Instance.TeleportCatWomanToClone(targetHider);
-                }
-                else
-                {
-                    GameMediator.Instance.NotifyHiderFound(targetHider);
-                }
-                seeker.SwitchState(SeekerAI.ExploringStateInstance);
-            }
-
-            seeker.MoveToLocation(targetHider.transform.position);
-
-        }
-    */
-
     public void UpdateState(SeekerAI seeker)
     {
         if (targetHider == null)
@@ -98,7 +55,6 @@ public class ChasingState : SeekerState
             return;
         }
 
-        // בדיקה מחוזקת אם אפשר לראות
         if (!seeker.CanSeeHider(targetHider) || targetHider.CompareTag("Invisible"))
         {
             Debug.Log("Seeker lost sight of hider – switching to Exploring");
@@ -106,7 +62,6 @@ public class ChasingState : SeekerState
             return;
         }
 
-        // האם נוגע ב־Hider
         if (targetHider.GetComponent<Collider2D>().bounds.Contains(seeker.transform.position))
         {
             var cloneManager = targetHider.GetComponent<PlayerCloneManager>();

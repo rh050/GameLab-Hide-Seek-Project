@@ -94,7 +94,6 @@ public void SpawnHidingSpots()
         }
         else
         {
-            // if the position is invalid, decrement i to retry this iteration
             i--;
         }
     }

@@ -46,7 +46,6 @@ public class HidingSpot : MonoBehaviour
             var rb = player.GetComponent<Rigidbody2D>();
             if (rb != null)
                 rb.constraints = RigidbodyConstraints2D.None;
-            //enable frizz z
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             
             player.GetComponent<PlayerController>().enabled = true;

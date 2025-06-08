@@ -26,7 +26,6 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    // אם צריך בגישה סטטית:
     public static CharactersSO GetSelectedCharacter()
     {
         string name = PlayerPrefs.GetString("SelectedCharacter", "");

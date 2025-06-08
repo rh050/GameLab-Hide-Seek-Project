@@ -8,7 +8,6 @@ public class StoryIntroController : MonoBehaviour
     public Sprite[] slides;
     public float displayDuration = 2f;
     private Image panelImage;
-    // Start is called before the first frame update
     void Start()
     {
         panelImage = GetComponent<Image>();
