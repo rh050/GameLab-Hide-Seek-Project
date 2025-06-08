@@ -11,9 +11,9 @@ public class Hider : MonoBehaviour
     private float abilityCooldownTimer = 0f;
 
     [Header("Hiding Settings")]
-    [SerializeField] private float hidingCooldownDuration = 5f;
-    [SerializeField] private float minHideTime = 3f;
-    [SerializeField] private float maxHideTime = 10f;
+    [SerializeField] private float hidingCooldownDuration = 1f;
+    [SerializeField] private float minHideTime = 30f;
+    [SerializeField] private float maxHideTime = 100f;
     
     [Header("Light Shrink Settings")]
     public float maxLightRadius = 5f;

@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="302e4537-17f8-4d0f-88a0-45f5d35d754f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../EnergyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EnergyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HidingSpot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HidingSpot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UI/GameHUDController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/GameHUDController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Art/Sprites/Environment/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Art/Sprites/Environment/Materials/victorypoint_1_0001 copy.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Art/Sprites/Environment/Materials/victorypoint_1_0001 copy.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Art/Sprites/Environment/victorypoint_1_0001 copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Art/Sprites/Environment/victorypoint_1_0001 copy.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Art/Sprites/UI/IMG_0119 (1).JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Art/Sprites/UI/IMG_0119 (1).JPG.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Art/Sprites/UI/צילום מסך 2024-12-23 ב-17.05.11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Scenes/Game_one.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../../Scenes/Game_one.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Characters/Hider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Characters/Hider.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,16 +25,15 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/../EnergyManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Characters/Hider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/HidingSpot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Player/Hider.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Player/PlayerInteraction.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/HidingSpotManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../UI/GameHUDController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../Library/PackageCache/com.unity.visualscripting@1.9.4/Editor/VisualScripting.Flow/Options/UnitBase.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2rCyw3Y84tQ1h0QJjhQ7ySsD7Rw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -37,7 +43,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "beta",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -55,6 +61,7 @@
       <option name="presentableId" value="Default" />
       <updated>1736077587487</updated>
       <workItem from="1736077589271" duration="2001000" />
+      <workItem from="1749410436204" duration="2618000" />
     </task>
     <servers />
   </component>
