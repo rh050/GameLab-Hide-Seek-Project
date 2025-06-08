@@ -54,7 +54,6 @@ public class ExploringState : SeekerState
         }
         else
         {
-            // אין לאן ללכת? פשוט תסתובב (אפשר להוסיף התנהגות רנדומלית)
         }
     }
 

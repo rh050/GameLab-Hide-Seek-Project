@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 public class EnergyManager : MonoBehaviour
 {
-    public static EnergyManager Instance { get; private set; } // Singleton instance
+    public static EnergyManager Instance { get; private set; } 
 
     public float maxEnergy = 30f;
     public float currentEnergy;
     public float energyRegenRate = 1f;
     public Text energyText;
-    private GameHUDController hud; // ישירות ל-HUD במקום ה-Mediator
+    private GameHUDController hud; 
 
     private void Awake()
     {
@@ -19,15 +19,15 @@ public class EnergyManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // מניעת יצירת מופעים נוספים
+            Destroy(gameObject); 
         }
     }
 
     private void Start()
     {
-        currentEnergy = 0f; // האנרגיה מתחילה מ-0
-        hud = FindObjectOfType<GameHUDController>(); // חיפוש ה-HUD
-        InvokeRepeating(nameof(RegenerateEnergy), 1f, 1f); // טעינת אנרגיה כל שנייה
+        currentEnergy = 0f; 
+        hud = FindObjectOfType<GameHUDController>(); 
+        InvokeRepeating(nameof(RegenerateEnergy), 1f, 1f); 
     }
 
     private void RegenerateEnergy()
@@ -45,9 +45,9 @@ public class EnergyManager : MonoBehaviour
         {
             currentEnergy -= amount;
             UpdateEnergyHUD();
-            return true; // יש מספיק אנרגיה
+            return true; 
         }
-        return false; // אין מספיק אנרגיה
+        return false; 
     }
 
     private void UpdateEnergyHUD()

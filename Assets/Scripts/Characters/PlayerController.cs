@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Get clone manager if exists
         cloneManager = GetComponent<PlayerCloneManager>();
         animator = GetComponent<Animator>();
 
@@ -53,11 +52,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Prevent movement if CatWoman has active clone and is not a clone herself
         if (!isClone && cloneManager != null && cloneManager.IsCloneActive())
         {
             movement = Vector2.zero;
-            return; // Block CatWoman from moving while clone is active
+            return; 
         }
 
         SmartObjectManager.Instance.ActivateSmartObjects(gameObject);
@@ -74,7 +72,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = movement * moveSpeed;
         }
-        //freeze Z 
+         
         Vector3 fixedPos = transform.position;
         fixedPos.z = 0f;
         transform.position = fixedPos;
@@ -140,13 +138,11 @@ private void UpdateAnimatorFloat(string parameter, float value)
         return false;
     }
 
-    // Speed Modifiers
     public void ModifySpeed(float multiplier) => moveSpeed *= multiplier;
     public void ResetSpeed() => moveSpeed = speedRegular;
     public void ModifySpeedTemporary(float multiplier, float duration)
     {
         StartCoroutine(TemporarySpeedChange(multiplier, duration));
-        //reset speed after duration
     }
 
     private IEnumerator TemporarySpeedChange(float multiplier, float duration)

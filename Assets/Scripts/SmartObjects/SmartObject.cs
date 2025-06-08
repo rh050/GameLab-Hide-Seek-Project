@@ -66,6 +66,6 @@ public class SmartObject : MonoBehaviour
     private IEnumerator ResetTrap()
     {
         yield return new WaitForSeconds(effectDuration);
-        isActive = true; // הפיכת האובייקט לפעיל מחדש
+        isActive = true;
     }
 }

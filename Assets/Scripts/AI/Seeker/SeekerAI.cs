@@ -31,7 +31,6 @@ public class SeekerAI : MonoBehaviour
 
     void Start()
     {
-        // Configure parameters based on chosen difficulty
         Difficulty diff = DifficultyManager.Instance != null
             ? DifficultyManager.Instance.GetDifficulty()
             : Difficulty.Medium;
@@ -154,7 +153,6 @@ public class SeekerAI : MonoBehaviour
     {
         if (hider == null) return false;
         
-        // Check if the target  IsHiderInvisible
         if (GameMediator.Instance.IsHiderInvisible(hider))
             return false;
 

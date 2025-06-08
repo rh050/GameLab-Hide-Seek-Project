@@ -11,10 +11,8 @@ public class PlayerCloneManager : MonoBehaviour
     {
         realPlayer = player;
 
-        // Instantiate clone
         clone = Instantiate(clonePrefab, player.transform.position, Quaternion.identity);
 
-        // Copy character data to clone
         CharactersSO data = player.GetComponent<Hider>()?.GetCharacterData();
         if (data != null)
         {
@@ -25,10 +23,8 @@ public class PlayerCloneManager : MonoBehaviour
             }
         }
 
-        // Disable real player control
         player.GetComponent<PlayerController>().enabled = false;
 
-        // Freeze Rigidbody
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -36,7 +32,6 @@ public class PlayerCloneManager : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
 
-        // Enable clone control
         PlayerController cloneController = clone.GetComponent<PlayerController>();
         if (cloneController != null)
         {
@@ -44,18 +39,14 @@ public class PlayerCloneManager : MonoBehaviour
             cloneController.isClone = true;
         }
 
-        // Camera follows the clone
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
         if (cameraFollow != null)
         {
             cameraFollow.target = clone.transform;
         }
 
-        // Start returning control after duration
         StartCoroutine(ReturnControlAfterDelay(controlDuration));
     }
-
-    
 
     private System.Collections.IEnumerator ReturnControlAfterDelay(float delay)
     {

@@ -119,7 +119,7 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    // --- Core Fade Logic ---
+    
     public void CrossfadeToClip(AudioClip newClip, bool loop)
     {
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class TeleportActivator : MonoBehaviour
 {
-    public Transform[] teleportLocations; // Pre-defined teleport locations
-    public float cooldown = 5f;           // Cooldown time before reuse
-    public float energyCost = 10f;        // Energy cost for teleportation
+    public Transform[] teleportLocations; 
+    public float cooldown = 5f;           
+    public float energyCost = 10f;        
     private bool isOnCooldown = false;
 
     void OnTriggerEnter2D(Collider2D other)

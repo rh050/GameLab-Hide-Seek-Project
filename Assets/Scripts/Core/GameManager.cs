@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public CharactersSO[] characterList; // Assign all characters in Inspector
-    public Transform[] spawnPoints; // Assign multiple spawn points in Inspector
+    public CharactersSO[] characterList; 
+    public Transform[] spawnPoints; 
 
     private bool gameStarted = false;
     private GameHUDController hud;
@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Random spawn point selection
         int index = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[index];
 

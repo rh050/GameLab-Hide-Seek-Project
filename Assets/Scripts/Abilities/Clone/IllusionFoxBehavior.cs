@@ -18,7 +18,6 @@ public class IllusionFoxBehavior : MonoBehaviour
 
     void Start()
     {
-        // אם לא הוגדר כיוון חיצוני — ניישם ברירת מחדל
         if (moveDirection == Vector2.zero)
             moveDirection = Vector2.up;
 
@@ -41,10 +40,7 @@ public class IllusionFoxBehavior : MonoBehaviour
         animator.SetFloat("InputY", dir.y);
     }
 
-    /// <summary>
-    /// קובע את הכיוון שבו תנוע האשליה.
-    /// חובה להיקרא מ-FoxAbility מיד אחרי Instantiate.
-    /// </summary>
+   
     public void SetDirection(Vector2 dir)
     {
         moveDirection = dir.normalized;
