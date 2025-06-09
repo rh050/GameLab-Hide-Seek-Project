@@ -42,7 +42,7 @@ public class DifficultyManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("GameDifficulty", (int)diff);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("Game_one");
+        SceneManager.LoadScene("StoryIntro");
     }
 
     public Difficulty GetDifficulty()

@@ -20,7 +20,7 @@ public class StoryIntroController : MonoBehaviour
         {
             StopAllCoroutines();
             panelImage.color = new Color(panelImage.color.r, panelImage.color.g, panelImage.color.b, 1f);
-            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Game_one");
         }
     }
     private IEnumerator Playintro()
@@ -33,7 +33,7 @@ public class StoryIntroController : MonoBehaviour
             yield return new WaitForSeconds(displayDuration);
             yield return StartCoroutine(Fade(1f, 0f, 0.5f));
         }
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Game_one");
     }
     private IEnumerator Fade(float startAlpha, float endAlpha, float duration)
     {
