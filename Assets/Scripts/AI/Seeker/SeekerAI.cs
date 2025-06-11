@@ -29,6 +29,11 @@ public class SeekerAI : MonoBehaviour
     public static readonly ExploringState ExploringStateInstance = new ExploringState();
     
 
+    void Awake()
+    {
+        ResetSeeker();
+    }
+    
     void Start()
     {
         Difficulty diff = DifficultyManager.Instance != null
@@ -182,6 +187,11 @@ public class SeekerAI : MonoBehaviour
 
         return null;
     }
-    
+    public void ResetSeeker()
+    {
+        currentState = new ExploringState();
+        currentState.EnterState(this);
+    }
+
 
 }

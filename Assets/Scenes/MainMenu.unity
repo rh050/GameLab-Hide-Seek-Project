@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 8401164}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 33.57788, y: -48.56836, z: 8.036318}
+  m_LocalPosition: {x: 1215, y: -182, z: 8.036318}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -347,8 +347,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -749, y: -21.99999}
-  m_SizeDelta: {x: 545.5022, y: 58.9851}
+  m_AnchoredPosition: {x: -737, y: 33.885}
+  m_SizeDelta: {x: 425.034, y: 72.312}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &199787606
 MonoBehaviour:
@@ -1410,8 +1410,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -747, y: -263}
-  m_SizeDelta: {x: 545.5022, y: 58.9851}
+  m_AnchoredPosition: {x: -735.4416, y: -215.99998}
+  m_SizeDelta: {x: 425.034, y: 58.985}
   m_Pivot: {x: 0.5, y: -0.8513424}
 --- !u!114 &870475024
 MonoBehaviour:
@@ -1873,8 +1873,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -747, y: -504}
-  m_SizeDelta: {x: 545.5022, y: 58.9851}
+  m_AnchoredPosition: {x: -735.4416, y: -456.99997}
+  m_SizeDelta: {x: 425.034, y: 58.985}
   m_Pivot: {x: 0.5, y: -2.202686}
 --- !u!114 &1187613613
 MonoBehaviour:
@@ -2027,7 +2027,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 32c8508913710a447a5f5bda0b971966, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f13b684d33b0480409c6cf56190d85bd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2534,7 +2534,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52.75
+  m_fontSize: 64.7
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3567,19 +3567,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 272498205190026294, guid: 51484e7e5f935234e860c3e0656355b9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 199.0535
+      value: 177.4622
       objectReference: {fileID: 0}
     - target: {fileID: 272498205190026294, guid: 51484e7e5f935234e860c3e0656355b9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -100.2149
+      value: -97.1055
       objectReference: {fileID: 0}
     - target: {fileID: 272498205190026294, guid: 51484e7e5f935234e860c3e0656355b9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 99.526764
+      value: 88.73108
       objectReference: {fileID: 0}
     - target: {fileID: 272498205190026294, guid: 51484e7e5f935234e860c3e0656355b9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50.10746
+      value: -48.552795
       objectReference: {fileID: 0}
     - target: {fileID: 645114128853554100, guid: 51484e7e5f935234e860c3e0656355b9, type: 3}
       propertyPath: m_AnchoredPosition.x

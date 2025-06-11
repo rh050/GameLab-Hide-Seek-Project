@@ -28,6 +28,7 @@ public class SmartObject : MonoBehaviour
         if (isTrap)
         {
             Debug.Log("Trap activated!");
+            player.transform.position = transform.position;
             playerController.ModifySpeedTemporary(0.5f, effectDuration); 
             HeatmapManager.Instance.RegisterRedZone(playerController.GetComponent<Hider>());
             AudioManager.Instance.PlayTrapLaugh();
