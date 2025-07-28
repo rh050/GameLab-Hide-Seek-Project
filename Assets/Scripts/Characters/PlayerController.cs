@@ -26,6 +26,14 @@ public class PlayerController : MonoBehaviour
     private Vector2 InputX;
     private Vector2 InputY;
     Animator animator ;
+    
+    [Header("Fatigue Settings")]
+    public float maxFatigue = 100f;    
+    public float fatigue;             
+    public float fatigueDrain = 25f;   
+    public float fatigueRegen = 20f;   
+    public float exhaustedSpeedMultiplier = 0.4f; 
+    private bool isExhausted = false;
 
     public Vector2 LastDirection { get; private set; }
 
@@ -46,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
         cloneManager = GetComponent<PlayerCloneManager>();
         animator = GetComponent<Animator>();
+        fatigue = maxFatigue;
 
         
     }
@@ -60,11 +69,35 @@ public class PlayerController : MonoBehaviour
 
         SmartObjectManager.Instance.ActivateSmartObjects(gameObject);
 
-        if (!IsInsideHidingSpot())
+        if (!IsInsideHidingSpot() && movement != Vector2.zero)
         {
-           
+            fatigue -= fatigueDrain * Time.deltaTime;
+            if (fatigue <= 0)
+            {
+                fatigue = 0;
+                if (!isExhausted)
+                {
+                    isExhausted = true;
+                    moveSpeed = speedRegular * exhaustedSpeedMultiplier;
+                }
+            }
+        }
+        else
+        {
+            fatigue += fatigueRegen * Time.deltaTime;
+            if (fatigue >= maxFatigue)
+            {
+                fatigue = maxFatigue;
+            }
+
+            if (isExhausted && fatigue >= maxFatigue * 0.6f) 
+            {
+                isExhausted = false;
+                moveSpeed = speedRegular;
+            }
         }
     }
+
 
     void FixedUpdate()
     {
@@ -143,6 +176,12 @@ private void UpdateAnimatorFloat(string parameter, float value)
     public void ModifySpeedTemporary(float multiplier, float duration)
     {
         StartCoroutine(TemporarySpeedChange(multiplier, duration));
+    }
+    public void Resetfatigue()
+    {
+        fatigue = maxFatigue;
+        isExhausted = false;
+        moveSpeed = speedRegular;
     }
 
     private IEnumerator TemporarySpeedChange(float multiplier, float duration)

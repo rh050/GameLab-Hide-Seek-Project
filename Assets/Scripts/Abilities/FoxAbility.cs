@@ -3,7 +3,6 @@
 [CreateAssetMenu(fileName = "Fox Ability", menuName = "Ability/Fox")]
 public class FoxAbility : Ability
 {
-    [Header("Illusion Settings")]
     public GameObject illusionPrefab;
     private float illusionLifetime;
 

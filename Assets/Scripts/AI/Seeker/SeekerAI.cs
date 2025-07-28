@@ -194,4 +194,8 @@ public class SeekerAI : MonoBehaviour
     }
 
 
+    public void MarkHintedHidingSpot(HidingSpot spot)
+    {
+        ExploringState.targetHidingSpot = spot;
+    }
 }

@@ -5,42 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="821974f4-3ddd-4e20-bbd3-633a543fa851" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visuals/AudioManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visuals/AudioManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Background Ambience.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Background Ambience/creepy-vocal-ambience-6074.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Background Ambience/creepy-vocal-ambience-6074.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Background Ambience/haunted-house-ambience-337104.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Background Ambience/haunted-house-ambience-337104.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Calm Ambience.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Calm Ambience/forest-atmosphere-localization-poland-320813.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Calm Ambience/forest-atmosphere-localization-poland-320813.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Whisper Clips.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Whisper Clips/creepy-whispering-6690.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Whisper Clips/creepy-whispering-6690.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Whisper Clips/ghost-whispers-6030.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/Whisper Clips/ghost-whispers-6030.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/distorted-sound-02-brvhrtz-248243.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/distorted-sound-02-brvhrtz-248243.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/evil-laugh-89423.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/evil-laugh-89423.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/evil-laugh-multi-34044.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/evil-laugh-multi-34044.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/woman-screaming-sfx-screaming-sound-effect-320169.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/woman-screaming-sfx-screaming-sound-effect-320169.mp3.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/zombie-scream-324752.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sounds/Game/zombie-scream-324752.mp3.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameLab-Hide-Seek-Projects/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameLab-Hide-Seek-Projects/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GDD.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GDD/GameDesignHideNseek .docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GDD/GameDesignHideNseek .docx.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game_one.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game_one.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/ChasingState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/ChasingState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/ExploringState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/ExploringState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/SeekerAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/SeekerAI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/FoxAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/FoxAbility.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/Hider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/Hider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/PlayerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/GameMediator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/GameMediator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Heatmap/HeatmapManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Heatmap/HeatmapManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HidingSpots/HidingSpotManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HidingSpots/HidingSpotManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SmartObjects/SmartObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SmartObjects/SmartObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HidingSpots/HidingSpot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HidingSpots/HidingSpot.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +47,7 @@
   &quot;keyToString&quot;: {
     &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;beta&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ca01557f&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -135,6 +111,8 @@
       <workItem from="1748459593126" duration="1460000" />
       <workItem from="1748546354832" duration="4427000" />
       <workItem from="1748597345770" duration="3267000" />
+      <workItem from="1753005699153" duration="7175000" />
+      <workItem from="1753296331861" duration="1231000" />
     </task>
     <servers />
   </component>

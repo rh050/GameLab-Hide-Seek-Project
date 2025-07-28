@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Sozzy the Cats
   characterSprite: {fileID: 0}
-  speed: 2
+  speed: 0
   characterPrefab: {fileID: 7858592109270468648, guid: e627b230d65deda41b439be509e0dd05, type: 3}
   ability: {fileID: 11400000, guid: adbf14bce48fa2a43bd1e358f4f19201, type: 2}

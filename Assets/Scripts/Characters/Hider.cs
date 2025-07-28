@@ -4,7 +4,6 @@ using UnityEngine.Rendering.Universal;
 
 public class Hider : MonoBehaviour
 {
-    
     [Header("Ability Settings")]
     [SerializeField] private float abilityEnergyCost = 5f;
     [SerializeField] private float abilityCooldownDuration = 10f;
@@ -12,77 +11,57 @@ public class Hider : MonoBehaviour
 
     [Header("Hiding Settings")]
     [SerializeField] private float hidingCooldownDuration = 1f;
-    [SerializeField] private float minHideTime = 150f;
-    [SerializeField] private float maxHideTime = 250f;
-    
+    private float hidingCooldownTimer = 0f;
+
     [Header("Light Shrink Settings")]
     public float maxLightRadius = 5f;
     public float minLightRadius = 2f;
-    public float shrinkRate = 0.5f;  
-    public float growRate   = 1f;    
+    public float shrinkRate = 0.5f;
+    public float growRate = 1f;
 
     private CharactersSO characterData;
     private bool isInHidingSpotArea = false;
     private EnergyManager energyManager;
     public Light2D selfLight;
     private PlayerController pc;
-    private float hidingCooldownTimer = 0f;
     private bool isHiding = false;
     private HidingSpot currentHidingSpot;
-    private Coroutine hideCoroutine;
     private PlayerCloneManager cloneManager;
     private Coroutine whisperCoroutine;
-
-    
 
     void Start()
     {
         cloneManager = GetComponent<PlayerCloneManager>();
-        if (!CompareTag("Clone")) {GameMediator.Instance.RegisterHider(this);}
-        energyManager  = EnergyManager.Instance;
-        pc             = GetComponent<PlayerController>();
-        
+        if (!CompareTag("Clone")) { GameMediator.Instance.RegisterHider(this); }
+        energyManager = EnergyManager.Instance;
+        pc = GetComponent<PlayerController>();
     }
-    
+
     void Update()
     {
-
         if (abilityCooldownTimer > 0)
-        {
             abilityCooldownTimer -= Time.deltaTime;
-        }
 
         if (hidingCooldownTimer > 0)
-        {
             hidingCooldownTimer -= Time.deltaTime;
-        }
 
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("E Key Pressed");
             ActivateAbility();
-        }
 
         if (Input.GetKeyDown(KeyCode.R))
-        {
             ToggleHide();
-        }
-        
+
         if (selfLight == null) return;
 
         if (isHiding)
         {
             if (selfLight.pointLightOuterRadius > minLightRadius)
-            {
                 selfLight.pointLightOuterRadius = Mathf.Max(
                     selfLight.pointLightOuterRadius - shrinkRate * Time.deltaTime,
                     minLightRadius
                 );
-            }
             else
-            {
                 selfLight.enabled = false;
-            }
         }
         else
         {
@@ -90,16 +69,12 @@ public class Hider : MonoBehaviour
                 selfLight.enabled = true;
 
             if (selfLight.pointLightOuterRadius < maxLightRadius)
-            {
                 selfLight.pointLightOuterRadius = Mathf.Min(
                     selfLight.pointLightOuterRadius + growRate * Time.deltaTime,
                     maxLightRadius
                 );
-            }
         }
     }
-    
-    
 
     public void AssignCharacter(CharactersSO selectedCharacter)
     {
@@ -146,18 +121,11 @@ public class Hider : MonoBehaviour
             Debug.Log("Not enough energy to use ability.");
         }
     }
-    
 
     void ToggleHide()
     {
         if (!isHiding)
         {
-            if (hidingCooldownTimer > 0)
-            {
-                Debug.Log("Hiding is on cooldown! Time left: " + hidingCooldownTimer.ToString("F1") + "s");
-                return;
-            }
-
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
             foreach (var col in colliders)
             {
@@ -170,9 +138,6 @@ public class Hider : MonoBehaviour
                         isHiding = true;
                         currentHidingSpot = spot;
                         SoundOnEnterHide();
-
-                        float hideDuration = Random.Range(minHideTime, maxHideTime);
-                        hideCoroutine = StartCoroutine(EndHideAfterSeconds(hideDuration));
                         break;
                     }
                 }
@@ -180,41 +145,36 @@ public class Hider : MonoBehaviour
         }
         else
         {
-            ExitHiding();
+            ForceExitHiding(); 
         }
     }
-
-    void ExitHiding()
+    
+    public void ForceExitHiding()
     {
-        if (hideCoroutine != null)
-        {
-            StopCoroutine(hideCoroutine);
-            hideCoroutine = null;
-        }
+        if (!isHiding)
+            return;
 
+        ExitHiding();
+    }
+
+    private void ExitHiding()
+    {
         if (currentHidingSpot != null)
         {
             currentHidingSpot.LeaveSpot(gameObject);
+            currentHidingSpot = null;
         }
-        
+
         if (selfLight != null)
         {
             selfLight.enabled = true;
-            selfLight.pointLightOuterRadius = minLightRadius; 
+            selfLight.pointLightOuterRadius = minLightRadius;
         }
         SoundOnExitHide();
+        pc.Resetfatigue();
 
         isHiding = false;
-        currentHidingSpot = null;
         hidingCooldownTimer = hidingCooldownDuration;
-
-        Debug.Log("Exited hiding. Cooldown started.");
-    }
-
-    private IEnumerator EndHideAfterSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        ExitHiding();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -235,28 +195,21 @@ public class Hider : MonoBehaviour
             }
         }
     }
-    public CharactersSO GetCharacterData()
-    {
-        return characterData;
-    }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("HidingSpot"))
-        {
             isInHidingSpotArea = false;
-        }
     }
-     public bool getisInHidingSpotArea()
-     {
-         return isInHidingSpotArea;
-     }   
-     
+
+    public CharactersSO GetCharacterData() => characterData;
+    public bool getisInHidingSpotArea() => isInHidingSpotArea;
+
     void SoundOnEnterHide()
     {
         if (whisperCoroutine != null) StopCoroutine(whisperCoroutine);
         AudioManager.Instance.PlayCalmAmbience();
-        whisperCoroutine = StartCoroutine(StartWhisperAfterDelay(5f)); 
+        whisperCoroutine = StartCoroutine(StartWhisperAfterDelay(5f));
     }
 
     IEnumerator StartWhisperAfterDelay(float delay)
@@ -271,8 +224,8 @@ public class Hider : MonoBehaviour
     {
         if (whisperCoroutine != null) StopCoroutine(whisperCoroutine);
         AudioManager.Instance.StopSound();
-        AudioManager.Instance.PlayCalmAmbience(); 
+        AudioManager.Instance.PlayCalmAmbience();
     }
 
-
+    public bool IsHiding() => isHiding;
 }

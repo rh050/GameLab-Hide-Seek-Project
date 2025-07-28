@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ExploringState : SeekerState
 {
-    private HidingSpot targetHidingSpot;
+    public static HidingSpot targetHidingSpot;
 
     public void EnterState(SeekerAI seeker)
     {

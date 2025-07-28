@@ -60,19 +60,8 @@ public class GameMediator : MonoBehaviour
             hud.UpdateHidersLeft(hiders.Count);
         }
     }
-    public SeekerAI GetSeeker()
-    {
-        return seeker;
-    }
-    public float GetSeekerToPlayerDistance()
-    {
-        PlayerController player = FindObjectOfType<PlayerController>();
-        if (player != null && seeker != null)
-        {
-            return Vector3.Distance(seeker.transform.position, player.transform.position);
-        }
-        return Mathf.Infinity;
-    }
+
+
 
     public void NotifyHiderFound(Hider hider)
     {
@@ -117,13 +106,7 @@ public class GameMediator : MonoBehaviour
         }
     }
 
-    public void SetHiderInvisible(Hider hider, bool state)
-    {
-        if (state)
-            invisibleHiders.Add(hider);
-        else
-            invisibleHiders.Remove(hider);
-    }
+
 
     public bool IsHiderInvisible(Hider hider)
     {
@@ -141,17 +124,19 @@ public class GameMediator : MonoBehaviour
     public GameHUDController GetHUD() => hud;
     
     
-    public static void TrackRedZone(Hider hider)
-    {
-        if (hider != null)
-        {
-            HeatmapManager.Instance.TrackRedZone(hider);
-        }
-    }
+    
 
     public Vector2 GetNearestRedZone(Vector2 seekerPos)
     {
         Vector2 nearestRedZone= HeatmapManager.Instance.GetNearestRedZone(seekerPos);
         return nearestRedZone;
+    }
+    public void OnHintHidingSpot(HidingSpot spot)
+    {
+        SeekerAI seeker = FindObjectOfType<SeekerAI>();
+        if (seeker != null)
+        {
+            seeker.MarkHintedHidingSpot(spot);
+        }
     }
 }
