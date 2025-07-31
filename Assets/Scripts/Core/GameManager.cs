@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public SeekerAI GetSeeker() => seeker;
 
     public void EndGame(string result)
     {

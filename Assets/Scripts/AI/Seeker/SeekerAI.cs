@@ -1,29 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using System.Linq;
 
 public class SeekerAI : MonoBehaviour
 {
     [Header("AI Parameters (set by Difficulty)")]
     public float moveSpeed;
-    public float teleportInterval;
     public float visionRadius;
-    public float lostSightDuration;
     [Header("AI Light Growth")]
     public float seekerMaxRadius = 15f;
     private float seekerGrowRate  = 0.5f;  
     private bool HiiderInsideLightRadius = false;
-    private Collider2D[] collidersBuffer = new Collider2D[32];
     public Light2D seekerLight;
     private SeekerState currentState;
     private Collider2D[] visionColliders;
-    private float teleportTimer;
     private System.Type lastStateType = null;
     // Animation-related
     private Animator animator;
     private Vector2 lastPosition;
-    public bool HiderInsideLightRadius { get; }
     //states
     public static readonly ObservingState ObservingStateInstance = new ObservingState();
     public static readonly ExploringState ExploringStateInstance = new ExploringState();
@@ -43,24 +37,18 @@ public class SeekerAI : MonoBehaviour
         {
             case Difficulty.Easy:
                 moveSpeed         = 2.0f;
-                teleportInterval = 30.0f;
                 visionRadius     = 6.0f;
-                lostSightDuration= 5.0f;
                 seekerGrowRate = 0.01f;
                 break;
             case Difficulty.Medium:
                 moveSpeed         = 2.5f;
-                teleportInterval = 20.0f;
                 visionRadius     = 5.0f;
-                lostSightDuration= 3.0f;
                 seekerGrowRate = 0.03f;
 
                 break;
             case Difficulty.Hard:
                 moveSpeed         = 3f;
-                teleportInterval = 10.0f;
                 visionRadius     = 4.0f;
-                lostSightDuration= 1.5f;
                 seekerGrowRate = 0.05f;
                 break;
         }

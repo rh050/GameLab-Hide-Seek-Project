@@ -6,17 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="821974f4-3ddd-4e20-bbd3-633a543fa851" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameLab-Hide-Seek-Projects/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameLab-Hide-Seek-Projects/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GDD.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GDD/GameDesignHideNseek .docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GDD/GameDesignHideNseek .docx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game_one.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game_one.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/ExploringState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/ExploringState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/SeekerAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Seeker/SeekerAI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/FoxAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/FoxAbility.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/Hider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/Hider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/GameMediator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/GameMediator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HidingSpots/HidingSpot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HidingSpots/HidingSpot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Visuals/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Visuals/AudioManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,20 +35,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ca01557f&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "4a0116c6",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.52f1\Editor\Unity.exe" />
@@ -113,6 +105,7 @@
       <workItem from="1748597345770" duration="3267000" />
       <workItem from="1753005699153" duration="7175000" />
       <workItem from="1753296331861" duration="1231000" />
+      <workItem from="1753955532054" duration="4996000" />
     </task>
     <servers />
   </component>

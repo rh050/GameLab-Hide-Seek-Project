@@ -113,11 +113,6 @@ public class AudioManager : MonoBehaviour
         sfxSource.mute = false;
     }
 
-    public bool IsMuted()
-    {
-        return audioSource.mute && sfxSource.mute;
-    }
-
 
     
     public void CrossfadeToClip(AudioClip newClip, bool loop)
