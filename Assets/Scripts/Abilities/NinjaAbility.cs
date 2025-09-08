@@ -32,7 +32,6 @@ public class NinjaAbility : Ability
 
         if (smokeZonePrefab == null)
         {
-            Debug.LogWarning("SmokeZone prefab not assigned to NinjaAbility.");
             return;
         }
 

@@ -43,12 +43,8 @@ public class PlayerController : MonoBehaviour
     {
         speedRegular = moveSpeed;
         rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-            Debug.LogError("Rigidbody2D is missing on " + gameObject.name);
 
         energyManager = EnergyManager.Instance;
-        if (energyManager == null)
-            Debug.LogError("EnergyManager instance not found!");
 
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -134,8 +130,6 @@ public class PlayerController : MonoBehaviour
             UpdateAnimatorFloat("LastInputX", input.x);
             UpdateAnimatorFloat("LastInputY", input.y);
         }
-
-        Debug.Log("Movement Detected: " + movement);
     }
     else if (context.canceled)
     {
@@ -144,8 +138,6 @@ public class PlayerController : MonoBehaviour
 
         UpdateAnimatorFloat("InputX", 0);
         UpdateAnimatorFloat("InputY", 0);
-
-        Debug.Log("Movement Stopped!");
     }
 }
 

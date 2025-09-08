@@ -94,13 +94,11 @@ public class Hider : MonoBehaviour
 
         if (characterData == null)
         {
-            Debug.LogWarning("CharacterData is null. Cannot use ability.");
             return;
         }
 
         if (characterData.ability == null)
         {
-            Debug.LogWarning("Ability is not assigned to characterData.");
             return;
         }
 

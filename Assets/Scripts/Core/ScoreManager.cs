@@ -43,10 +43,6 @@ public class ScoreManager : MonoBehaviour
         {
             hud.UpdatePoints(seekerPoints, hidersPoints);
         }
-        else
-        {
-            Debug.LogWarning("HUD not found in ScoreManager!");
-        }
     }
 
     public void AwardSurvivingHiders()

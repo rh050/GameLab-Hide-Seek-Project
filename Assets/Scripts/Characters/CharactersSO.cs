@@ -16,7 +16,6 @@ public class CharactersSO : ScriptableObject
     {
         if (ability == null)
         {
-            Debug.LogWarning("No ability assigned to " + characterName);
             return;
         }
 

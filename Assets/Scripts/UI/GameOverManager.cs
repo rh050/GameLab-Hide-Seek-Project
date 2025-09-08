@@ -16,19 +16,11 @@ public class GameOverManager : MonoBehaviour
         {
             resultText.text = GameData.GameResult;
         }
-        else
-        {
-            Debug.LogWarning("Result Text is not assigned in GameOverManager!");
-        }
 
        
         if (continueButton != null)
         {
             continueButton.onClick.AddListener(OnContinueClicked);
-        }
-        else
-        {
-            Debug.LogWarning("Continue Button is not assigned in GameOverManager!");
         }
     }
 

@@ -7,6 +7,11 @@ public class GameManager : MonoBehaviour
     public CharactersSO[] characterList; 
     public Transform[] spawnPoints; 
 
+    [Header("Game Messages Settings")]
+    [SerializeField] private string startGameMessage = "Start!";
+    [SerializeField] private float startGameMessageDuration = 2f;
+    [SerializeField] private string timeUpMessage = "Time's Up! Hiders Win!";
+
     private bool gameStarted = false;
     private GameHUDController hud;
     private float gameTime = 100f;
@@ -36,7 +41,6 @@ public class GameManager : MonoBehaviour
         string selectedCharacterName = PlayerPrefs.GetString("SelectedCharacter", "");
         if (string.IsNullOrEmpty(selectedCharacterName))
         {
-            Debug.LogError("No character selected! Returning to Main Menu...");
             SceneManager.LoadScene("MainMenu");
             return;
         }
@@ -53,7 +57,6 @@ public class GameManager : MonoBehaviour
 
         if (selectedCharacter == null)
         {
-            Debug.LogError("Character not found in list!");
             return;
         }
 
@@ -68,10 +71,6 @@ public class GameManager : MonoBehaviour
             hider.AssignCharacter(selectedCharacter);
             Debug.Log("Assigned Character to Hider: " + selectedCharacter.characterName);
         }
-        else
-        {
-            Debug.LogError("Hider component missing on player prefab!");
-        }
 
         Debug.Log("Spawned " + selectedCharacter.characterName + " at " + spawnPoint.position);
     }
@@ -81,7 +80,7 @@ public class GameManager : MonoBehaviour
         gameStarted = true;
         if (hud != null)
         {
-            hud.DisplayMessage("Start!", 2f);
+            hud.DisplayMessage(startGameMessage, startGameMessageDuration);
         }
 
         foreach (Hider hider in GameMediator.Instance.GetAllHiders())
@@ -102,7 +101,7 @@ public class GameManager : MonoBehaviour
 
             if (gameTime <= 0)
             {
-                EndGame("Time's Up! Hiders Win!");
+                EndGame(timeUpMessage);
             }
         }
     }

@@ -21,7 +21,6 @@ public class SmartObject : MonoBehaviour
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController == null)
         {
-            Debug.LogWarning("Player does not have PlayerController!");
             return;
         }
 
@@ -51,7 +50,6 @@ public class SmartObject : MonoBehaviour
     {
         if (moveDirection == Vector3.zero)
         {
-            Debug.LogWarning($"{gameObject.name}: moveDirection is zero, object won't move!");
             yield break;
         }
 

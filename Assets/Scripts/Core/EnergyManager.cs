@@ -56,9 +56,5 @@ public class EnergyManager : MonoBehaviour
         {
             hud.UpdateEnergyHUD(currentEnergy, maxEnergy);
         }
-        else
-        {
-            Debug.LogWarning("HUD not found in EnergyManager!");
-        }
     }
 }

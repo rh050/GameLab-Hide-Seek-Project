@@ -450,6 +450,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e36abacd994b4191134c5742eeb2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hiderFoundMessage: A hider has been found!
+  hiderFoundMessageDuration: 2
+  seekerWinsMessage: Seeker Wins!
+  seekerWinsMessageDuration: 3
+  allHidersFoundEndMessage: All Hiders Found! Seeker Wins!
 --- !u!114 &116006003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,7 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81ea16318f81d841b7774b15df4c8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redZoneMarkerPrefab: {fileID: 0}
+  redZoneMarkerPrefab: {fileID: 5908020988965127046, guid: b8d2a923ca1bf2a4781a02f2e9af860e, type: 3}
   redZoneCooldown: 2
 --- !u!114 &116006004
 MonoBehaviour:
@@ -630,6 +635,9 @@ MonoBehaviour:
   - {fileID: 755057283}
   - {fileID: 559363984}
   - {fileID: 511389018}
+  startGameMessage: Start!
+  startGameMessageDuration: 2
+  timeUpMessage: Time's Up! Hiders Win!
 --- !u!114 &116006011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2075,9 +2083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  teleportInterval: 3000
   visionRadius: 0
-  lostSightDuration: 0
   seekerMaxRadius: 15
   seekerLight: {fileID: 578540440}
 --- !u!95 &578540439

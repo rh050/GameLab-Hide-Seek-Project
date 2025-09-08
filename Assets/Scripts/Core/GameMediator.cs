@@ -5,6 +5,13 @@ public class GameMediator : MonoBehaviour
 {
     public static GameMediator Instance;
 
+    [Header("Game Messages Settings")]
+    [SerializeField] private string hiderFoundMessage = "A hider has been found!";
+    [SerializeField] private float hiderFoundMessageDuration = 2f;
+    [SerializeField] private string seekerWinsMessage = "Seeker Wins!";
+    [SerializeField] private float seekerWinsMessageDuration = 3f;
+    [SerializeField] private string allHidersFoundEndMessage = "All Hiders Found! Seeker Wins!";
+
     private List<Hider> hiders = new List<Hider>();
     private HashSet<Hider> invisibleHiders = new HashSet<Hider>();
     private SeekerAI seeker;
@@ -66,15 +73,15 @@ public class GameMediator : MonoBehaviour
     public void NotifyHiderFound(Hider hider)
     {
         AudioManager.Instance.PlayGameOverSFX();
-        hud.DisplayMessage("A hider has been found!", 2f);
+        hud.DisplayMessage(hiderFoundMessage, hiderFoundMessageDuration);
         hiders.Remove(hider);
         ScoreManager.Instance.AddSeekerPoints(10);
         UpdateHidersCount();
 
         if (hiders.Count == 0)
         {
-            hud.DisplayMessage("Seeker Wins!", 3f);
-            GameManager.Instance.EndGame("All Hiders Found! Seeker Wins!");
+            hud.DisplayMessage(seekerWinsMessage, seekerWinsMessageDuration);
+            GameManager.Instance.EndGame(allHidersFoundEndMessage);
         }
     }
 
